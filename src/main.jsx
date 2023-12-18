@@ -18,6 +18,7 @@ import Immatricolazione from './pages/Immatricolazione.jsx'
 import ISEE from './pages/ISEE.jsx'
 import Visite from './pages/Visite.jsx'
 import QAUni from './pages/Q&AUni.jsx'
+import Login from './pages/Login.jsx'
 
 import Costruzione from './pages/Costruzione.jsx'
 
@@ -27,11 +28,6 @@ import CardsChildren from './pages/CardsChildren.jsx'
 
 import store from "./redux/store";
 import { Provider } from 'react-redux'
-
-
-
-
-
 
 
 const router = createBrowserRouter([
@@ -90,6 +86,10 @@ const router = createBrowserRouter([
   {
     path: "/In-Costruzione",
     element: <Costruzione></Costruzione>
+  },
+  {
+    path: "/Login",
+    element: <Login></Login>
   },
   {
     path: "/contatti",

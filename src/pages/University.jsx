@@ -1,9 +1,12 @@
 import WindowsTop from "../hooks/WindowsTop";
 
-import testingresso from "../assets/testingresso.jpg"
-import laziodisco from "../assets/Laziodisco.jpg"
-import isee from "../assets/Isee.jpg"
-import visite from "../assets/Visite.jpg"
+import { selectUsers } from '../redux/usersSlice.js';
+import { useSelector } from "react-redux";
+
+import testingresso from "../assets/testingresso.jpg";
+import laziodisco from "../assets/Laziodisco.jpg";
+import isee from "../assets/Isee.jpg";
+import visite from "../assets/Visite.jpg";
 
 import Navbar from "../components/Navbar";
 import CartaBase from "../components/CartaBase";
@@ -15,6 +18,9 @@ import Space from "../components/Space";
 
 function University() {
     WindowsTop();
+
+    const user = useSelector(selectUsers);
+    let x = "";
     return (
         <>
             <Navbar></Navbar>
@@ -64,8 +70,9 @@ function University() {
                         desc1={"Un database di appunti/dispense condivisi tra studenti!"}
                         desc2={""}>
                     </CartaBase>
+
                     <CartaBase
-                        link={"/In-Costruzione"}
+                        link={"/Login"}
                         colore={"bg-orange-400"}
                         imgURL={testingresso}
                         title={"Domande esami"}

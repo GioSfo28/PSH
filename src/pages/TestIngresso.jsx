@@ -63,7 +63,7 @@ function TestIngresso() {
                         desc2={""}>
                     </CartaBase>
                     <CartaBase
-                        link={"/In-Costruzione"}
+                        link={"/Login"}
                         colore={"bg-red-900"}
                         imgURL={testingresso}
                         title={"Simulatore"}

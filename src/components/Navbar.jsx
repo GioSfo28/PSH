@@ -3,8 +3,35 @@ import { NavLink } from 'react-router-dom';
 import Button from './Button';
 
 
+import { database } from '../firebase/config.js';
+import { signOut } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/usersSlice';
+
+import { selectUsers } from '../redux/usersSlice.js';
+import { useSelector } from "react-redux";
+
+
 
 const Nav = () => {
+
+    const dispatch = useDispatch();
+    const user = useSelector(selectUsers);
+
+    function handleSignOut() {
+        if (confirm('Vuoi eseguire il logout?')) {
+            signOut(database).then(() => {
+                dispatch(setUser(null));
+                console.log(user.currentUser);
+            }).catch((error) => {
+               console.log(error);
+            });
+        }
+
+    }
+
+
+
     let Links = [
         { name: "🏠HOME", linkto: "/" },
         { name: "📝TEST INGRESSO", linkto: "/Test-ingresso" },
@@ -12,7 +39,7 @@ const Nav = () => {
         { name: "🩺LAVORO", linkto: "/cards" },
         { name: "BLOG", linkto: "/cards" },
     ];
-    let[open,setOpen]=useState(false);
+    let [open, setOpen] = useState(false);
     return (
         <div className='shadow-md w-full fixed top-0 left-0'>
             <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7 '>
@@ -22,10 +49,10 @@ const Nav = () => {
                     </span>
                     PSH
                 </div>
-                <div onClick={()=>setOpen(!open)} className='text-3xl text-black absolute right-8 top-6 cursor-pointer md:hidden'>
-                    <ion-icon name={open ? 'close': 'menu'}></ion-icon>
+                <div onClick={() => setOpen(!open)} className='text-3xl text-black absolute right-8 top-6 cursor-pointer md:hidden'>
+                    <ion-icon name={open ? 'close' : 'menu'}></ion-icon>
                 </div>
-                <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 opacity-100':'top-[-490px]'} md:opacity-100 opacity-0`}>
+                <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 opacity-100' : 'top-[-490px]'} md:opacity-100 opacity-0`}>
                     {
                         Links.map((Link) => (
                             <li key={Link.name} className='md:ml-8 text-lg md:my-0 my-7'>
@@ -33,7 +60,7 @@ const Nav = () => {
                             </li>
                         ))
                     }
-                    <Button>📞 CONTATTI</Button>
+                    <button onClick={handleSignOut}>📞 CONTATTI</button>
                 </ul>
 
             </div>
