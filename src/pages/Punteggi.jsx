@@ -18,7 +18,7 @@ function Punteggi() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-orange-400">
+            <div className="w-full py-10 px-4 mx-auto bg-orange-400">
                 <h2 className="mb-10 text-white text-4xl font-bold">Punteggi minimi</h2>
                 <h3 className="mb-10 text-white text-2xl font-bold">Qui trovate tutti i punteggi minimi della Sapienza degli ultimi 6 anni</h3>
                 <div className="grid place-items-center mx-8 text-lg text-white">

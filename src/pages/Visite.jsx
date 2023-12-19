@@ -15,7 +15,7 @@ function Visite() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-red-900">
+            <div className="w-full py-10 px-4 mx-auto bg-red-900">
                 <h2 className="mb-10 text-white text-4xl font-bold">Visite mediche</h2>
                 <div className="grid text-left mx-8 text-lg text-white">
                     <li>Leggendo attentamente il <a className="text-white hover:text-orange-400 underline underline-offset-4" href="https://corsidilaurea.uniroma1.it/sites/default/files/documenti_ufficiali/2023/169/05418_i.pdf" target="_blank" title="Bando" rel="nofollow">bando</a>, si nota che ci sono delle visite obbligatorie da fare, come:</li>

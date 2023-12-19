@@ -14,27 +14,37 @@ import Space from "../components/Space";
 
 function Login() {
     WindowsTop();
-   
+
     const [loginType, setLoginType] = useState('login');
 
     return (
         <>
-        
+
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container grid place-items-center py-10 px-4 mx-auto bg-blue-700">
+            <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-blue-700">
                 <div className='w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
                     <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
-                        <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>Login</h1>
-                        <p className='text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white'> Accedi o crea un account</p>
+                        {
+                            loginType == 'login' ?
+                                <div>
+                                    <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>Login</h1>
+                                    <p className='text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white mb-5'> Accedi o crea un account</p>
+                                </div>
+                                :
+                                <div>
+                                    <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-5'>Crea un account</h1>
+                                </div>
+                        }
+
                         <div className="inline">
                             <button
-                                className={`btn ${loginType == 'login' ? 'selected' : ''} hover:bg-green-300`}
+                                className={`btn ${loginType == 'login' ? 'selected' : ''} bg-blue-500 text-white hover:bg-green-300 hover:text-black mr-2`}
                                 onClick={() => setLoginType('login')}>
                                 Accedi
                             </button>
                             <button
-                                className={`btn ${loginType == 'signup' ? 'selected' : ''} hover:bg-red-300`}
+                                className={`btn ${loginType == 'signup' ? 'selected' : ''} bg-blue-500 text-white hover:bg-red-300 hover:text-black ml-2`}
                                 onClick={() => setLoginType('signup')}>
                                 Registrati
                             </button>

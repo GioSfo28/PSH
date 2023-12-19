@@ -16,7 +16,7 @@ function Lezioni() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-orange-400">
+            <div className="w-full py-10 px-4 mx-auto bg-orange-400">
                 <h2 className="mb-10 text-white text-4xl font-bold">Video Lezioni</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                     <CartaBase

@@ -14,7 +14,7 @@ function IscrizioneTest() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-orange-400">
+            <div className="w-full py-10 px-4 mx-auto bg-orange-400">
                 <h2 className="mb-10 text-white text-4xl font-bold">Iscrizione al test</h2>
                 <div className="grid place-items-center">
                     <Video

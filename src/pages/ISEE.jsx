@@ -13,7 +13,7 @@ function ISEE() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-red-900">
+            <div className="w-full py-10 px-4 mx-auto bg-red-900">
                 <h2 className="mb-10 text-white text-4xl font-bold">Questione ISEE</h2>
                 <div className="grid text-left mx-8 text-lg text-white">
                     <li><b>Cosa bisogna fare durante la generazione del bollettino per immatricolarsi?</b></li>

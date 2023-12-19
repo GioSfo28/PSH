@@ -4,13 +4,17 @@ import { sendPasswordResetEmail, signInWithEmailAndPassword, onAuthStateChanged 
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/usersSlice';
 
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 
 function LoginForm() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     const [userCredentials, setUserCredentials] = useState({});
     const [error, setError] = useState('');
@@ -18,7 +22,6 @@ function LoginForm() {
     onAuthStateChanged(database, (user) => {
         if (user) {
             dispatch(setUser({ id: user.uid, email: user.email }));
-            console.log(user.email);
         } else {
             dispatch(setUser(null));
         }
@@ -29,11 +32,13 @@ function LoginForm() {
         setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
     }
 
-
     function handleLogin(e) {
         e.preventDefault();
         setError("");
         signInWithEmailAndPassword(database, userCredentials.email, userCredentials.password)
+            .then((userCredential) => {
+                navigate("/Dashboard");
+            })
             .catch((error) => {
                 if (error.message == "Firebase: Error (auth/invalid-email).") {
                     setError("E-mail non valida!")
@@ -71,7 +76,7 @@ function LoginForm() {
                     {error}
                 </div>
             }
-            <button onClick={(e) => { handleLogin(e) }} className="hover:bg-green-300">Accedi</button>
+            <button onClick={(e) => { handleLogin(e) }} className="bg-blue-500 text-white hover:bg-green-300 hover:text-black">Accedi</button>
             <p onClick={handlePasswordReset} className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Password dimenticata?</p>
 
         </>

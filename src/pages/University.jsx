@@ -14,27 +14,26 @@ import Footer from "../components/Footer";
 import Space from "../components/Space";
 
 
-
-
 function University() {
     WindowsTop();
 
     const user = useSelector(selectUsers);
-    let x = "";
+
     return (
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-red-900">
+            <div className="w-full py-10 px-4 bg-red-900">
                 <h2 className="mb-10 text-white text-4xl font-bold">Università</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     <CartaBase
                         link={"/Immatricolazione"}
                         colore={"bg-orange-400"}
                         imgURL={"https://images.unsplash.com/photo-1618068656845-fa244b9f8bd4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHJpbWklMjBwYXNzaXxlbnwwfHwwfHx8MA%3D%3D"}
                         title={"Immatricolazione"}
                         desc1={"Video tutorial per l'immatricolazione!"}
-                        desc2={""}>
+                        desc2={""}
+                        testo={"Scopri di più"}>
                     </CartaBase>
                     <CartaBase
                         link={"/Questione-ISEE"}
@@ -42,7 +41,8 @@ function University() {
                         imgURL={isee}
                         title={"Questione ISEE"}
                         desc1={"Il dramma delle NEO-MATRICOLE!"}
-                        desc2={""}>
+                        desc2={""}
+                        testo={"Scopri di più"}>
                     </CartaBase>
                     <CartaBase
                         link={"/Visite-mediche"}
@@ -50,42 +50,60 @@ function University() {
                         imgURL={visite}
                         title={"Visite mediche"}
                         desc1={"Le visite obbligatorie secondo il bando!"}
-                        desc2={""}>
+                        desc2={""}
+                        testo={"Scopri di più"}>
                     </CartaBase>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     <CartaBase
                         link={"/Q-&-A-Uni"}
                         colore={"bg-orange-400"}
                         imgURL={"https://plus.unsplash.com/premium_photo-1678216286021-e81f66761751?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDV8fGludGVycm9nYXRpdmV8ZW58MHx8MHx8fDA%3D"}
                         title={"Q & A"}
                         desc1={"Risposte alle domande più frequenti!"}
-                        desc2={""}>
+                        desc2={""}
+                        testo={"Scopri di più"}>
                     </CartaBase>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                     <CartaBase
                         link={"/In-Costruzione"}
                         colore={"bg-orange-400"}
                         imgURL={"https://images.unsplash.com/photo-1618068656845-fa244b9f8bd4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHJpbWklMjBwYXNzaXxlbnwwfHwwfHx8MA%3D%3D"}
                         title={"Appunti e dispense"}
                         desc1={"Un database di appunti/dispense condivisi tra studenti!"}
-                        desc2={""}>
+                        desc2={""}
+                        testo={"In arrivo"}>
                     </CartaBase>
-
-                    <CartaBase
-                        link={"/Login"}
-                        colore={"bg-orange-400"}
-                        imgURL={testingresso}
-                        title={"Domande esami"}
-                        desc1={"Un simulatore che raccoglie le domande degli esami scritti di numerose materie!"}
-                        desc2={""}>
-                    </CartaBase>
+                    {user.currentUser == null ?
+                        <CartaBase
+                            link={"/Login"}
+                            colore={"bg-orange-400"}
+                            imgURL={testingresso}
+                            title={"Domande esami"}
+                            desc1={"Un simulatore che raccoglie le domande degli esami scritti di numerose materie!"}
+                            desc2={""}
+                            testo={"Scopri di più"}>
+                        </CartaBase>
+                        :
+                        <CartaBase
+                            link={"/Dashboard"}
+                            colore={"bg-orange-400"}
+                            imgURL={testingresso}
+                            title={"Domande esami"}
+                            desc1={"Un simulatore che raccoglie le domande degli esami scritti di numerose materie!"}
+                            desc2={""}
+                            testo={"Scopri di più"}>
+                        </CartaBase>
+                    }
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     <CartaBase
                         link={"/In-Costruzione"}
                         colore={"bg-orange-400"}
                         imgURL={laziodisco}
                         title={"Recensioni esami"}
                         desc1={"Trova o condividi una recensione sull'esame che hai dato!"}
-                        desc2={""}>
+                        desc2={""}
+                        testo={"In arrivo"}>
                     </CartaBase>
                     <CartaBase
                         link={"/In-Costruzione"}
@@ -93,7 +111,8 @@ function University() {
                         imgURL={"https://plus.unsplash.com/premium_photo-1678216286021-e81f66761751?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDV8fGludGVycm9nYXRpdmV8ZW58MHx8MHx8fDA%3D"}
                         title={"Procedure"}
                         desc1={"Una raccolta di procedure infermieristiche!"}
-                        desc2={""}>
+                        desc2={""}
+                        testo={"In arrivo"}>
                     </CartaBase>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 
@@ -14,30 +14,32 @@ import { useSelector } from "react-redux";
 
 
 const Nav = () => {
-
     const dispatch = useDispatch();
     const user = useSelector(selectUsers);
+    const navigate = useNavigate();
+
+    function handleSignIn() {
+        navigate("/Login");
+    };
 
     function handleSignOut() {
         if (confirm('Vuoi eseguire il logout?')) {
             signOut(database).then(() => {
                 dispatch(setUser(null));
-                console.log(user.currentUser);
+                navigate("/Login");
             }).catch((error) => {
-               console.log(error);
+                console.log(error);
             });
-        }
+        };
 
-    }
-
-
+    };
 
     let Links = [
-        { name: "🏠HOME", linkto: "/" },
-        { name: "📝TEST INGRESSO", linkto: "/Test-ingresso" },
-        { name: "🎓UNIVERSITÀ", linkto: "/University" },
-        { name: "🩺LAVORO", linkto: "/cards" },
-        { name: "BLOG", linkto: "/cards" },
+        { name: "🏠Home", linkto: "/" },
+        { name: "📝Test ingresso", linkto: "/Test-ingresso" },
+        { name: "🎓Università", linkto: "/University" },
+        { name: "🩺Lavoro", linkto: "/cards" },
+        { name: "Blog", linkto: "/cards" },
     ];
     let [open, setOpen] = useState(false);
     return (
@@ -60,9 +62,10 @@ const Nav = () => {
                             </li>
                         ))
                     }
-                    <button onClick={handleSignOut}>📞 CONTATTI</button>
+                    {
+                        user.currentUser == null ? <button onClick={handleSignIn} className='bg-indigo-700 text-white py-2 px-6 rounded md:ml-8 hover:bg-indigo-600 duration-500'> 🔑 ACCEDI</button> : <button onClick={handleSignOut} className='bg-indigo-700 text-white py-2 px-6 rounded md:ml-8 hover:bg-indigo-600 duration-500'> ❌ LOGOUT</button>
+                    }
                 </ul>
-
             </div>
         </div>
     )

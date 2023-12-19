@@ -12,7 +12,7 @@ function QATest() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-orange-400">
+            <div className="w-full py-10 px-4 mx-auto bg-orange-400">
                 <h2 className="mb-10 text-white text-4xl font-bold">Domande & Risposte</h2>
                 <div className="grid text-left mx-8 text-lg text-white">
                     <h2 className="text-2xl font-bold my-5">Risposte alle domande più frequenti:</h2>

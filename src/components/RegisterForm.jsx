@@ -3,6 +3,7 @@ import { database } from '../firebase/config.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/usersSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -11,6 +12,7 @@ function RegisterForm() {
     const dispatch = useDispatch();
     const [userCredentials, setUserCredentials] = useState({});
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     function handleCredentials(e){
         setUserCredentials({...userCredentials, [e.target.name]: e.target.value});
@@ -22,10 +24,8 @@ function RegisterForm() {
         setError("");
         createUserWithEmailAndPassword(database, userCredentials.email, userCredentials.password)
             .then((userCredential) => {
-             
-                console.log(user = userCredential.user);
                 dispatch(setUser({ id: userCredential.user.uid, email: userCredential.user.email }));
-                
+                navigate("/Dashboard");
             })
             .catch((error) => {
                 if (error.message == "Firebase: Error (auth/invalid-email)."){
@@ -39,8 +39,6 @@ function RegisterForm() {
                 };
             });
     }
-
-    
 
     return (
         <>
@@ -70,7 +68,7 @@ function RegisterForm() {
                     {error}
                 </div>
             }
-            <button onClick={(e) => { handleSignup(e) }} className="hover:bg-red-300">Registrati</button>
+            <button onClick={(e) => { handleSignup(e) }} className="bg-blue-500 text-white hover:bg-red-300 hover:text-black">Registrati</button>
             
         </>
     )

@@ -13,7 +13,7 @@ function Costruzione() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="container py-10 px-4 mx-auto bg-blue-700">
+            <div className="w-full py-10 px-4 mx-auto bg-blue-700">
                 <h2 className="mb-10 text-white text-4xl font-bold">Pagina in costruzione...</h2>
             </div>
             <Space></Space>
