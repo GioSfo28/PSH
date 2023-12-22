@@ -20,8 +20,11 @@ import Visite from './pages/Visite.jsx'
 import QAUni from './pages/Q&AUni.jsx'
 import Login from './pages/Login.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import SimulatoreTest from './pages/SimulatoreTest.jsx'
+import DomandeEsami from './pages/DomandeEsami.jsx'
 
 import Costruzione from './pages/Costruzione.jsx'
+import AdminSimulatore from './pages/AdminSimulatore.jsx'
 
 import Cards from './pages/Cards.jsx'
 import Card from './pages/Card.jsx'
@@ -29,6 +32,9 @@ import CardsChildren from './pages/CardsChildren.jsx'
 
 import store from "./redux/store";
 import { Provider } from 'react-redux'
+
+
+
 
 
 
@@ -96,6 +102,18 @@ const router = createBrowserRouter([
   {
     path: "/Dashboard",
     element: <Dashboard></Dashboard>
+  },
+  {
+    path: "/Simulatore-Test",
+    element: <SimulatoreTest></SimulatoreTest>
+  },
+  {
+    path: "/Admin-Simulatore",
+    element: <AdminSimulatore></AdminSimulatore>
+  },
+  {
+    path: "/Domande-esami",
+    element: <DomandeEsami></DomandeEsami>
   },
   {
     path: "/contatti",

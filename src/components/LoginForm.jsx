@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { database } from '../firebase/config.js';
+import { auth } from '../firebase/config.js';
 import { sendPasswordResetEmail, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/usersSlice';
+
+
 
 import { useNavigate } from 'react-router-dom';
 
-
-
+import { getDatabase, ref, onValue } from "firebase/database";
 
 
 function LoginForm() {
@@ -15,13 +16,22 @@ function LoginForm() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const getStatus = localStorage.getItem("statusData");
+    const getUsername = localStorage.getItem("usernameData");
+
+
+    const db = getDatabase();
+    const dbRef = ref(db, '/Utenti');
+    
 
     const [userCredentials, setUserCredentials] = useState({});
     const [error, setError] = useState('');
 
-    onAuthStateChanged(database, (user) => {
+
+    onAuthStateChanged(auth, (user) => {
         if (user) {
             dispatch(setUser({ id: user.uid, email: user.email }));
+            
         } else {
             dispatch(setUser(null));
         }
@@ -35,8 +45,20 @@ function LoginForm() {
     function handleLogin(e) {
         e.preventDefault();
         setError("");
-        signInWithEmailAndPassword(database, userCredentials.email, userCredentials.password)
+        signInWithEmailAndPassword(auth, userCredentials.email, userCredentials.password)
             .then((userCredential) => {
+                onValue(dbRef, (snapshot) => {
+                    snapshot.forEach((childSnapshot) => {
+                        const childKey = childSnapshot.key;
+                        const childData = childSnapshot.val().Email;
+                        if (childData === userCredentials.email) {
+                            localStorage.setItem("usernameData", childKey);
+                            localStorage.setItem("statusData", childSnapshot.val().Status);
+                        }
+                    });
+                }, {
+                    onlyOnce: true
+                });
                 navigate("/Dashboard");
             })
             .catch((error) => {
@@ -55,10 +77,11 @@ function LoginForm() {
 
     function handlePasswordReset() {
         const email = prompt('Inserisci la tua e-mail');
-        sendPasswordResetEmail(database, email);
+        sendPasswordResetEmail(auth, email);
         alert("E-mail per il reset password inviata!");
     }
-
+   
+    
 
     return (
         <>

@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 
-import { database } from '../firebase/config.js';
+import { auth } from '../firebase/config.js';
 import { signOut } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/usersSlice';
@@ -24,8 +24,9 @@ const Nav = () => {
 
     function handleSignOut() {
         if (confirm('Vuoi eseguire il logout?')) {
-            signOut(database).then(() => {
+            signOut(auth).then(() => {
                 dispatch(setUser(null));
+                localStorage.clear();
                 navigate("/Login");
             }).catch((error) => {
                 console.log(error);
@@ -43,7 +44,7 @@ const Nav = () => {
     ];
     let [open, setOpen] = useState(false);
     return (
-        <div className='shadow-md w-full fixed top-0 left-0'>
+        <div className='shadow-md w-full fixed top-0 left-0 z-10'>
             <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7 '>
                 <div className='font-bold text-black text-2xl cursor-pointer flex items-center'>
                     <span className='text-3xl text-red-600 mr-1 pt-2'>

@@ -5,6 +5,8 @@ import { getAuth } from "firebase/auth";
 
 
 
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyCAau7Jbnt8cOMHjuYtaOiEd7Gs5xtdLD8",
     authDomain: "psh-materiale.firebaseapp.com",
@@ -17,6 +19,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-export const database = getAuth(app);
+export const auth = getAuth(app);
