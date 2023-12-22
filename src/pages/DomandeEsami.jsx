@@ -54,10 +54,10 @@ function DomandeEsami() {
     var MEDdisable = false;
 
     if (getStatus == "PS") {
-        PSdisable = true;
+        MEDdisable = true;
     }
     else if (getStatus == "MED") {
-        MEDdisable = true;
+        PSdisable = true;
     }
     else if (getStatus == "Admin") {
         PSdisable = false;
