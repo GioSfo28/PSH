@@ -36,11 +36,8 @@ const Nav = () => {
     };
 
     let Links = [
-        { name: "🏠Home", linkto: "/" },
-        { name: "📝Test ingresso", linkto: "/Test-ingresso" },
-        { name: "🎓Università", linkto: "/University" },
-        { name: "🩺Lavoro", linkto: "/cards" },
-        { name: "Blog", linkto: "/cards" },
+        { name: "Profilo", linkto: "/Profilo" },
+        { name: "Ricerca", linkto: "/Ricerca" },
     ];
     let [open, setOpen] = useState(false);
     return (
@@ -48,23 +45,26 @@ const Nav = () => {
             <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7 '>
                 <div className='font-bold text-black text-2xl cursor-pointer flex items-center'>
                     <span className='text-3xl text-red-600 mr-1 pt-2'>
-                        <ion-icon name="heart"></ion-icon>
+                        <ion-icon name="chatbubbles"></ion-icon>
                     </span>
-                    PSH
+                    Incontri Cristiani
                 </div>
                 <div onClick={() => setOpen(!open)} className='text-3xl text-black absolute right-8 top-6 cursor-pointer md:hidden'>
                     <ion-icon name={open ? 'close' : 'menu'}></ion-icon>
                 </div>
                 <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 opacity-100' : 'top-[-490px]'} md:opacity-100 opacity-0`}>
                     {
-                        Links.map((Link) => (
-                            <li key={Link.name} className='md:ml-8 text-lg md:my-0 my-7'>
-                                <NavLink to={Link.linkto} className='text-black hover:text-red-500 duration-500'>{Link.name}</NavLink>
-                            </li>
-                        ))
+                        user.currentUser != null ?
+                            Links.map((Link) => (
+                                <li key={Link.name} className='md:ml-8 text-lg md:my-0 my-7'>
+                                    <NavLink to={Link.linkto} className='text-black hover:text-red-500 duration-500'>{Link.name}</NavLink>
+                                </li>
+                            ))
+                            :
+                            null
                     }
                     {
-                        user.currentUser == null ? <button onClick={handleSignIn} className='bg-indigo-700 text-white py-2 px-6 rounded md:ml-8 hover:bg-indigo-600 duration-500'> 🔑 ACCEDI</button> : <button onClick={handleSignOut} className='bg-indigo-700 text-white py-2 px-6 rounded md:ml-8 hover:bg-indigo-600 duration-500'> ❌ LOGOUT</button>
+                        user.currentUser == null ? <button onClick={handleSignIn} className='bg-indigo-700 text-white py-2 px-6 rounded md:ml-8 hover:bg-indigo-600 duration-500'>🔑 ACCEDI</button> : <button onClick={handleSignOut} className='bg-indigo-700 text-white py-2 px-6 rounded md:ml-8 hover:bg-indigo-600 duration-500'> ❌ LOGOUT</button>
                     }
                 </ul>
             </div>

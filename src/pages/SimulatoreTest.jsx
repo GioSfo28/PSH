@@ -48,9 +48,6 @@ function SimulatoreTest() {
     var correx = 0;
     var materia = "";
 
-
-
-
     const options = [
         { value: "Logica", label: "Logica" },
         { value: "Cultura Generale", label: "Cultura Generale" },
@@ -98,7 +95,6 @@ function SimulatoreTest() {
         }, {
             onlyOnce: true
         });
-
         document.getElementById("risposta_A").style.backgroundColor = '#FFFFFF';
         document.getElementById("risposta_A").style.color = '#000000';
         document.getElementById("risposta_B").style.backgroundColor = '#FFFFFF';

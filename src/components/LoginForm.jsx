@@ -48,18 +48,26 @@ function LoginForm() {
         signInWithEmailAndPassword(auth, userCredentials.email, userCredentials.password)
             .then((userCredential) => {
                 onValue(dbRef, (snapshot) => {
+                    let a = "";
                     snapshot.forEach((childSnapshot) => {
                         const childKey = childSnapshot.key;
                         const childData = childSnapshot.val().Email;
                         if (childData === userCredentials.email) {
-                            localStorage.setItem("usernameData", childKey);
+                            localStorage.setItem("uidData", childKey);
                             localStorage.setItem("statusData", childSnapshot.val().Status);
                         }
+                        a = childSnapshot.val().Informazioni == undefined;
+                       
                     });
+                    if (!a) {
+                        navigate("/Profilo");
+                    } else {
+                        navigate("/Questionario");
+                    }
                 }, {
                     onlyOnce: true
                 });
-                navigate("/Dashboard");
+                
             })
             .catch((error) => {
                 if (error.message == "Firebase: Error (auth/invalid-email).") {
@@ -70,6 +78,9 @@ function LoginForm() {
                 };
                 if (error.message == "Firebase: Error (auth/user-not-found).") {
                     setError("E-Mail NON registrata!")
+                };
+                if (error.message == "Firebase: Error (auth/invalid-credential).") {
+                    setError("Credenziali non valide!")
                 };
                 console.log(error.message);
             });
@@ -100,7 +111,7 @@ function LoginForm() {
                 </div>
             }
             <button onClick={(e) => { handleLogin(e) }} className="bg-blue-500 text-white hover:bg-green-300 hover:text-black">Accedi</button>
-            <p onClick={handlePasswordReset} className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Password dimenticata?</p>
+            <p onClick={handlePasswordReset} className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 cursor-pointer">Password dimenticata?</p>
 
         </>
     )

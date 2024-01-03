@@ -19,7 +19,10 @@ import ISEE from './pages/ISEE.jsx'
 import Visite from './pages/Visite.jsx'
 import QAUni from './pages/Q&AUni.jsx'
 import Login from './pages/Login.jsx'
-import Dashboard from './pages/Dashboard.jsx'
+import Questionario from './pages/Questionario.jsx'
+import Profilo from './pages/Profilo.jsx'
+import Ricerca from './pages/Ricerca.jsx'
+
 import SimulatoreTest from './pages/SimulatoreTest.jsx'
 import DomandeEsami from './pages/DomandeEsami.jsx'
 
@@ -100,8 +103,16 @@ const router = createBrowserRouter([
     element: <Login></Login>
   },
   {
-    path: "/Dashboard",
-    element: <Dashboard></Dashboard>
+    path: "/Questionario",
+    element: <Questionario></Questionario>
+  },
+  {
+    path: "/Profilo",
+    element: <Profilo></Profilo>
+  },
+  {
+    path: "/Ricerca",
+    element: <Ricerca></Ricerca>
   },
   {
     path: "/Simulatore-Test",
@@ -128,12 +139,16 @@ const router = createBrowserRouter([
     element: <Card />,
   },
   {
+    path: "/Utente/:cardID",
+    element: <Card />,
+  },
+  {
     path: "/cards-children",
     element: <CardsChildren></CardsChildren>,
     children: [
       {
         path: ":cardID",
-        element: <Card />,
+        element: <Card/>,
       },
     ],
   },

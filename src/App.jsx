@@ -107,8 +107,6 @@ function App() {
       <Navbar></Navbar>
       <Cover></Cover>
       <Space></Space>
-      <Index></Index>
-      <Space></Space>
       <Footer></Footer>
     </>
   )
