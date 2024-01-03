@@ -22,6 +22,7 @@ import Login from './pages/Login.jsx'
 import Questionario from './pages/Questionario.jsx'
 import Profilo from './pages/Profilo.jsx'
 import Ricerca from './pages/Ricerca.jsx'
+import Match from './pages/Match.jsx'
 
 import SimulatoreTest from './pages/SimulatoreTest.jsx'
 import DomandeEsami from './pages/DomandeEsami.jsx'
@@ -115,6 +116,10 @@ const router = createBrowserRouter([
     element: <Ricerca></Ricerca>
   },
   {
+    path: "/Match",
+    element: <Match></Match>
+  },
+  {
     path: "/Simulatore-Test",
     element: <SimulatoreTest></SimulatoreTest>
   },
@@ -131,6 +136,10 @@ const router = createBrowserRouter([
     element: <Contatti></Contatti>,
   },
   {
+    path: "/Utente/:cardID",
+    element: <Card />,
+  },
+  {
     path: "/cards",
     element: <Cards></Cards>,
   },
@@ -138,10 +147,7 @@ const router = createBrowserRouter([
     path: "/cards/:cardID",
     element: <Card />,
   },
-  {
-    path: "/Utente/:cardID",
-    element: <Card />,
-  },
+  
   {
     path: "/cards-children",
     element: <CardsChildren></CardsChildren>,

@@ -38,6 +38,7 @@ const Nav = () => {
     let Links = [
         { name: "Profilo", linkto: "/Profilo" },
         { name: "Ricerca", linkto: "/Ricerca" },
+        { name: "Match", linkto: "/Match" },
     ];
     let [open, setOpen] = useState(false);
     return (

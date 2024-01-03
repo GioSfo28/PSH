@@ -38,11 +38,13 @@ function Ricerca() {
     }, [info]);
 
     const genere = [
+        { id: "genere", value: "Genere", label: "Genere", isDisabled: true },
         { id: "genere", value: "Maschio", label: "Maschio" },
         { id: "genere", value: "Femmina", label: "Femmina" },
     ];
 
     const province = [
+        { id: "province", value: "Province", label: "Province", isDisabled: true },
         { id: "province", value: "Agrigento", label: "Agrigento" },
         { id: "province", value: "Alessandria", label: "Alessandria" },
         { id: "province", value: "Ancona", label: "Ancona" },
@@ -153,6 +155,7 @@ function Ricerca() {
     ];
 
     const anni = [
+        { id: "anni", value: "anni", label: "Età <= di", isDisabled: true },
         { id: "anni", value: "16", label: "16" },
         { id: "anni", value: "17", label: "17" },
         { id: "anni", value: "18", label: "18" },
@@ -359,15 +362,9 @@ function Ricerca() {
 
                                 dispatch(add(utenti1));
 
-                                update(ref(db, "Utenti/" + getUid + '/Ricerca'), {
-                                    Genere: info.genere,
-                                    Anni: info.anni,
-                                    Provincia: info.province,
-                                });
-
                                 utentiAggiunti.add(childKey);
-                            }else{
-                                if(isChecked){
+                            } else {
+                                if (isChecked) {
                                     const utenti1 = {
                                         id: childKey,
                                         aborto: a.Aborto,
@@ -412,7 +409,7 @@ function Ricerca() {
 
 
     }
-   
+
 
     return (
         <>
@@ -435,29 +432,35 @@ function Ricerca() {
                             {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
                             <p className='mx-2 text-white'>{isChecked ? '✔️ Nessun filtro' : '⬅️ Seleziona se non vuoi filtri'}</p>
                         </div>
-                        <div className='p-4 w-[100%]'>
-                            <Select
-                                name='genere'
-                                id="genere"
-                                options={genere}
-                                onChange={handleInfo}
-                            />
-                        </div>
-                        <div className='p-4 w-[100%]'>
-                            <Select
-                                id="province"
-                                options={province}
-                                onChange={handleInfo}
-                            />
-                        </div>
-                        <div className='p-4 w-[100%]'>
-                            <Select
-                                id="anni"
-                                options={anni}
-                                onChange={handleInfo}
-                            />
-                        </div>
-                        
+                        {!isChecked ?
+                            <div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select
+                                        name='genere'
+                                        id="genere"
+                                        options={genere}
+                                        onChange={handleInfo}
+                                    />
+                                </div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select
+                                        id="province"
+                                        options={province}
+                                        onChange={handleInfo}
+                                    />
+                                </div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select
+                                        id="anni"
+                                        options={anni}
+                                        onChange={handleInfo}
+                                    />
+                                </div>
+                            </div>
+                            :
+                            null
+                        }
+
                     </div>
                 </div>
 
