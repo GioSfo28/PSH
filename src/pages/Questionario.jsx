@@ -16,7 +16,7 @@ import Footer from '../components/Footer.jsx';
 import { selectUsers } from '../redux/usersSlice.js';
 import { useSelector } from "react-redux";
 
-import Select from "react-select"; 
+import Select from "react-select";
 
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
@@ -35,59 +35,53 @@ function Questionario() {
     const getUid = localStorage.getItem("uidData");
 
     const [imageUpload, setImageUpload] = useState(null);
-
-    const uploadFile = () => {
-        if (imageUpload === null) {
-            alert("Seleziona un'immagine profilo da caricare!");
-            return;
-        }
-        const imageRef = storageRef(storage, `Utenti/${getUid}/ImmagineProfilo.jpg`);
-
-        uploadBytes(imageRef, imageUpload)
-            .then((snapshot) => {
-                getDownloadURL(snapshot.ref)
-                    .then((url) => {
-                        const db = getDatabase(app);
-                        update(ref(db, "Utenti/" + getUid), {
-                            ImmagineProfilo: url
-                        });
-                        alert("Immagine caricata correttamente!");
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                    });
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
-    };
-
     const [ciUpload, setCiUpload] = useState(null);
 
-    const uploadCI = () => {
-        if (ciUpload === null) {
-            alert("Carica il selfie con la carta d'identità!");
-            return;
-        }
-        const imageRef = storageRef(storage, `Utenti/${getUid}/CI.jpg`);
+    async function uploadFile() {
+        try {
+            if (!imageUpload) {
+                alert("Seleziona un'immagine profilo da caricare!");
+                return;
+            }
 
-        uploadBytes(imageRef, ciUpload)
-            .then((snapshot) => {
-                getDownloadURL(snapshot.ref)
-                    .then((url) => {
-                        const db = getDatabase(app);
-                        update(ref(db, "Utenti/" + getUid), {
-                            ImmagineCI: url
-                        });
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                    });
-            })
-            .catch((error) => {
-                console.log(error.message);
+            const imageRef = storageRef(storage, `Utenti/${getUid}/ImmagineProfilo.jpg`);
+            const snapshot = await uploadBytes(imageRef, imageUpload);
+            const url = await getDownloadURL(snapshot.ref);
+
+            const db = getDatabase(app);
+            await update(ref(db, "Utenti/" + getUid), {
+                ImmagineProfilo: url
             });
-    };
+
+            alert("Immagine caricata correttamente!");
+
+        } catch (error) {
+            console.error("Errore durante l'upload dell'immagine profilo:", error.message);
+            throw error; // Rilancia l'errore per interrompere l'esecuzione delle operazioni successive
+        }
+    }
+
+    async function uploadCI() {
+        try {
+            if (!ciUpload) {
+                alert("Carica il selfie con la carta d'identità!");
+                return;
+            }
+
+            const imageRef = storageRef(storage, `Utenti/${getUid}/CI.jpg`);
+            const snapshot = await uploadBytes(imageRef, ciUpload);
+            const url = await getDownloadURL(snapshot.ref);
+
+            const db = getDatabase(app);
+            await update(ref(db, "Utenti/" + getUid), {
+                ImmagineCI: url
+            });
+
+        } catch (error) {
+            console.error("Errore durante l'upload del file CI:", error.message);
+            throw error; // Rilancia l'errore per interrompere l'esecuzione delle operazioni successive
+        }
+    }
 
 
 
@@ -523,6 +517,391 @@ function Questionario() {
         { id: "lgbt", value: "No", label: "No" },
     ];
 
+
+    const listaAttivita = [
+        { id: 'listaAttivita', value: 'caccia_tesoro', label: 'Caccia al Tesoro' },
+        { id: 'listaAttivita', value: 'coding_progetti_personali', label: 'Coding su Progetti Personali' },
+        { id: 'listaAttivita', value: 'costruzione_modelli_aeroplani', label: 'Costruzione di Modelli di Aeroplani' },
+        { id: 'listaAttivita', value: 'costruzione_modelli_navali', label: 'Costruzione di Modelli Navali' },
+        { id: 'listaAttivita', value: 'costruzione_mobili', label: 'Costruzione di Mobili' },
+        { id: 'listaAttivita', value: 'corso_yoga', label: 'Corso di Yoga' },
+        { id: 'listaAttivita', value: 'corsa', label: "Corsa all'Aperto" },
+        { id: 'listaAttivita', value: 'corsi_online', label: 'Corsi Online' },
+        { id: 'listaAttivita', value: 'creazione_biglietti_augurali', label: 'Creazione di Biglietti Augurali' },
+        { id: 'listaAttivita', value: 'cucina', label: 'Cucina una Nuova Ricetta' },
+        { id: 'listaAttivita', value: 'cucina_creativa', label: 'Cucina Creativa' },
+        { id: 'listaAttivita', value: 'cucina_etnica', label: 'Cucina Etnica' },
+        { id: 'listaAttivita', value: 'cucina_vegana', label: 'Cucina Vegana' },
+        { id: 'listaAttivita', value: 'decorare_torte', label: 'Decorare Torte' },
+        { id: 'listaAttivita', value: 'disegno', label: 'Disegno Artistico' },
+        { id: 'listaAttivita', value: 'escursione_montagna', label: 'Escursione in Montagna' },
+        { id: 'listaAttivita', value: 'escursione_natura', label: 'Escursione in Natura' },
+        { id: 'listaAttivita', value: 'esplorazione_sotterranei', label: 'Esplorazione di Sotterranei' },
+        { id: 'listaAttivita', value: 'fotografia', label: 'Fotografia' },
+        { id: 'listaAttivita', value: 'fotografia_astrofotografica', label: 'Fotografia Astrofotografica' },
+        { id: 'listaAttivita', value: 'fotografia_macro', label: 'Fotografia Macro' },
+        { id: 'listaAttivita', value: 'giardinaggio', label: 'Giardinaggio' },
+        { id: 'listaAttivita', value: 'grigliata_amici', label: 'Grigliata con gli Amici' },
+        { id: 'listaAttivita', value: 'hobby_artigianato', label: 'Hobby di Artigianato' },
+        { id: 'listaAttivita', value: 'karaoke', label: 'Karaoke' },
+        { id: 'listaAttivita', value: 'kayak', label: 'Kayak' },
+        { id: 'listaAttivita', value: 'lavoro_remoto', label: 'Lavoro Remoto' },
+        { id: 'listaAttivita', value: 'lettura_filosofia', label: 'Lettura di Testi di Filosofia' },
+        { id: 'listaAttivita', value: 'lettura_libri', label: 'Lettura di Libri' },
+        { id: 'listaAttivita', value: 'maratona_serie_tv', label: 'Maratona di Serie TV' },
+        { id: 'listaAttivita', value: 'meditazione', label: 'Meditazione' },
+        { id: 'listaAttivita', value: 'meditazione_guidata', label: 'Meditazione Guidata' },
+        { id: 'listaAttivita', value: 'osservazione_uccelli', label: 'Osservazione degli Uccelli' },
+        { id: 'listaAttivita', value: 'osservazione_astronomica', label: 'Osservazione Astronomica' },
+        { id: 'listaAttivita', value: 'paddle_board', label: 'Paddle Board' },
+        { id: 'listaAttivita', value: 'palestra', label: 'Allenamento in Palestra' },
+        { id: 'listaAttivita', value: 'passeggiata_notturna', label: 'Passeggiata Notturna' },
+        { id: 'listaAttivita', value: 'passeggiata_parco', label: 'Passeggiata al Parco' },
+        { id: 'listaAttivita', value: 'pittura', label: 'Pittura' },
+        { id: 'listaAttivita', value: 'pittura_su_tela', label: 'Pittura su Tela' },
+        { id: 'listaAttivita', value: 'pittura_su_tessuto', label: 'Pittura su Tessuto' },
+        { id: 'listaAttivita', value: 'pratica_strumento_musicale', label: 'Pratica di uno Strumento Musicale' },
+        { id: 'listaAttivita', value: 'progettazione_giochi_da_tavolo', label: 'Progettazione di Giochi da Tavolo' },
+        { id: 'listaAttivita', value: 'raccogliere_conchiglie', label: 'Raccogliere Conchiglie' },
+        { id: 'listaAttivita', value: 'raccogliere_funghi', label: 'Raccogliere Funghi' },
+        { id: 'listaAttivita', value: 'scacchi', label: 'Giocare a Scacchi' },
+        { id: 'listaAttivita', value: 'scrittura', label: 'Scrittura Creativa' },
+        { id: 'listaAttivita', value: 'scrittura_diario', label: 'Scrittura di un Diario' },
+        { id: 'listaAttivita', value: 'scrittura_poesie', label: 'Scrittura di Poesie' },
+        { id: 'listaAttivita', value: 'scrittura_sci-fi', label: 'Scrittura di Racconti di Sci-Fi' },
+        { id: 'listaAttivita', value: 'scultura', label: 'Scultura' },
+        { id: 'listaAttivita', value: 'socializzare_amici', label: 'Socializzare con gli Amici' },
+        { id: 'listaAttivita', value: 'spettacolo_teatrale', label: 'Spettacolo Teatrale' },
+        { id: 'listaAttivita', value: 'surf', label: 'Surf' },
+        { id: 'listaAttivita', value: 'svago_video_game', label: 'Svago con i Video Giochi' },
+        { id: 'listaAttivita', value: 'teatro_amatoriale', label: 'Partecipazione a un Gruppo Teatrale Amatoriale' },
+        { id: 'listaAttivita', value: 'teatro_immersivo', label: 'Teatro Immersivo' },
+        { id: 'listaAttivita', value: 'teatro_interattivo', label: 'Partecipazione a un Progetto di Teatro Interattivo' },
+        { id: 'listaAttivita', value: 'volo_aliante', label: 'Volo in Aliante' },
+        { id: 'listaAttivita', value: 'videogiochi_multigiocatore', label: 'Videogiochi Multigiocatore' },
+        { id: 'listaAttivita', value: 'videogiochi_retro', label: 'Videogiochi Retro' },
+        { id: 'listaAttivita', value: 'viaggio_esplorativo', label: 'Viaggio Esplorativo' },
+        { id: 'listaAttivita', value: 'visita_antiquariato', label: 'Visita a Negozi di Antiquariato' },
+        { id: 'listaAttivita', value: 'visita_museo', label: 'Visita a un Museo' },
+        { id: 'listaAttivita', value: 'visita_nuovo_ristorante', label: 'Visita a un Nuovo Ristorante' },
+        { id: 'listaAttivita', value: 'volontariato', label: 'Attività di Volontariato' },
+        { id: 'listaAttivita', value: 'volontariato_locale', label: 'Volontariato Locale' },
+    ];
+
+
+
+    const listaSport = [
+        { id: 'listaSport', value: 'aerial_wrestling', label: 'Lotta Aerea' },
+        { id: 'listaSport', value: 'aikido', label: 'Aikido' },
+        { id: 'listaSport', value: 'air_wrestling', label: 'Lotta Aerea' },
+        { id: 'listaSport', value: 'aquathlon', label: 'Aquathlon' },
+        { id: 'listaSport', value: 'archery', label: "Tiro con l'Arco" },
+        { id: 'listaSport', value: 'arrampicata', label: 'Arrampicata Sportiva' },
+        { id: 'listaSport', value: 'arrampicata_libera', label: 'Arrampicata Libera' },
+        { id: 'listaSport', value: 'artistic_gymnastics', label: 'Ginnastica Artistica' },
+        { id: 'listaSport', value: 'athletics', label: 'Atletica Leggera' },
+        { id: 'listaSport', value: 'badminton', label: 'Badminton' },
+        { id: 'listaSport', value: 'barefoot_water_skiing', label: 'Sci Nautico a Piedi Nudi' },
+        { id: 'listaSport', value: 'baseball', label: 'Baseball' },
+        { id: 'listaSport', value: 'basket', label: 'Basket' },
+        { id: 'listaSport', value: 'beach_volleyball', label: 'Pallavolo da Spiaggia' },
+        { id: 'listaSport', value: 'beach_wrestling', label: 'Lotta in Spiaggia' },
+        { id: 'listaSport', value: 'belt_wrestling', label: 'Lotta con la Cintura' },
+        { id: 'listaSport', value: 'bmx', label: 'BMX' },
+        { id: 'listaSport', value: 'bodyboarding', label: 'Bodyboard' },
+        { id: 'listaSport', value: 'bocce', label: 'Bocce' },
+        { id: 'listaSport', value: 'boomerang', label: 'Boomerang' },
+        { id: 'listaSport', value: 'boxing', label: 'Boxe' },
+        { id: 'listaSport', value: 'brazilian_jiu_jitsu', label: 'Brazilian Jiu-Jitsu' },
+        { id: 'listaSport', value: 'canoe_sprint', label: 'Canoa Sprint' },
+        { id: 'listaSport', value: 'canoe_slalom', label: 'Canoa Slalom' },
+        { id: 'listaSport', value: 'canoe_polo', label: 'Kayak Polo' },
+        { id: 'listaSport', value: 'cave_diving', label: 'Subacquea in Grotta' },
+        { id: 'listaSport', value: 'catch_wrestling', label: 'Catch Wrestling' },
+        { id: 'listaSport', value: 'cable_wakeboarding', label: 'Wakeboard su Cavo' },
+        { id: 'listaSport', value: 'capoeira', label: 'Capoeira' },
+        { id: 'listaSport', value: 'coasteering', label: 'Coasteering' },
+        { id: 'listaSport', value: 'coastal_rowing', label: 'Canottaggio Costiero' },
+        { id: 'listaSport', value: 'cosmic_wrestling', label: 'Wrestling Cosmico' },
+        { id: 'listaSport', value: 'crossfit', label: 'CrossFit' },
+        { id: 'listaSport', value: 'curling', label: 'Curling' },
+        { id: 'listaSport', value: 'cycling', label: 'Ciclismo' },
+        { id: 'listaSport', value: 'dance_sport', label: 'Danza Sportiva' },
+        { id: 'listaSport', value: 'darts', label: 'Freccette' },
+        { id: 'listaSport', value: 'dimensional_wrestling', label: 'Wrestling Dimensionale' },
+        { id: 'listaSport', value: 'dragon_boat_racing', label: 'Dragon Boat Racing' },
+        { id: 'listaSport', value: 'electronic_wrestling', label: 'Wrestling Elettronico' },
+        { id: 'listaSport', value: 'equine_vaulting', label: 'Equitazione' },
+        { id: 'listaSport', value: 'escrima', label: 'Scherma' },
+        { id: 'listaSport', value: 'extreme_grappling', label: 'Grappling Estremo' },
+        { id: 'listaSport', value: 'fencing', label: 'Scherma' },
+        { id: 'listaSport', value: 'figure_skating', label: 'Pattinaggio Artistico' },
+        { id: 'listaSport', value: 'flyboarding', label: 'Flyboard' },
+        { id: 'listaSport', value: 'flyfish', label: 'Flyfish' },
+        { id: 'listaSport', value: 'football', label: 'Calcio' },
+        { id: 'listaSport', value: 'freediving', label: 'Apnea' },
+        { id: 'listaSport', value: 'freestyle_skiing', label: 'Sci Freestyle' },
+        { id: 'listaSport', value: 'freestyle_wrestling', label: 'Lotta Libera' },
+        { id: 'listaSport', value: 'futsal', label: 'Futsal' },
+        { id: 'listaSport', value: 'gaelic_football', label: 'Calcio Gaelico' },
+        { id: 'listaSport', value: 'golf', label: 'Golf' },
+        { id: 'listaSport', value: 'gymnastics', label: 'Ginnastica' },
+        { id: 'listaSport', value: 'handball', label: 'Pallamano' },
+        { id: 'listaSport', value: 'hapkido', label: 'Hapkido' },
+        { id: 'listaSport', value: 'hockey', label: 'Hockey su Ghiaccio' },
+        { id: 'listaSport', value: 'hockey_su_prato', label: 'Hockey su Prato' },
+        { id: 'listaSport', value: 'horse_racing', label: 'Corsa Ippica' },
+        { id: 'listaSport', value: 'hybrid_grappling', label: 'Grappling Ibrido' },
+        { id: 'listaSport', value: 'hydrospeed', label: 'Hydrospeed' },
+        { id: 'listaSport', value: 'ice_climbing', label: 'Arrampicata su Ghiaccio' },
+        { id: 'listaSport', value: 'ice_diving', label: 'Subacquea su Ghiaccio' },
+        { id: 'listaSport', value: 'ice_sailing', label: 'Vela su Ghiaccio' },
+        { id: 'listaSport', value: 'ice_surfing', label: 'Surf su Ghiaccio' },
+        { id: 'listaSport', value: 'ice_swimming', label: 'Nuoto su Ghiaccio' },
+        { id: 'listaSport', value: 'ice_wrestling', label: "Lotta nell'Olio" },
+        { id: 'listaSport', value: 'integrated_grappling', label: 'Grappling Integrato' },
+        { id: 'listaSport', value: 'interdimensional_wrestling', label: 'Wrestling Interdimensionale' },
+        { id: 'listaSport', value: 'jello_wrestling', label: 'Jello Wrestling' },
+        { id: 'listaSport', value: 'jet_skiing', label: 'Jet Ski' },
+        { id: 'listaSport', value: 'judo', label: 'Judo' },
+        { id: 'listaSport', value: 'karate', label: 'Karate' },
+        { id: 'listaSport', value: 'kayak_polo', label: 'Kayak Polo' },
+        { id: 'listaSport', value: 'kendo', label: 'Kendo' },
+        { id: 'listaSport', value: 'kickboxing', label: 'Kickboxing' },
+        { id: 'listaSport', value: 'kitesurfing', label: 'Kitesurf' },
+        { id: 'listaSport', value: 'kneeboarding', label: 'Kneeboard' },
+        { id: 'listaSport', value: 'krav_maga', label: 'Krav Maga' },
+        { id: 'listaSport', value: 'kung_fu', label: 'Kung Fu' },
+        { id: 'listaSport', value: 'luge', label: 'Slittino' },
+        { id: 'listaSport', value: 'luta_livre', label: 'Luta Livre' },
+        { id: 'listaSport', value: 'maiu_thai', label: 'Muay Thai' },
+        { id: 'listaSport', value: 'marathon_swimming', label: 'Nuoto di Fondo' },
+        { id: 'listaSport', value: 'modern_pentathlon', label: 'Pentathlon Moderno' },
+        { id: 'listaSport', value: 'motocross', label: 'Motocross' },
+        { id: 'listaSport', value: 'mountain_biking', label: 'Mountain Bike' },
+        { id: 'listaSport', value: 'muay_boran', label: 'Muay Boran' },
+        { id: 'listaSport', value: 'netball', label: 'Netball' },
+        { id: 'listaSport', value: 'ninjutsu', label: 'Ninjutsu' },
+        { id: 'listaSport', value: 'nordic_combined', label: 'Combinata Nordica' },
+        { id: 'listaSport', value: 'nuoto', label: 'Nuoto' },
+        { id: 'listaSport', value: 'obstacle_course_racing', label: 'Corsa ad Ostacoli' },
+        { id: 'listaSport', value: 'octopush', label: 'Octopush' },
+        { id: 'listaSport', value: 'oil_wrestling', label: "Lotta nell'Olio" },
+        { id: 'listaSport', value: 'paddle', label: 'Paddle' },
+        { id: 'listaSport', value: 'parachuting', label: 'Paracadutismo' },
+        { id: 'listaSport', value: 'paragliding', label: 'Parapendio' },
+        { id: 'listaSport', value: 'pattinaggio', label: 'Pattinaggio' },
+        { id: 'listaSport', value: 'pencak_silat', label: 'Pencak Silat' },
+        { id: 'listaSport', value: 'pesapallo', label: 'Pesäpallo' },
+        { id: 'listaSport', value: 'pickleball', label: 'Pickleball' },
+        { id: 'listaSport', value: 'platform_diving', label: 'Tuffi dalla Piattaforma' },
+        { id: 'listaSport', value: 'pocket_billiards', label: 'Biliardo a Tasche' },
+        { id: 'listaSport', value: 'pole_dancing', label: 'Pole Dance' },
+        { id: 'listaSport', value: 'polocrosse', label: 'Polocrosse' },
+        { id: 'listaSport', value: 'powerboat_racing', label: 'Motonautica' },
+        { id: 'listaSport', value: 'powerlifting', label: 'Powerlifting' },
+        { id: 'listaSport', value: 'pradal_serey', label: 'Pradal Serey' },
+        { id: 'listaSport', value: 'professional_boxing', label: 'Boxe Professionistica' },
+        { id: 'listaSport', value: 'professional_wrestling', label: 'Wrestling Professionistico' },
+        { id: 'listaSport', value: 'pump_track', label: 'Pump Track' },
+        { id: 'listaSport', value: 'puroresu', label: 'Puroresu' },
+        { id: 'listaSport', value: 'push_hands', label: 'Push Hands' },
+        { id: 'listaSport', value: 'racewalking', label: 'Marcia' },
+        { id: 'listaSport', value: 'racketlon', label: 'Racketlon' },
+        { id: 'listaSport', value: 'radio-controlled_car_racing', label: 'Automodellismo' },
+        { id: 'listaSport', value: 'rafting', label: 'Rafting' },
+        { id: 'listaSport', value: 'rappelling', label: 'Rappelling' },
+        { id: 'listaSport', value: 'relay_race', label: 'Staffetta' },
+        { id: 'listaSport', value: 'reverse_wrestling', label: 'Wrestling Invertito' },
+        { id: 'listaSport', value: 'ringball', label: 'Ringball' },
+        { id: 'listaSport', value: 'ringette', label: 'Ringette' },
+        { id: 'listaSport', value: 'rodeo', label: 'Rodeo' },
+        { id: 'listaSport', value: 'roller_derby', label: 'Roller Derby' },
+        { id: 'listaSport', value: 'rope_skipping', label: 'Salto della Corda' },
+        { id: 'listaSport', value: 'rounders', label: 'Rounders' },
+        { id: 'listaSport', value: 'rowing', label: 'Canottaggio' },
+        { id: 'listaSport', value: 'rugby_league', label: 'Rugby a 13' },
+        { id: 'listaSport', value: 'rugby_sevens', label: 'Rugby a 7' },
+        { id: 'listaSport', value: 'rugby_union', label: 'Rugby a 15' },
+        { id: 'listaSport', value: 'running', label: 'Corsa' },
+        { id: 'listaSport', value: 'sailing', label: 'Vela' },
+        { id: 'listaSport', value: 'salto_asta', label: "Salto con l'asta" },
+        { id: 'listaSport', value: 'salto_lungo', label: 'Salto in lungo' },
+        { id: 'listaSport', value: 'sambo', label: 'Sambo' },
+        { id: 'listaSport', value: 'sandboarding', label: 'Sandboard' },
+        { id: 'listaSport', value: 'savate', label: 'Savate' },
+        { id: 'listaSport', value: 'sci', label: 'Sci' },
+        { id: 'listaSport', value: 'scootering', label: 'Scooter Freestyle' },
+        { id: 'listaSport', value: 'scuba_diving', label: 'Subacquea' },
+        { id: 'listaSport', value: 'sepaktakraw', label: 'Sepak Takraw' },
+        { id: 'listaSport', value: 'shin_kicking', label: 'Shin Kicking' },
+        { id: 'listaSport', value: 'shooting_sport', label: 'Tiro Sportivo' },
+        { id: 'listaSport', value: 'short_track_speed_skating', label: 'Short Track' },
+        { id: 'listaSport', value: 'skeleton', label: 'Skeleton' },
+        { id: 'listaSport', value: 'ski_ballet', label: 'Sci Balletto' },
+        { id: 'listaSport', value: 'ski_flying', label: 'Salto con gli Sci' },
+        { id: 'listaSport', value: 'ski_mountaineering', label: 'Sci Alpinismo' },
+        { id: 'listaSport', value: 'ski_orienteering', label: 'Sci Orienteering' },
+        { id: 'listaSport', value: 'ski_cross', label: 'Ski Cross' },
+        { id: 'listaSport', value: 'ski_joring', label: 'Ski Joring' },
+        { id: 'listaSport', value: 'skimboarding', label: 'Skimboard' },
+        { id: 'listaSport', value: 'slamball', label: 'Slamball' },
+        { id: 'listaSport', value: 'sled_dog_racing', label: 'Cani da Slitta' },
+        { id: 'listaSport', value: 'snow_kiting', label: 'Snow Kiting' },
+        { id: 'listaSport', value: 'snowboarding', label: 'Snowboard' },
+        { id: 'listaSport', value: 'snowmobile_racing', label: 'Gara di Snowmobile' },
+        { id: 'listaSport', value: 'soccer_tennis', label: 'Tennis Calcio' },
+        { id: 'listaSport', value: 'soft_tennis', label: 'Soft Tennis' },
+        { id: 'listaSport', value: 'softball', label: 'Softball' },
+        { id: 'listaSport', value: 'speed_golf', label: 'Speed Golf' },
+        { id: 'listaSport', value: 'speed_skating', label: 'Pattinaggio di Velocità' },
+        { id: 'listaSport', value: 'speedball', label: 'Speedball' },
+        { id: 'listaSport', value: 'sprint', label: 'Sprint' },
+        { id: 'listaSport', value: 'sprint_football', label: 'Calcio Sprint' },
+        { id: 'listaSport', value: 'squash', label: 'Squash' },
+        { id: 'listaSport', value: 'synchronized_swimming', label: 'Nuoto Sincronizzato' },
+        { id: 'listaSport', value: 'taekwondo', label: 'Taekwondo' },
+        { id: 'listaSport', value: 'tai_chi', label: 'Tai Chi' },
+        { id: 'listaSport', value: 'tamburello', label: 'Tamburello' },
+        { id: 'listaSport', value: 'teamgym', label: 'TeamGym' },
+        { id: 'listaSport', value: 'ten_pin_bowling', label: 'Bowling a 10 Birilli' },
+        { id: 'listaSport', value: 'tennis', label: 'Tennis' },
+        { id: 'listaSport', value: 'tennis_polo', label: 'Polo Tennis' },
+        { id: 'listaSport', value: 'tetherball', label: 'Tetherball' },
+        { id: 'listaSport', value: 'three-cushion', label: 'Biliardo a 3 Cuscini' },
+        { id: 'listaSport', value: 'throwball', label: 'Throwball' },
+        { id: 'listaSport', value: 'touch_rugby', label: 'Touch Rugby' },
+        { id: 'listaSport', value: 'trampoline_gymnastics', label: 'Ginnastica su Trampolino' },
+        { id: 'listaSport', value: 'triathlon', label: 'Triathlon' },
+        { id: 'listaSport', value: 'tug_of_war', label: 'Tiro alla Fune' },
+        { id: 'listaSport', value: 'ultramarathon', label: 'Ultramaratona' },
+        { id: 'listaSport', value: 'underwater_hockey', label: 'Hockey Subacqueo' },
+        { id: 'listaSport', value: 'underwater_ice_hockey', label: 'Hockey Subacqueo su Ghiaccio' },
+        { id: 'listaSport', value: 'underwater_rugby', label: 'Rugby Subacqueo' },
+        { id: 'listaSport', value: 'unicycling', label: 'Monociclismo' },
+        { id: 'listaSport', value: 'urban_biking', label: 'Ciclismo Urbano' },
+        { id: 'listaSport', value: 'urban_climbing', label: 'Arrampicata Urbana' },
+        { id: 'listaSport', value: 'urban_golf', label: 'Golf Urbano' },
+        { id: 'listaSport', value: 'urban_street_soccer', label: 'Calcio da Strada Urbano' },
+        { id: 'listaSport', value: 'urban_surfing', label: 'Surf da Strada Urbano' },
+        { id: 'listaSport', value: 'varzesh-e_pahlavani', label: 'Varzesh-e Pahlavani' },
+        { id: 'listaSport', value: 'volleyball', label: 'Pallavolo' },
+        { id: 'listaSport', value: 'volleyball_tennis', label: 'Tennis Pallavolo' },
+        { id: 'listaSport', value: 'volte', label: 'Volteggi' },
+        { id: 'listaSport', value: 'wakeboarding', label: 'Wakeboard' },
+        { id: 'listaSport', value: 'walking_football', label: 'Calcio Camminato' },
+        { id: 'listaSport', value: 'walking_rugby', label: 'Rugby Camminato' },
+        { id: 'listaSport', value: 'wallball', label: 'Wallball' },
+        { id: 'listaSport', value: 'wallyball', label: 'Wallyball' },
+        { id: 'listaSport', value: 'water_basketball', label: 'Basket Acquatico' },
+        { id: 'listaSport', value: 'water_polo', label: 'Pallanuoto' },
+        { id: 'listaSport', value: 'weightlifting', label: 'Sollevamento Pesi' },
+        { id: 'listaSport', value: 'wheelchair_basketball', label: 'Basket in Sedia a Rotelle' },
+        { id: 'listaSport', value: 'wheelchair_curling', label: 'Curling in Sedia a Rotelle' },
+        { id: 'listaSport', value: 'wheelchair_dancing', label: 'Danza in Sedia a Rotelle' },
+        { id: 'listaSport', value: 'wheelchair_fencing', label: 'Scherma in Sedia a Rotelle' },
+        { id: 'listaSport', value: 'wheelchair_rugby', label: 'Rugby in Sedia a Rotelle' },
+        { id: 'listaSport', value: 'wheelchair_tennis', label: 'Tennis in Sedia a Rotelle' },
+        { id: 'listaSport', value: 'windsurfing', label: 'Windsurf' },
+        { id: 'listaSport', value: 'woodball', label: 'Woodball' },
+        { id: 'listaSport', value: 'wood_chopping', label: 'Taglio del Legno' },
+        { id: 'listaSport', value: 'xare', label: 'Xare' },
+        { id: 'listaSport', value: 'xwing', label: 'X-Wing' },
+        { id: 'listaSport', value: 'yachting', label: 'Yachting' },
+        { id: 'listaSport', value: 'yoga', label: 'Yoga' },
+        { id: 'listaSport', value: 'zourkhaneh', label: 'Zourkhaneh' }
+    ]
+
+    const listaGeneri = [
+        { id: 'listaGeneri', value: 'Alternativo', label: 'Alternativo' },
+        { id: 'listaGeneri', value: 'Blues', label: 'Blues' },
+        { id: 'listaGeneri', value: 'Classica', label: 'Classica' },
+        { id: 'listaGeneri', value: 'Country', label: 'Country' },
+        { id: 'listaGeneri', value: 'Dance', label: 'Dance' },
+        { id: 'listaGeneri', value: 'Elettronica', label: 'Elettronica' },
+        { id: 'listaGeneri', value: 'Folk', label: 'Folk' },
+        { id: 'listaGeneri', value: 'Hip-Hop/Rap', label: 'Hip-Hop/Rap' },
+        { id: 'listaGeneri', value: 'Indie', label: 'Indie' },
+        { id: 'listaGeneri', value: 'Jazz', label: 'Jazz' },
+        { id: 'listaGeneri', value: 'K-Pop', label: 'K-Pop' },
+        { id: 'listaGeneri', value: 'Latino', label: 'Latino' },
+        { id: 'listaGeneri', value: 'Metal', label: 'Metal' },
+        { id: 'listaGeneri', value: 'Opera', label: 'Opera' },
+        { id: 'listaGeneri', value: 'Pop', label: 'Pop' },
+        { id: 'listaGeneri', value: 'R&B/Soul', label: 'R&B/Soul' },
+        { id: 'listaGeneri', value: 'Reggae', label: 'Reggae' },
+        { id: 'listaGeneri', value: 'Rock', label: 'Rock' },
+        { id: 'listaGeneri', value: 'Ska', label: 'Ska' },
+        { id: 'listaGeneri', value: 'World', label: 'World' }
+    ]
+
+
+
+
+    const [selectedOpzioni, setSelectedOpzioni] = useState({
+        attivita: [],
+        sport: [],
+        musica: [],
+    });
+
+    const handleReset = () => {
+        setSelectedOpzioni({
+            attivita: [],
+            sport: [],
+            musica: [],
+        });
+    };
+
+    useEffect(() => {
+        handleReset();
+    },[]);
+    
+
+    // La tua funzione handleInfo
+    const handleInfoMulti = selectedOptions => {
+        
+        if (selectedOptions.length > 0) {
+
+            // Copia lo stato attuale
+            const updatedOpzioni = { ...selectedOpzioni };
+
+            for (let i = 0; i < selectedOptions.length; i++) {
+                switch (selectedOptions[i].id) {
+                    case "listaAttivita":
+                        if(i==0){
+                        updatedOpzioni.attivita = [selectedOptions[i].label];
+                        }
+                        else{
+                            updatedOpzioni.attivita.push(selectedOptions[i].label);
+                        }
+
+                        break;
+                    case "listaSport":
+                        if (i == 0) {
+                            updatedOpzioni.sport = [selectedOptions[i].label];
+                        }
+                        else {
+                            updatedOpzioni.sport.push(selectedOptions[i].label);
+                        }
+
+                        break;
+                    case "listaGeneri":
+                        if (i == 0) {
+                            updatedOpzioni.musica = [selectedOptions[i].label];
+                        }
+                        else {
+                            updatedOpzioni.musica.push(selectedOptions[i].label);
+                        }
+
+                        break;
+                }
+            }
+            setSelectedOpzioni(updatedOpzioni);
+
+        }
+
+    };
+
     const handleInfo = (selectedOption) => {
 
         switch (selectedOption.id) {
@@ -580,43 +959,58 @@ function Questionario() {
             case "lgbt":
                 setInfo({ ...info, ["lgbt"]: selectedOption.value });
                 break;
+
         }
     }
+    
 
 
-    function salva() {
-        uploadFile();
-        uploadCI();
+    async function salva() {
+        try {
+            // Esegui l'upload del file CI
+            await uploadCI();
 
-        var data2 = selectedDate.getMonth() + 1;
-        var data1 = selectedDate.getDate() + "-" + data2 + "-" + selectedDate.getFullYear();
+            // Se l'upload ha successo, esegui l'upload del secondo file
+            await uploadFile();
+            if (ciUpload && imageUpload) {
 
-        const db = getDatabase(app);
-        update(ref(db, "Utenti/" + getUid + '/Informazioni'), {
-            Genere: info.genere,
-            Altezza: info.altezza,
-            Provincia: info.province,
-            DataDiNascita: data1,
-            Anni: info.anni,
-            Alcol: info.alcol,
-            Fumo: info.fumo,
-            Figli: info.oraFigli,
-            Politica: info.politica,
-            Istruzione: info.istruzione,
-            Lavoro: info.lavoro,
-            Fede: info.fede,
-            Messa: info.messa,
-            Contraccezione: info.contraccezione,
-            Sesso: info.sesso,
-            ValoreVita: info.valorevita,
-            Aborto: info.aborto,
-            Eutanasia: info.eutanasia,
-            LGBT: info.lgbt
-        });
+                var data2 = selectedDate.getMonth() + 1;
+                var data1 = selectedDate.getDate() + "-" + data2 + "-" + selectedDate.getFullYear();
+                const db = getDatabase(app);
+                await update(ref(db, "Utenti/" + getUid + '/Informazioni'), {
+                    Genere: info.genere,
+                    Altezza: info.altezza,
+                    Provincia: info.province,
+                    DataDiNascita: data1,
+                    Anni: info.anni,
+                    Alcol: info.alcol,
+                    Fumo: info.fumo,
+                    Figli: info.oraFigli,
+                    Politica: info.politica,
+                    Istruzione: info.istruzione,
+                    Lavoro: info.lavoro,
+                    Fede: info.fede,
+                    Messa: info.messa,
+                    Contraccezione: info.contraccezione,
+                    Sesso: info.sesso,
+                    ValoreVita: info.valorevita,
+                    Aborto: info.aborto,
+                    Eutanasia: info.eutanasia,
+                    LGBT: info.lgbt,
+                    Passioni: selectedOpzioni.attivita,
+                    Sport: selectedOpzioni.sport,
+                    Musica: selectedOpzioni.musica,
+                });
 
-        alert("Profilo salvato con successo!");
-        navigate("/Profilo");
-        setInfo(null);
+                alert("Profilo salvato con successo!");
+                navigate("/Profilo");
+                setInfo(null);
+            }
+        } catch (error) {
+            // Gestisci l'errore qui, ad esempio mostra un messaggio all'utente o fai altro
+            console.error("Errore durante il salvataggio del profilo:", error.message);
+            alert("Non hai caricato correttamente le immagini richieste. Riprova.");
+        }
     }
 
 
@@ -790,6 +1184,29 @@ function Questionario() {
                                 </div>
                                 <div className='p-4 w-[100%]'>
                                     <Select id="lgbt" options={lgbt} onChange={handleInfo} />
+                                </div>
+
+
+                            </div>
+                            <h2 className="my-10 text-white text-4xl font-bold">Ultima richiesta: le tue passioni!</h2>
+                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700 mt-5'>
+                                <div className='p-4'>
+                                    <label>Seleziona le tue passioni:</label>
+                                </div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select id="listaAttivita" isMulti options={listaAttivita} className="basic-multi-select" onChange={handleInfoMulti} />
+                                </div>
+                                <div className='p-4'>
+                                    <label>Seleziona i tuoi sport:</label>
+                                </div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select id="listaSport" isMulti options={listaSport} className="basic-multi-select" onChange={handleInfoMulti} />
+                                </div>
+                                <div className='p-4'>
+                                    <label>Seleziona i tuoi gusti musicali:</label>
+                                </div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select id="listaGeneri" isMulti options={listaGeneri} className="basic-multi-select" onChange={handleInfoMulti} />
                                 </div>
                             </div>
                             <button className='m-5' onClick={salva}>Salva</button>

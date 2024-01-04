@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import WindowsTop from '../hooks/WindowsTop.jsx';
 import Space from "../components/Space.jsx";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,6 +10,7 @@ import { selectUtenti } from '../redux/utentiSlice.js';
 
 
 function Card() {
+    WindowsTop();
     const { cardID } = useParams();
     const selectUtentiState = (state) => state.utenti.value;
     const selectUtenti = createSelector([selectUtentiState], (utenti) => utenti);
@@ -21,6 +23,7 @@ function Card() {
         return utenti.filter((utente) => utente.id === cardID);
     }, [utenti, cardID]);
 
+  
 
     useEffect(() => {
         if (memoizedUtenti.length > 0) {
@@ -38,7 +41,7 @@ function Card() {
             document.getElementById("politica").innerHTML = "🏛️ " + utente.politica;
             document.getElementById("fede").innerHTML = "🙏 " + utente.fede;
             document.getElementById("messa").innerHTML = "⛪ " + utente.messa;
-
+               
 
             { utente.sesso == "Si" ? document.getElementById("sesso").innerHTML = "✔️ Sesso dopo il matrimonio" : document.getElementById("sesso").innerHTML = "❌ Sesso dopo il matrimonio" }
             { utente.contraccezione == "Si" ? document.getElementById("contraccezione").innerHTML = "✔️ No contraccezione" : document.getElementById("contraccezione").innerHTML = "❌ No contraccezione" }
@@ -50,7 +53,14 @@ function Card() {
     }, [memoizedUtenti]);
 
     const utente = memoizedUtenti[0];
+     
+    function cuore(){
+        alert("Hai lasciato un cuore!");
+    }
 
+    function chat() {
+        alert("Funzione al momento non disponibile!");
+    }
 
     return (
         <>
@@ -59,12 +69,12 @@ function Card() {
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-700">
                 <h2 className="mb-10 text-white text-4xl font-bold">Profilo</h2>
 
-                <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700'>
+                <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700'>
                     <div className='text-center grid place-items-center p-6'>
                         <label className='text-3xl font-bold' id='nomecognome'>{utente.nome + " " + utente.cognome}</label>
                         <img className='mt-5 w-[300px] h-[300px]' id='profilo' src={utente.immagineProfilo} />
                         <div className='my-5 grid grid-cols-2 gap-1'>
-                            <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'>{ }</label>
+                            <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
                             <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='aborto'></label>
                             <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='contraccezione'></label>
                             <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='lgbt'></label>
@@ -89,6 +99,35 @@ function Card() {
                             <label id='fede'></label>
                             <label id='messa'></label>
                         </div>
+                        
+                    </div>
+                    
+                </div>
+                <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 bg-white  shadow dark:border dark:bg-gray-800 dark:border-gray-700'>
+                    <div className='text-left m-4'>
+                        <h2>Passioni:</h2>
+                        {utente.passioni.map((attivita, index) => (
+                            <li key={index}>{attivita}</li>
+                        ))}
+                    </div>
+                    <div className='text-left m-4'>
+                        <h2>Sport:</h2>
+                        {utente.sport.map((attivita, index) => (
+                            <li key={index}>{attivita}</li>
+                        ))}
+                    </div>
+                    <div className='text-left m-4'>
+                        <h2>Generi musicali:</h2>
+                        {utente.musica.map((attivita, index) => (
+                            <li key={index}>{attivita}</li>
+                        ))}
+                    </div>
+                </div>
+
+                <div className='w-full grid grid-cols-1 gap-5 bg-white '>
+                    <div className="m-20 flex  gap-10">
+                        <label className='bg-red-300 rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
+                        <label className='bg-blue-300 rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
                     </div>
                 </div>
             </div>

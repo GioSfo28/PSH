@@ -55,15 +55,14 @@ function LoginForm() {
                         if (childData === userCredentials.email) {
                             localStorage.setItem("uidData", childKey);
                             localStorage.setItem("statusData", childSnapshot.val().Status);
+                            a = childSnapshot.val().Informazioni != undefined;
+                            if (a) {
+                                navigate("/Profilo");
+                            } else {
+                                navigate("/Questionario");
+                            }
                         }
-                        a = childSnapshot.val().Informazioni == undefined;
-                       
                     });
-                    if (!a) {
-                        navigate("/Profilo");
-                    } else {
-                        navigate("/Questionario");
-                    }
                 }, {
                     onlyOnce: true
                 });

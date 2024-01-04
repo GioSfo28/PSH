@@ -17,15 +17,12 @@ import { useDispatch } from "react-redux";
 import { add, reset } from "../redux/utentiSlice.js";
 
 function Match() {
+    WindowsTop();
+
     const utenti = useSelector((state) => state.utenti.value);
     const dispatch = useDispatch();
 
     const getUid = localStorage.getItem("uidData");
-
-    
-    
-
-
 
     useEffect(() => {
 
@@ -50,8 +47,15 @@ function Match() {
     // Set per tracciare gli ID degli utenti già aggiunti
     const utentiAggiunti = new Set();
 
+    useEffect(() => {
+        async function fetchData() {
+            await Filtratore();
+        }
+        fetchData();
+    }, []);
 
-    function Filtratore() {
+
+    async function Filtratore() {
         const db = getDatabase();
         const dbRef = ref(db, '/Utenti');
 
@@ -122,12 +126,12 @@ function Match() {
                                 };
 
                                 dispatch(add(utenti1));
-    
+                                
                                 utentiAggiunti.add(childKey);
                             } 
                             
                         }
-
+                        
                     }, {
                         onlyOnce: true
                     });
@@ -145,12 +149,10 @@ function Match() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-700">
+            <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-red-700">
                 <h1 className="text-white text-center text-4xl font-bold mb-10">
                     Match profili 100% compatibili
                 </h1>
-
-
                 <div className="w-full grid py-10 px-4 rounded-lg mx-auto bg-white">
                     {utenti.length == 0 ?
                         <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
@@ -163,7 +165,6 @@ function Match() {
                                     key={utente.id}
                                     utenteID={utente.id}
                                     imgURL={utente.immagineProfilo}
-                                    sesso={utente.sesso}
                                     title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
                                     {utente.provincia}
                                 </CardItem>

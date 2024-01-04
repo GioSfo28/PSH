@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import WindowsTop from '../hooks/WindowsTop.jsx';
-import Memoria from '../hooks/Memoria.jsx'
+
 import Navbar from '../components/Navbar.jsx';
 import Space from '../components/Space.jsx';
 
@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { add, reset } from "../redux/utentiSlice";
 
 function Ricerca() {
+    WindowsTop();
     const utenti = useSelector((state) => state.utenti.value);
     const dispatch = useDispatch();
 
@@ -327,7 +328,39 @@ function Ricerca() {
             snapshot.forEach((childSnapshot) => {
                 const childKey = childSnapshot.key;
                 if (childKey != getUid) {
+                    let passioni = [];
+                    let sport = [];
+                    let musica = [];
                     const dbRef1 = ref(db, '/Utenti/' + childKey + '/Informazioni');
+                    const dbRef2 = ref(db, '/Utenti/' + childKey + '/Informazioni/Passioni');
+                    const dbRef3 = ref(db, '/Utenti/' + childKey + '/Informazioni/Sport');
+                    const dbRef4 = ref(db, '/Utenti/' + childKey + '/Informazioni/Musica');
+                    onValue(dbRef2, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            passioni.push(childSnapshot.val())
+                        
+                        }, {
+                            onlyOnce: true
+                        });
+                        
+                    })
+                    onValue(dbRef3, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            sport.push(childSnapshot.val())
+
+                        }, {
+                            onlyOnce: true
+                        });
+                        
+                    })
+                    onValue(dbRef4, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            musica.push(childSnapshot.val())
+
+                        }, {
+                            onlyOnce: true
+                        });
+                    })
                     const b = childSnapshot.val();
                     onValue(dbRef1, (snapshot1) => {
                         const a = snapshot1.val();
@@ -341,7 +374,6 @@ function Ricerca() {
                                     anni: a.Anni,
                                     contraccezione: a.Contraccezione,
                                     dataNascita: a.DataDiNascita,
-                                    eucarestia: a.Eucarestia,
                                     eutanasia: a.Eutanasia,
                                     fede: a.Fede,
                                     figli: a.Figli,
@@ -358,10 +390,14 @@ function Ricerca() {
                                     nome: b.Nome,
                                     cognome: b.Cognome,
                                     immagineProfilo: b.ImmagineProfilo,
+                                    verificato: b.Verificato,
+                                    passioni: passioni,
+                                    sport: sport,
+                                    musica: musica,
                                 };
-
+                                
                                 dispatch(add(utenti1));
-
+                                
                                 utentiAggiunti.add(childKey);
                             } else {
                                 if (isChecked) {
@@ -373,7 +409,6 @@ function Ricerca() {
                                         anni: a.Anni,
                                         contraccezione: a.Contraccezione,
                                         dataNascita: a.DataDiNascita,
-                                        eucarestia: a.Eucarestia,
                                         eutanasia: a.Eutanasia,
                                         fede: a.Fede,
                                         figli: a.Figli,
@@ -390,6 +425,10 @@ function Ricerca() {
                                         nome: b.Nome,
                                         cognome: b.Cognome,
                                         immagineProfilo: b.ImmagineProfilo,
+                                        verificato: b.Verificato,
+                                        passioni: passioni,
+                                        sport: sport,
+                                        musica: musica,
                                     };
 
                                     dispatch(add(utenti1));
@@ -411,15 +450,17 @@ function Ricerca() {
     }
 
 
+
+
     return (
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-700">
+            <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-600">
                 <h1 className="text-white text-center text-4xl font-bold mb-10">
                     Ricerca profili
                 </h1>
-                <div className="w-full grid pb-20 px-4 mx-auto bg-orange-700">
+                <div className="w-full grid pb-20 px-4 mx-auto bg-orange-600">
                     <div className='text-left'>
                         <label className='text-white text-lg p-4'>Filtri:</label>
                         <div className='flex p-4 w-[100%]'>
@@ -475,8 +516,8 @@ function Ricerca() {
                                 <CardItem
                                     key={utente.id}
                                     utenteID={utente.id}
+                                    isVerificated={utente.verificato}
                                     imgURL={utente.immagineProfilo}
-                                    sesso={utente.sesso}
                                     title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
                                     {utente.provincia}
                                 </CardItem>
