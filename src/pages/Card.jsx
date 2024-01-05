@@ -3,7 +3,7 @@ import WindowsTop from '../hooks/WindowsTop.jsx';
 import Space from "../components/Space.jsx";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { createSelector } from 'reselect';
 import { selectUtenti } from '../redux/utentiSlice.js';
 
@@ -20,7 +20,7 @@ function Card() {
     // Utilizza il selettore memorizzato
     const utenti = useSelector(selectUtenti);
     const getUid = localStorage.getItem("uidData");
-
+    
 
     const memoizedUtenti = useMemo(() => {
         return utenti.filter((utente) => utente.id === cardID);
@@ -78,7 +78,25 @@ function Card() {
     function chat() {
         alert("Funzione al momento non disponibile!");
     }
+    const db = getDatabase();
+    const [verificatoValue, setVerificatoValue] = useState(null);
 
+    useEffect(() => {
+        async function fetchVerificato() {
+            try {
+                const verificatoSnapshot = await get(ref(db, "Utenti/" + cardID + "/Verificato"));
+                const value = verificatoSnapshot.val();
+                setVerificatoValue(value);
+            } catch (error) {
+                console.error("Errore durante la lettura di Verificato:", error);
+            }
+        }
+
+        fetchVerificato();
+    }, []); // L'array vuoto [] assicura che useEffect venga eseguito solo al montaggio del componente
+
+    
+        
     return (
         <>
             <Navbar />
@@ -116,7 +134,7 @@ function Card() {
                             <label id='politica'></label>
                             <label id='fede'></label>
                             <label id='messa'></label>
-                        </div> 
+                        </div>
                         <div>
                             <h2 className='mt-10'>In cerca di:</h2>
                             <div className='my-10 md:mt-5 grid grid-cols-2'>
@@ -129,13 +147,22 @@ function Card() {
                     </div>
 
                 </div>
-                <div className='w-full grid grid-cols-1 gap-5 bg-white '>
-                    <div className="mb-10 flex  gap-10">
-                        <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
-                        <label className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
-                        <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
+                {verificatoValue == true ?
+                    <div className='w-full grid grid-cols-1 gap-5 bg-white '>
+                        <div className="mb-10 flex  gap-10">
+                            <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
+                            <label className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
+                            <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
+                        </div>
                     </div>
-                </div>
+                    :
+                    <div className='w-full grid grid-cols-1 gap-5 bg-white '>
+                        <div className="p-4 bg-blue-500 text-white text-4xl text-bold">
+                            <h2>Una volta che il tuo profilo sarà verificato potrai interagire con gli altri!</h2>
+                        </div>
+                    </div>
+                }
+
                 <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 bg-white'>
                     <div className='text-left m-4'>
                         <h2>Passioni:</h2>

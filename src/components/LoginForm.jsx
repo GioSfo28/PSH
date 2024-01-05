@@ -55,6 +55,7 @@ function LoginForm() {
                         if (childData === userCredentials.email) {
                             localStorage.setItem("uidData", childKey);
                             localStorage.setItem("statusData", childSnapshot.val().Status);
+                            localStorage.setItem("verificatoData", childSnapshot.val().Verificato);
                             a = childSnapshot.val().Informazioni != undefined;
                             if (a) {
                                 navigate("/Profilo");
