@@ -7,7 +7,7 @@ import React, { useMemo, useEffect } from "react";
 import { createSelector } from 'reselect';
 import { selectUtenti } from '../redux/utentiSlice.js';
 
-import { getDatabase, ref, set, child, get, update, remove,  onValue } from "firebase/database";
+import { getDatabase, ref, set, child, get, update, remove, onValue } from "firebase/database";
 
 
 
@@ -39,6 +39,7 @@ function Card() {
             document.getElementById("istruzione").innerHTML = "👨‍🎓 " + utente.istruzione;
             document.getElementById("lavoro").innerHTML = "💼 " + utente.lavoro;
             document.getElementById("figli").innerHTML = "👶 " + utente.figli;
+            document.getElementById("poifigli").innerHTML = "🔜👶 " + utente.poiFigli;
             document.getElementById("fumo").innerHTML = "🚬 " + utente.fumo;
             document.getElementById("alcol").innerHTML = "🍷 " + utente.alcol;
             document.getElementById("politica").innerHTML = "🏛️ " + utente.politica;
@@ -62,7 +63,7 @@ function Card() {
         const db = getDatabase();
 
 
-        update(ref(db, "Utenti/" + cardID + '/Like/'+ getUid), {
+        update(ref(db, "Utenti/" + cardID + '/Like/' + getUid), {
             Like: 1,
         });
     }
@@ -109,11 +110,20 @@ function Card() {
                             <label id='istruzione'></label>
                             <label id='lavoro'></label>
                             <label id='figli'></label>
+                            <label id='poifigli'></label>
                             <label id='fumo'></label>
                             <label id='alcol'></label>
                             <label id='politica'></label>
                             <label id='fede'></label>
                             <label id='messa'></label>
+                        </div> 
+                        <div>
+                            <h2 className='mt-10'>In cerca di:</h2>
+                            <div className='my-10 md:mt-5 grid grid-cols-2'>
+                                {utente.cerca.map((attivita, index) => (
+                                    <label className={attivita == "Amicizia" ? 'p-2 mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-2 mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
+                                ))}
+                            </div>
                         </div>
 
                     </div>
@@ -147,7 +157,7 @@ function Card() {
                     </div>
                 </div>
 
-                
+
             </div>
             <Space></Space>
         </>

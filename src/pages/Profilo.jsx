@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import WindowsTop from '../hooks/WindowsTop.jsx';
 import Navbar from '../components/Navbar.jsx';
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { reset, add } from '../redux/utentiSlice';
 
 function Profilo() {
-    
+
     WindowsTop();
     const user = useSelector(selectUsers);
     const navigate = useNavigate();
@@ -21,12 +21,13 @@ function Profilo() {
     const [passioni, setPassioni] = useState([]);
     const [sport, setSport] = useState([]);
     const [musica, setMusica] = useState([]);
+    const [cerca, setCerca] = useState([]);
     const [utentiAggiunti, setUtentiAggiunti] = useState(new Set());
-    
+
     useEffect(() => {
-        
+
         const fetchData = async (field, setState) => {
-            
+
             try {
                 const db = getDatabase();
                 const dbRef = ref(db, `/Utenti/${getUid}/Informazioni/${field}`);
@@ -37,18 +38,18 @@ function Profilo() {
                     });
                     setState(dataArray);
                 });
-                
+
             } catch (error) {
                 console.error(`Errore durante il recupero di ${field}:`, error.message);
             }
         };
-        
+
         const fetchUserData = async (a) => {
             try {
                 const db = getDatabase();
                 const dbRef = ref(db, `/Utenti/${getUid}/Informazioni`);
                 const dbRef1 = ref(db, `/Utenti/${getUid}`);
-                
+
                 onValue(dbRef, (snapshot) => {
                     const a = snapshot.val();
                     document.getElementById("genere").innerHTML = "♀️♂️ " + a.Genere;
@@ -59,6 +60,7 @@ function Profilo() {
                     document.getElementById("istruzione").innerHTML = "👨‍🎓 " + a.Istruzione;
                     document.getElementById("lavoro").innerHTML = "💼 " + a.Lavoro;
                     document.getElementById("figli").innerHTML = "👶 " + a.Figli;
+                    document.getElementById("poifigli").innerHTML = "🔜👶 " + a.PoiFigli;
                     document.getElementById("fumo").innerHTML = "🚬 " + a.Fumo;
                     document.getElementById("alcol").innerHTML = "🍷 " + a.Alcol;
                     document.getElementById("politica").innerHTML = "🏛️ " + a.Politica;
@@ -71,7 +73,7 @@ function Profilo() {
                     document.getElementById("eutanasia").innerHTML = a.Eutanasia === "Si" ? "✔️ Contro eutanasia" : "❌ Contro eutanasia";
                     document.getElementById("valoreVita").innerHTML = a.ValoreVita === "Si" ? "✔️ Sacralità della vita" : "❌ Sacralità della vita";
                 }, { onlyOnce: true });
-                
+
                 onValue(dbRef1, (snapshot) => {
                     const a = snapshot.val();
                     document.getElementById("profilo").src = a.ImmagineProfilo;
@@ -85,6 +87,7 @@ function Profilo() {
                     await fetchData("Passioni", setPassioni);
                     await fetchData("Sport", setSport);
                     await fetchData("Musica", setMusica);
+                    await fetchData("Cerca", setCerca);
 
                     const utenti1 = {
                         id: getUid,
@@ -94,10 +97,10 @@ function Profilo() {
                         anni: a.Anni,
                         contraccezione: a.Contraccezione,
                         dataNascita: a.DataDiNascita,
-                        eucarestia: a.Eucarestia,
                         eutanasia: a.Eutanasia,
                         fede: a.Fede,
                         figli: a.Figli,
+                        poiFigli: a.PoiFigli,
                         fumo: a.Fumo,
                         genere: a.Genere,
                         istruzione: a.Istruzione,
@@ -121,21 +124,21 @@ function Profilo() {
                 console.error("Errore durante il recupero dei dati utente:", error.message);
             }
         };
-        
+
         const db = getDatabase();
         const dbRef = ref(db, "/Utenti");
 
         dispatch(reset());
 
         onValue(dbRef, (snapshot) => {
-            
+
             snapshot.forEach((childSnapshot) => {
-                
+
                 const childKey = childSnapshot.key;
                 if (childKey == getUid) {
                     const dbRef1 = ref(db, `/Utenti/${childKey}/Informazioni`);
                     const b = childSnapshot.val();
-                    
+
                     onValue(dbRef1, (snapshot1) => {
                         const a = snapshot1.val();
 
@@ -186,11 +189,20 @@ function Profilo() {
                                     <label id='istruzione'></label>
                                     <label id='lavoro'></label>
                                     <label id='figli'></label>
+                                    <label id='poifigli'></label>
                                     <label id='fumo'></label>
                                     <label id='alcol'></label>
                                     <label id='politica'></label>
                                     <label id='fede'></label>
                                     <label id='messa'></label>
+                                </div>
+                                <div>
+                                    <h2 className='mt-10'>In cerca di:</h2>
+                                    <div className='mt-5 grid grid-cols-2'>
+                                        {cerca.map((attivita, index) => (
+                                            <label className={attivita == "Amicizia" ? 'p-2 mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-2 mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -214,6 +226,7 @@ function Profilo() {
                                 ))}
                             </div>
                         </div>
+                            <Link to={"/Modifica"}><button className='m-5'>Modifica</button></Link>
                     </div>
                 )}
             </div>

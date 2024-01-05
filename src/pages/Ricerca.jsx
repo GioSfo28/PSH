@@ -335,6 +335,7 @@ function Ricerca() {
         let eutanasia = "";
         let fede = "";
         let figli = "";
+        let poiFigli= "";
         let fumo = "";
         let lgbt = "";
         let messa = "";
@@ -358,6 +359,7 @@ function Ricerca() {
             eutanasia = a.Eutanasia;
             fede = a.Fede;
             figli = a.Figli;
+            poiFigli = a.PoiFigli;
             fumo = a.Fumo;
             lgbt = a.LGBT;
             messa = a.Messa;
@@ -376,10 +378,11 @@ function Ricerca() {
                     let passioni = [];
                     let sport = [];
                     let musica = [];
-                    const dbRef1 = ref(db, '/Utenti/' + childKey + '/Informazioni');
+                    let cerca = [];
                     const dbRef2 = ref(db, '/Utenti/' + childKey + '/Informazioni/Passioni');
                     const dbRef3 = ref(db, '/Utenti/' + childKey + '/Informazioni/Sport');
                     const dbRef4 = ref(db, '/Utenti/' + childKey + '/Informazioni/Musica');
+                    const dbRef5 = ref(db, '/Utenti/' + childKey + '/Informazioni/Cerca');
                     onValue(dbRef2, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             passioni.push(childSnapshot.val())
@@ -406,7 +409,14 @@ function Ricerca() {
                             onlyOnce: true
                         });
                     })
+                    onValue(dbRef5, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            cerca.push(childSnapshot.val())
 
+                        }, {
+                            onlyOnce: true
+                        });
+                    })
                     function confrontaEAssegnaPunteggio(valoreSinistra, valoreDestra) {
                         if (valoreSinistra === valoreDestra) {
                             return 1;
@@ -418,7 +428,7 @@ function Ricerca() {
                     // ...
 
                     let punteggio = 0;
-
+                    const dbRef1 = ref(db, '/Utenti/' + childKey + '/Informazioni');
                     const b = childSnapshot.val();
                     onValue(dbRef1, (snapshot1) => {
                         const a = snapshot1.val();
@@ -430,6 +440,7 @@ function Ricerca() {
                                 punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
                                 punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
                                 punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                                punteggio += confrontaEAssegnaPunteggio(poiFigli, a.PoiFigli);
                                 punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
                                 punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
                                 punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
@@ -437,7 +448,7 @@ function Ricerca() {
                                 punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
                                 punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
                                
-                                punteggio = ((100 * punteggio) / 12).toFixed();
+                                punteggio = ((100 * punteggio) / 13).toFixed();
                                 punteggio = "La tua affinità è: " + punteggio + "%";
                                 const utenti1 = {
                                     id: childKey,
@@ -450,6 +461,7 @@ function Ricerca() {
                                     eutanasia: a.Eutanasia,
                                     fede: a.Fede,
                                     figli: a.Figli,
+                                    poiFigli: a.PoiFigli,
                                     fumo: a.Fumo,
                                     genere: a.Genere,
                                     istruzione: a.Istruzione,
@@ -468,10 +480,11 @@ function Ricerca() {
                                     sport: sport,
                                     musica: musica,
                                     punteggio: punteggio,
+                                    cerca: cerca,
                                 };
 
                                 dispatch(add(utenti1));
-
+                                
                                 utentiAggiunti.add(childKey);
                             } else {
                                 if (isChecked) {
@@ -481,6 +494,7 @@ function Ricerca() {
                                     punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
                                     punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
                                     punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                                    punteggio += confrontaEAssegnaPunteggio(poiFigli, a.PoiFigli);
                                     punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
                                     punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
                                     punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
@@ -488,7 +502,7 @@ function Ricerca() {
                                     punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
                                     punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
 
-                                    punteggio = ((100 * punteggio) / 12).toFixed();
+                                    punteggio = ((100 * punteggio) / 13).toFixed();
                                     punteggio = "La tua affinità è: " + punteggio + "%";
                                     const utenti1 = {
                                         id: childKey,
@@ -501,6 +515,7 @@ function Ricerca() {
                                         eutanasia: a.Eutanasia,
                                         fede: a.Fede,
                                         figli: a.Figli,
+                                        poiFigli: a.PoiFigli,
                                         fumo: a.Fumo,
                                         genere: a.Genere,
                                         istruzione: a.Istruzione,
@@ -519,6 +534,7 @@ function Ricerca() {
                                         sport: sport,
                                         musica: musica,
                                         punteggio: punteggio,
+                                        cerca: cerca,
                                     };
 
                                     dispatch(add(utenti1));
@@ -547,6 +563,7 @@ function Ricerca() {
         let eutanasia = "";
         let fede = "";
         let figli = "";
+        let poiFigli = "";
         let fumo = "";
         let lgbt = "";
         let messa = "";
@@ -570,6 +587,7 @@ function Ricerca() {
             eutanasia = a.Eutanasia;
             fede = a.Fede;
             figli = a.Figli;
+            poiFigli = a.PoiFigli;
             fumo = a.Fumo;
             lgbt = a.LGBT;
             messa = a.Messa;
@@ -589,9 +607,11 @@ function Ricerca() {
                     let passioni = [];
                     let sport = [];
                     let musica = [];
+                    let cerca = [];
                     const dbRef2 = ref(db, '/Utenti/' + childKey + '/Informazioni/Passioni');
                     const dbRef3 = ref(db, '/Utenti/' + childKey + '/Informazioni/Sport');
                     const dbRef4 = ref(db, '/Utenti/' + childKey + '/Informazioni/Musica');
+                    const dbRef5 = ref(db, '/Utenti/' + childKey + '/Informazioni/Cerca');
                     onValue(dbRef2, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             passioni.push(childSnapshot.val())
@@ -613,6 +633,14 @@ function Ricerca() {
                     onValue(dbRef4, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             musica.push(childSnapshot.val())
+
+                        }, {
+                            onlyOnce: true
+                        });
+                    })
+                    onValue(dbRef5, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            cerca.push(childSnapshot.val())
 
                         }, {
                             onlyOnce: true
@@ -642,14 +670,15 @@ function Ricerca() {
                             punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
                             punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
                             punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                            punteggio += confrontaEAssegnaPunteggio(poiFigli, a.PoiFigli);
                             punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
                             punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
                             punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
                             punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
                             punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
                             punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
-                            if (punteggio > 9) {
-                                punteggio = ((100 * punteggio) / 12).toFixed();
+                            if (punteggio > 8) {
+                                punteggio = ((100 * punteggio) / 13).toFixed();
                                 punteggio = "La tua affinità è: " + punteggio + "%";
                                 const utenti1 = {
                                     id: childKey,
@@ -662,6 +691,7 @@ function Ricerca() {
                                     eutanasia: a.Eutanasia,
                                     fede: a.Fede,
                                     figli: a.Figli,
+                                    poiFigli: a.PoiFigli,
                                     fumo: a.Fumo,
                                     genere: a.Genere,
                                     istruzione: a.Istruzione,
@@ -679,6 +709,7 @@ function Ricerca() {
                                     passioni: passioni,
                                     sport: sport,
                                     musica: musica,
+                                    cerca: cerca,
                                     punteggio: punteggio,
                                 };
 
@@ -734,7 +765,7 @@ function Ricerca() {
                                 onChange={handleCheckboxChange2}
                             />
                             {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
-                            <p className='mx-2 text-white'>{isMatch ? '✔️ Ricerca avviata' : "⬅️ Trova un match superiore all'80%"}</p>
+                            <p className='mx-2 text-white'>{isMatch ? '✔️ Ricerca avviata' : "⬅️ Trova un match superiore all'68%"}</p>
 
                         </div>
                         {!isChecked && !isMatch ?
@@ -783,6 +814,7 @@ function Ricerca() {
                                     isVerificated={utente.verificato}
                                     imgURL={utente.immagineProfilo}
                                     punteggio={utente.punteggio}
+                                    cerca = {utente.cerca}
                                     title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
                                     {utente.provincia}
                                 </CardItem>

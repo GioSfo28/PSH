@@ -62,9 +62,11 @@ function Like() {
                                 let passioni = [];
                                 let sport = [];
                                 let musica = [];
+                                let cerca = [];
                                 const dbRef2 = ref(db, '/Utenti/' + childKey + '/Informazioni/Passioni');
                                 const dbRef3 = ref(db, '/Utenti/' + childKey + '/Informazioni/Sport');
                                 const dbRef4 = ref(db, '/Utenti/' + childKey + '/Informazioni/Musica');
+                                const dbRef5 = ref(db, '/Utenti/' + childKey + '/Informazioni/Cerca');
                                 onValue(dbRef2, (snapshot) => {
                                     snapshot.forEach((childSnapshot) => {
                                         passioni.push(childSnapshot.val())
@@ -86,6 +88,14 @@ function Like() {
                                 onValue(dbRef4, (snapshot) => {
                                     snapshot.forEach((childSnapshot) => {
                                         musica.push(childSnapshot.val())
+
+                                    }, {
+                                        onlyOnce: true
+                                    });
+                                })
+                                onValue(dbRef5, (snapshot) => {
+                                    snapshot.forEach((childSnapshot) => {
+                                        cerca.push(childSnapshot.val())
 
                                     }, {
                                         onlyOnce: true
@@ -122,6 +132,7 @@ function Like() {
                                             passioni: passioni,
                                             sport: sport,
                                             musica: musica,
+                                            cerca: cerca,
                                         };
 
                                         dispatch(add(utenti1));
@@ -167,7 +178,10 @@ function Like() {
                                 <CardItem
                                     key={utente.id}
                                     utenteID={utente.id}
+                                    isVerificated={utente.verificato}
                                     imgURL={utente.immagineProfilo}
+                                    punteggio={utente.punteggio}
+                                    cerca={utente.cerca}
                                     title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
                                     {utente.provincia}
                                 </CardItem>

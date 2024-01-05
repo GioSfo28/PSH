@@ -27,7 +27,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 
-function Questionario() {
+function Modifica() {
     WindowsTop();
     const [selectedDate, setSelectedDate] = useState(null);
     const user = useSelector(selectUsers);
@@ -1258,4 +1258,4 @@ function Questionario() {
     );
 }
 
-export default Questionario;
+export default Modifica;
