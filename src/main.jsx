@@ -25,6 +25,7 @@ import Ricerca from './pages/Ricerca.jsx'
 import Like from './pages/Like.jsx'
 import Match from './pages/Match.jsx'
 import Modifica from './pages/Modifica.jsx'
+import Admin from './pages/Admin.jsx'
 
 import SimulatoreTest from './pages/SimulatoreTest.jsx'
 import DomandeEsami from './pages/DomandeEsami.jsx'
@@ -38,6 +39,7 @@ import CardsChildren from './pages/CardsChildren.jsx'
 
 import store from "./redux/store";
 import { Provider } from 'react-redux'
+
 
 
 
@@ -130,6 +132,10 @@ const router = createBrowserRouter([
   {
     path: "/Modifica",
     element: <Modifica></Modifica>
+  },
+  {
+    path: "/Admin",
+    element: <Admin></Admin>
   },
   {
     path: "/Simulatore-Test",

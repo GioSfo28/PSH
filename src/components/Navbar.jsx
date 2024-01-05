@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import Button from './Button';
 
@@ -17,9 +17,29 @@ const Nav = () => {
     const dispatch = useDispatch();
     const user = useSelector(selectUsers);
     const navigate = useNavigate();
+   
+
+    const [status, setStatus] = useState(null);
+
+    useEffect(() => {
+        async function fetchVerificato() {
+            try {
+                const getStatus = localStorage.getItem("statusData");
+                setStatus(getStatus);
+            } catch (error) {
+                console.error("Errore durante la lettura di Verificato:", error);
+            }
+        }
+
+        fetchVerificato();
+    }, []); // L'array vuoto [] assicura che useEffect venga eseguito solo al montaggio del componente
 
     function handleSignIn() {
         navigate("/Login");
+    };
+
+    function handleAdmin() {
+        navigate("/Admin");
     };
 
     function handleSignOut() {
@@ -55,11 +75,12 @@ const Nav = () => {
                     <ion-icon name={open ? 'close' : 'menu'}></ion-icon>
                 </div>
                 <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 opacity-100' : 'top-[-490px]'} md:opacity-100 opacity-0`}>
+                    {status == "Admin" ? <button onClick={handleAdmin} className='bg-red-700 text-white py-2 px-6 rounded md:ml-8 hover:bg-red-500 duration-500'> ⭐ ADMIN</button> : null}
                     {
                         user.currentUser != null ?
                             Links.map((Link) => (
                                 <li key={Link.name} className='md:ml-8 text-lg md:my-0 my-7'>
-                                    <NavLink to={Link.linkto} className='text-black hover:text-red-500 duration-500'>{Link.name}</NavLink>
+                                   <NavLink to={Link.linkto} className='text-black hover:text-red-500 duration-500'>{Link.name}</NavLink>
                                 </li>
                             ))
                             :

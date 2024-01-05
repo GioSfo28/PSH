@@ -1118,7 +1118,7 @@ function Questionario() {
                                     />
                                 </div>
                                 <div className='p-4'>
-                                    <label>Ora scatta un selfie tenendo in mano la tua carta d'identità con la foto visibile</label>
+                                    <label>Ora scatta un selfie tenendo in mano la tua carta d'identità leggibile e con la foto visibile</label>
                                 </div>
                                 <div className='p-4 w-[100%]'>
                                     <input
