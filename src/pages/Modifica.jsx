@@ -992,12 +992,10 @@ function Modifica() {
 
     async function salva() {
         try {
-            // Esegui l'upload del file CI
-            await uploadCI();
-
+            
             // Se l'upload ha successo, esegui l'upload del secondo file
             await uploadFile();
-            if (ciUpload && imageUpload) {
+            if (imageUpload) {
 
                 var data2 = selectedDate.getMonth() + 1;
                 var data1 = selectedDate.getDate() + "-" + data2 + "-" + selectedDate.getFullYear();
@@ -1047,7 +1045,7 @@ function Modifica() {
 
             <Space></Space>
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-blue-700">
-                <h2 className="mb-10 text-white text-4xl font-bold">Completa il tuo profilo!</h2>
+                <h2 className="mb-10 text-white text-4xl font-bold">Modifica il tuo profilo!</h2>
                 {
                     user.currentUser == null ?
                         <div className='grid place-items-center mx-auto'>
@@ -1114,20 +1112,6 @@ function Modifica() {
                                         type="file"
                                         onChange={(e) => {
                                             setImageUpload(e.target.files[0]);
-                                        }}
-                                    />
-                                </div>
-                                <div className='p-4'>
-                                    <label>Ora scatta un selfie tenendo in mano la tua carta d'identità con la foto visibile</label>
-                                </div>
-                                <div className='p-4 w-[100%]'>
-                                    <input
-                                        label="Image"
-                                        placeholder="Choose image"
-                                        accept="image/png,image/jpeg"
-                                        type="file"
-                                        onChange={(e) => {
-                                            setCiUpload(e.target.files[0]);
                                         }}
                                     />
                                 </div>
