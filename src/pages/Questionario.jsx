@@ -1100,7 +1100,7 @@ function Questionario() {
                                 </div>
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Alcune domande personali</h2>
-                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700 mt-5'>
+                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow'>
                                 <div className='p-4'>
                                     <label>Bevi alcolici?</label>
                                 </div>
@@ -1189,7 +1189,7 @@ function Questionario() {
 
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Ultima richiesta: le tue passioni!</h2>
-                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700 mt-5'>
+                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow'>
                                 <div className='p-4'>
                                     <label>Seleziona le tue passioni:</label>
                                 </div>

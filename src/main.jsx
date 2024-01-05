@@ -22,6 +22,7 @@ import Login from './pages/Login.jsx'
 import Questionario from './pages/Questionario.jsx'
 import Profilo from './pages/Profilo.jsx'
 import Ricerca from './pages/Ricerca.jsx'
+import Like from './pages/Like.jsx'
 import Match from './pages/Match.jsx'
 
 import SimulatoreTest from './pages/SimulatoreTest.jsx'
@@ -36,6 +37,7 @@ import CardsChildren from './pages/CardsChildren.jsx'
 
 import store from "./redux/store";
 import { Provider } from 'react-redux'
+
 
 
 
@@ -114,6 +116,10 @@ const router = createBrowserRouter([
   {
     path: "/Ricerca",
     element: <Ricerca></Ricerca>
+  },
+  {
+    path: "/Like",
+    element: <Like></Like>
   },
   {
     path: "/Match",

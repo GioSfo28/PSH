@@ -30,19 +30,7 @@ function Match() {
 
     }, []);
 
-    
-    let aborto = "";
-    let alcol = "";
-    let contraccezione = "";
-    let eutanasia = "";
-    let fede = "";
-    let figli = "";
-    let fumo = "";
-    let lgbt = "";
-    let messa = "";
-    let politica = "";
-    let sesso = "";
-    let valoreVita = "";
+
 
     // Set per tracciare gli ID degli utenti già aggiunti
     const utentiAggiunti = new Set();
@@ -59,33 +47,6 @@ function Match() {
         const db = getDatabase();
         const dbRef = ref(db, '/Utenti');
 
-
-        
-        const dbRef2 = ref(db, '/Utenti/' + getUid + '/Informazioni');
-
-
-        onValue(dbRef2, (snapshot) => {
-
-            const a = snapshot.val();
-            aborto = a.Aborto;
-            alcol = a.Alcol;
-            contraccezione = a.Contraccezione;
-            eutanasia = a.Eutanasia;
-            fede = a.Fede;
-            figli = a.Figli;
-            fumo = a.Fumo;
-            lgbt = a.LGBT;
-            messa = a.Messa;
-            politica = a.Politica;
-            sesso = a.Sesso;
-            valoreVita = a.ValoreVita;
-
-        }, {
-            onlyOnce: true
-        });
-
-
-
         dispatch(reset());
 
         onValue(dbRef, (snapshot) => {
@@ -93,48 +54,100 @@ function Match() {
                 const childKey = childSnapshot.key;
                 if (childKey != getUid) {
                     const dbRef1 = ref(db, '/Utenti/' + childKey + '/Informazioni');
+                    const dbRef2 = ref(db, '/Utenti/' + getUid + '/Like');
+                    const dbRef3 = ref(db, '/Utenti/' + childKey + '/Like');
                     const b = childSnapshot.val();
-                    onValue(dbRef1, (snapshot1) => {
-                        const a = snapshot1.val();
-                        if (!utentiAggiunti.has(childKey)) {
-                            if (aborto == a.Aborto && alcol == a.Alcol && contraccezione == a.Contraccezione && eutanasia == a.Eutanasia && fede == a.Fede && figli == a.Figli && fumo == a.Fumo && lgbt == a.LGBT && messa == a.Messa && politica == a.Politica && sesso == a.Sesso && valoreVita == a.ValoreVita ) {
-                                const utenti1 = {
-                                    id: childKey,
-                                    aborto: a.Aborto,
-                                    alcol: a.Alcol,
-                                    altezza: a.Altezza,
-                                    anni: a.Anni,
-                                    contraccezione: a.Contraccezione,
-                                    dataNascita: a.DataDiNascita,
-                                    eucarestia: a.Eucarestia,
-                                    eutanasia: a.Eutanasia,
-                                    fede: a.Fede,
-                                    figli: a.Figli,
-                                    fumo: a.Fumo,
-                                    genere: a.Genere,
-                                    istruzione: a.Istruzione,
-                                    lgbt: a.LGBT,
-                                    lavoro: a.Lavoro,
-                                    messa: a.Messa,
-                                    politica: a.Politica,
-                                    provincia: a.Provincia,
-                                    sesso: a.Sesso,
-                                    valoreVita: a.ValoreVita,
-                                    nome: b.Nome,
-                                    cognome: b.Cognome,
-                                    immagineProfilo: b.ImmagineProfilo,
-                                };
+                    onValue(dbRef2, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            if(childSnapshot.key == childKey){
+                                onValue(dbRef3, (snapshot) => {
+                                    snapshot.forEach((childSnapshot) => {
+                                            if(childSnapshot.key == getUid){
+                                                let passioni = [];
+                                                let sport = [];
+                                                let musica = [];
+                                                const dbRef2 = ref(db, '/Utenti/' + childKey + '/Informazioni/Passioni');
+                                                const dbRef3 = ref(db, '/Utenti/' + childKey + '/Informazioni/Sport');
+                                                const dbRef4 = ref(db, '/Utenti/' + childKey + '/Informazioni/Musica');
+                                                onValue(dbRef2, (snapshot) => {
+                                                    snapshot.forEach((childSnapshot) => {
+                                                        passioni.push(childSnapshot.val())
 
-                                dispatch(add(utenti1));
+                                                    }, {
+                                                        onlyOnce: true
+                                                    });
+
+                                                })
+                                                onValue(dbRef3, (snapshot) => {
+                                                    snapshot.forEach((childSnapshot) => {
+                                                        sport.push(childSnapshot.val())
+
+                                                    }, {
+                                                        onlyOnce: true
+                                                    });
+
+                                                })
+                                                onValue(dbRef4, (snapshot) => {
+                                                    snapshot.forEach((childSnapshot) => {
+                                                        musica.push(childSnapshot.val())
+
+                                                    }, {
+                                                        onlyOnce: true
+                                                    });
+                                                })
+                                                onValue(dbRef1, (snapshot1) => {
+                                                    const a = snapshot1.val();
+                                                    if (!utentiAggiunti.has(childKey)) {
+                                                        const utenti1 = {
+                                                            id: childKey,
+                                                            aborto: a.Aborto,
+                                                            alcol: a.Alcol,
+                                                            altezza: a.Altezza,
+                                                            anni: a.Anni,
+                                                            contraccezione: a.Contraccezione,
+                                                            dataNascita: a.DataDiNascita,
+                                                            eutanasia: a.Eutanasia,
+                                                            fede: a.Fede,
+                                                            figli: a.Figli,
+                                                            fumo: a.Fumo,
+                                                            genere: a.Genere,
+                                                            istruzione: a.Istruzione,
+                                                            lgbt: a.LGBT,
+                                                            lavoro: a.Lavoro,
+                                                            messa: a.Messa,
+                                                            politica: a.Politica,
+                                                            provincia: a.Provincia,
+                                                            sesso: a.Sesso,
+                                                            valoreVita: a.ValoreVita,
+                                                            nome: b.Nome,
+                                                            cognome: b.Cognome,
+                                                            immagineProfilo: b.ImmagineProfilo,
+                                                            verificato: b.Verificato,
+                                                            passioni: passioni,
+                                                            sport: sport,
+                                                            musica: musica,
+                                                        };
+
+                                                        dispatch(add(utenti1));
+
+                                                        utentiAggiunti.add(childKey);
+                                                    }
+
+                                                }, {
+                                                    onlyOnce: true
+                                                });
+                                            }
+                                    }, {
+                                        onlyOnce: true
+                                    });
+                                })
                                 
-                                utentiAggiunti.add(childKey);
-                            } 
-                            
-                        }
-                        
-                    }, {
-                        onlyOnce: true
-                    });
+                            }
+                        }, {
+                            onlyOnce: true
+                        });
+                    })
+                    
                 }
             });
         }, {
@@ -151,13 +164,13 @@ function Match() {
             <Space></Space>
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-red-700">
                 <h1 className="text-white text-center text-4xl font-bold mb-10">
-                    Match profili 100% compatibili
+                    Match! Qui i profili che hanno ricambiato il tuo like!
                 </h1>
                 <div className="w-full grid py-10 px-4 rounded-lg mx-auto bg-white">
                     {utenti.length == 0 ?
                         <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
-                            <h2 className='text-black'>Nessun utente compatibile al 100%</h2>
-                        </div> 
+                            <h2 className='text-black'>Nessun match disponibile</h2>
+                        </div>
                         :
                         <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
                             {utenti.map((utente) => (

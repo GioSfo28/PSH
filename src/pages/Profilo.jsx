@@ -162,10 +162,10 @@ function Profilo() {
                     </div>
                 ) : (
                     <div>
-                        <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700'>
+                        <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow'>
                             <div className='text-center grid place-items-center p-6'>
-                                <label className='text-3xl font-bold' id='nomecognome'></label>
-                                <img className='mt-5 w-[300px] h-[300px]' id='profilo' />
+                                <label className='text-3xl font-bold ' id='nomecognome'></label>
+                                <img className='mt-5 w-[300px] h-[300px] shadow-md shadow-black' id='profilo' />
                                 <div className='my-5 grid grid-cols-2 gap-1'>
                                     <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
                                     <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='aborto'></label>
@@ -175,7 +175,7 @@ function Profilo() {
                                     <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='eutanasia'></label>
                                 </div>
                             </div>
-                            <div className='text-left p-6'>
+                            <div className='text-left p-6 '>
                                 <label className='text-3xl font-bold'>Informazioni</label>
                                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 text-left gap-6 p-3'>
                                     <label id='genere'></label>
@@ -194,7 +194,7 @@ function Profilo() {
                                 </div>
                             </div>
                         </div>
-                        <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 bg-white rounded-b-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700'>
+                        <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 bg-white rounded-b-lg '>
                             <div className='text-left m-4'>
                                 <h2>Passioni:</h2>
                                 {passioni.map((attivita, index) => (

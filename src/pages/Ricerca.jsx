@@ -24,9 +24,19 @@ function Ricerca() {
     const getUid = localStorage.getItem("uidData");
 
     const [isChecked, setIsChecked] = useState(false);
+    const [isMatch, setIsMatch] = useState(false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
+        dispatch(reset());
     };
+    const handleCheckboxChange2 = () => {
+        setIsMatch(!isMatch);
+        dispatch(reset());
+        if (isMatch == false) {
+            Match();
+        }
+    };
+
 
     // Recupera info da localStorage o imposta un valore di default
     const [info, setInfo] = useState(
@@ -318,11 +328,46 @@ function Ricerca() {
 
 
     function Filtratore() {
+        dispatch(reset());
+        let aborto = "";
+        let alcol = "";
+        let contraccezione = "";
+        let eutanasia = "";
+        let fede = "";
+        let figli = "";
+        let fumo = "";
+        let lgbt = "";
+        let messa = "";
+        let politica = "";
+        let sesso = "";
+        let valoreVita = "";
+
         const db = getDatabase();
         const dbRef = ref(db, '/Utenti');
 
 
-        dispatch(reset());
+
+        const dbRef2 = ref(db, '/Utenti/' + getUid + '/Informazioni');
+
+        onValue(dbRef2, (snapshot) => {
+
+            const a = snapshot.val();
+            aborto = a.Aborto;
+            alcol = a.Alcol;
+            contraccezione = a.Contraccezione;
+            eutanasia = a.Eutanasia;
+            fede = a.Fede;
+            figli = a.Figli;
+            fumo = a.Fumo;
+            lgbt = a.LGBT;
+            messa = a.Messa;
+            politica = a.Politica;
+            sesso = a.Sesso;
+            valoreVita = a.ValoreVita;
+
+        }, {
+            onlyOnce: true
+        });
 
         onValue(dbRef, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
@@ -338,11 +383,11 @@ function Ricerca() {
                     onValue(dbRef2, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             passioni.push(childSnapshot.val())
-                        
+
                         }, {
                             onlyOnce: true
                         });
-                        
+
                     })
                     onValue(dbRef3, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
@@ -351,7 +396,7 @@ function Ricerca() {
                         }, {
                             onlyOnce: true
                         });
-                        
+
                     })
                     onValue(dbRef4, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
@@ -361,11 +406,39 @@ function Ricerca() {
                             onlyOnce: true
                         });
                     })
+
+                    function confrontaEAssegnaPunteggio(valoreSinistra, valoreDestra) {
+                        if (valoreSinistra === valoreDestra) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+
+                    // ...
+
+                    let punteggio = 0;
+
                     const b = childSnapshot.val();
                     onValue(dbRef1, (snapshot1) => {
                         const a = snapshot1.val();
                         if (!utentiAggiunti.has(childKey)) {
                             if (info.genere == a.Genere && info.province == a.Provincia && parseInt(a.Anni) <= parseInt(info.anni)) {
+                                punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
+                                punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
+                                punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
+                                punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
+                                punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
+                                punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                                punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
+                                punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
+                                punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
+                                punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
+                                punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
+                                punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
+                               
+                                punteggio = ((100 * punteggio) / 12).toFixed();
+                                punteggio = "La tua affinità è: " + punteggio + "%";
                                 const utenti1 = {
                                     id: childKey,
                                     aborto: a.Aborto,
@@ -394,13 +467,29 @@ function Ricerca() {
                                     passioni: passioni,
                                     sport: sport,
                                     musica: musica,
+                                    punteggio: punteggio,
                                 };
-                                
+
                                 dispatch(add(utenti1));
-                                
+
                                 utentiAggiunti.add(childKey);
                             } else {
                                 if (isChecked) {
+                                    punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
+                                    punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
+                                    punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
+                                    punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
+                                    punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
+                                    punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                                    punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
+                                    punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
+                                    punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
+                                    punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
+                                    punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
+                                    punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
+
+                                    punteggio = ((100 * punteggio) / 12).toFixed();
+                                    punteggio = "La tua affinità è: " + punteggio + "%";
                                     const utenti1 = {
                                         id: childKey,
                                         aborto: a.Aborto,
@@ -429,6 +518,7 @@ function Ricerca() {
                                         passioni: passioni,
                                         sport: sport,
                                         musica: musica,
+                                        punteggio: punteggio,
                                     };
 
                                     dispatch(add(utenti1));
@@ -445,6 +535,170 @@ function Ricerca() {
         }, {
             onlyOnce: true
         });
+
+
+    }
+
+    function Match() {
+        dispatch(reset());
+        let aborto = "";
+        let alcol = "";
+        let contraccezione = "";
+        let eutanasia = "";
+        let fede = "";
+        let figli = "";
+        let fumo = "";
+        let lgbt = "";
+        let messa = "";
+        let politica = "";
+        let sesso = "";
+        let valoreVita = "";
+
+        const db = getDatabase();
+        const dbRef = ref(db, '/Utenti');
+
+
+
+        const dbRef2 = ref(db, '/Utenti/' + getUid + '/Informazioni');
+
+        onValue(dbRef2, (snapshot) => {
+
+            const a = snapshot.val();
+            aborto = a.Aborto;
+            alcol = a.Alcol;
+            contraccezione = a.Contraccezione;
+            eutanasia = a.Eutanasia;
+            fede = a.Fede;
+            figli = a.Figli;
+            fumo = a.Fumo;
+            lgbt = a.LGBT;
+            messa = a.Messa;
+            politica = a.Politica;
+            sesso = a.Sesso;
+            valoreVita = a.ValoreVita;
+
+        }, {
+            onlyOnce: true
+        });
+
+
+        onValue(dbRef, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                const childKey = childSnapshot.key;
+                if (childKey != getUid) {
+                    let passioni = [];
+                    let sport = [];
+                    let musica = [];
+                    const dbRef2 = ref(db, '/Utenti/' + childKey + '/Informazioni/Passioni');
+                    const dbRef3 = ref(db, '/Utenti/' + childKey + '/Informazioni/Sport');
+                    const dbRef4 = ref(db, '/Utenti/' + childKey + '/Informazioni/Musica');
+                    onValue(dbRef2, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            passioni.push(childSnapshot.val())
+
+                        }, {
+                            onlyOnce: true
+                        });
+
+                    })
+                    onValue(dbRef3, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            sport.push(childSnapshot.val())
+
+                        }, {
+                            onlyOnce: true
+                        });
+
+                    })
+                    onValue(dbRef4, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            musica.push(childSnapshot.val())
+
+                        }, {
+                            onlyOnce: true
+                        });
+                    })
+
+                    function confrontaEAssegnaPunteggio(valoreSinistra, valoreDestra) {
+                        if (valoreSinistra === valoreDestra) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+
+                    // ...
+
+                    let punteggio = 0;
+
+                    const dbRef1 = ref(db, '/Utenti/' + childKey + '/Informazioni');
+                    const b = childSnapshot.val();
+                    onValue(dbRef1, (snapshot1) => {
+                        const a = snapshot1.val();
+                        if (!utentiAggiunti.has(childKey)) {
+                            punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
+                            punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
+                            punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
+                            punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
+                            punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
+                            punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                            punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
+                            punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
+                            punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
+                            punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
+                            punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
+                            punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
+                            if (punteggio > 9) {
+                                punteggio = ((100 * punteggio) / 12).toFixed();
+                                punteggio = "La tua affinità è: " + punteggio + "%";
+                                const utenti1 = {
+                                    id: childKey,
+                                    aborto: a.Aborto,
+                                    alcol: a.Alcol,
+                                    altezza: a.Altezza,
+                                    anni: a.Anni,
+                                    contraccezione: a.Contraccezione,
+                                    dataNascita: a.DataDiNascita,
+                                    eutanasia: a.Eutanasia,
+                                    fede: a.Fede,
+                                    figli: a.Figli,
+                                    fumo: a.Fumo,
+                                    genere: a.Genere,
+                                    istruzione: a.Istruzione,
+                                    lgbt: a.LGBT,
+                                    lavoro: a.Lavoro,
+                                    messa: a.Messa,
+                                    politica: a.Politica,
+                                    provincia: a.Provincia,
+                                    sesso: a.Sesso,
+                                    valoreVita: a.ValoreVita,
+                                    nome: b.Nome,
+                                    cognome: b.Cognome,
+                                    immagineProfilo: b.ImmagineProfilo,
+                                    verificato: b.Verificato,
+                                    passioni: passioni,
+                                    sport: sport,
+                                    musica: musica,
+                                    punteggio: punteggio,
+                                };
+
+                                dispatch(add(utenti1));
+
+                                utentiAggiunti.add(childKey);
+                            }
+
+                        }
+
+                    }, {
+                        onlyOnce: true
+                    });
+                }
+            });
+        }, {
+            onlyOnce: true
+        });
+
+
 
 
     }
@@ -466,14 +720,24 @@ function Ricerca() {
                         <div className='flex p-4 w-[100%]'>
                             <input
                                 type="checkbox"
-                                value={"Nessun filtro"}
                                 checked={isChecked}
                                 onChange={handleCheckboxChange}
                             />
                             {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
                             <p className='mx-2 text-white'>{isChecked ? '✔️ Nessun filtro' : '⬅️ Seleziona se non vuoi filtri'}</p>
+
                         </div>
-                        {!isChecked ?
+                        <div className='flex p-4 w-[100%]'>
+                            <input
+                                type="checkbox"
+                                checked={isMatch}
+                                onChange={handleCheckboxChange2}
+                            />
+                            {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
+                            <p className='mx-2 text-white'>{isMatch ? '✔️ Ricerca avviata' : "⬅️ Trova un match superiore all'80%"}</p>
+
+                        </div>
+                        {!isChecked && !isMatch ?
                             <div>
                                 <div className='p-4 w-[100%]'>
                                     <Select
@@ -518,6 +782,7 @@ function Ricerca() {
                                     utenteID={utente.id}
                                     isVerificated={utente.verificato}
                                     imgURL={utente.immagineProfilo}
+                                    punteggio={utente.punteggio}
                                     title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
                                     {utente.provincia}
                                 </CardItem>
