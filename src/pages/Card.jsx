@@ -119,6 +119,13 @@ function Card() {
                     </div>
 
                 </div>
+                <div className='w-full grid grid-cols-1 gap-5 bg-white '>
+                    <div className="mb-10 flex  gap-10">
+                        <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
+                        <label className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
+                        <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
+                    </div>
+                </div>
                 <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 bg-white'>
                     <div className='text-left m-4'>
                         <h2>Passioni:</h2>
@@ -140,13 +147,7 @@ function Card() {
                     </div>
                 </div>
 
-                <div className='w-full grid grid-cols-1 gap-5 bg-white '>
-                    <div className="m-20 flex  gap-10">
-                        <label className='bg-white shadow-2xl shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
-                        <label className='bg-white shadow-2xl shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
-                        <label className='bg-white shadow-2xl shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
-                    </div>
-                </div>
+                
             </div>
             <Space></Space>
         </>
