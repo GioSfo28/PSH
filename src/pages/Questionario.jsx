@@ -854,7 +854,7 @@ function Questionario() {
         attivita: [],
         sport: [],
         musica: [],
-        cerca: [],
+        cerca:[],
     });
 
     const handleReset = () => {
@@ -862,18 +862,18 @@ function Questionario() {
             attivita: [],
             sport: [],
             musica: [],
-            cerca: [],
+            cerca:[],
         });
     };
 
     useEffect(() => {
         handleReset();
-    }, []);
-
+    },[]);
+    
 
     // La tua funzione handleInfo
     const handleInfoMulti = selectedOptions => {
-
+        
         if (selectedOptions.length > 0) {
 
             // Copia lo stato attuale
@@ -882,10 +882,10 @@ function Questionario() {
             for (let i = 0; i < selectedOptions.length; i++) {
                 switch (selectedOptions[i].id) {
                     case "listaAttivita":
-                        if (i == 0) {
-                            updatedOpzioni.attivita = [selectedOptions[i].label];
+                        if(i==0){
+                        updatedOpzioni.attivita = [selectedOptions[i].label];
                         }
-                        else {
+                        else{
                             updatedOpzioni.attivita.push(selectedOptions[i].label);
                         }
                         break;
@@ -987,7 +987,7 @@ function Questionario() {
 
         }
     }
-
+    
 
 
     async function salva() {
@@ -1054,7 +1054,7 @@ function Questionario() {
                         </div>
                         :
                         <div>
-                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
+                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
                                     <label>Sei in cerca di (puoi selezionarle entrambe):</label>
                                 </div>
@@ -1079,8 +1079,6 @@ function Questionario() {
                                 <div className='p-4 w-[100%]'>
                                     <Select id="province" options={province} onChange={handleInfo} />
                                 </div>
-                            </div>
-                            <div className='w-full grid grid-cols-1 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4 '>
                                     <label>Inserisci la tua data di nascita: </label>
                                 </div>
@@ -1098,15 +1096,12 @@ function Questionario() {
                                         showYearDropdown
                                     />
                                 </div>
-                           
                                 <div className='p-4'>
-                                    <label>Quanti anni hai ora?</label>
+                                    <label>Quanti anni hai?</label>
                                 </div>
                                 <div className='p-4 w-[100%]'>
                                     <Select id="anni" options={anni} onChange={handleInfo} />
                                 </div>
-                            </div>
-                            <div className='w-full grid grid-cols-1 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
                                     <label>Carica una tua foto profilo:</label>
                                 </div>
@@ -1137,7 +1132,7 @@ function Questionario() {
                                 </div>
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Alcune domande personali</h2>
-                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
+                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
                                     <label>Bevi alcolici?</label>
                                 </div>
@@ -1231,7 +1226,7 @@ function Questionario() {
 
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Ultima richiesta: le tue passioni!</h2>
-                            <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
+                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
                                     <label>Seleziona le tue passioni:</label>
                                 </div>
