@@ -84,9 +84,10 @@ function Card() {
     useEffect(() => {
         async function fetchVerificato() {
             try {
-                const verificatoSnapshot = await get(ref(db, "Utenti/" + cardID + "/Verificato"));
+                const verificatoSnapshot = await get(ref(db, "Utenti/" + getUid + "/Verificato"));
                 const value = verificatoSnapshot.val();
                 setVerificatoValue(value);
+                console.log(value);
             } catch (error) {
                 console.error("Errore durante la lettura di Verificato:", error);
             }
