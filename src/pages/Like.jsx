@@ -3,6 +3,8 @@ import WindowsTop from '../hooks/WindowsTop.jsx';
 
 import Navbar from '../components/Navbar.jsx';
 import Space from '../components/Space.jsx';
+import Footer from "../components/Footer";
+
 
 import CardItem from '../components/CardItem.jsx';
 
@@ -198,6 +200,8 @@ function Like() {
                 </div>
             </div>
             )};
+            <Space />
+            <Footer />
         </>
     );
 }

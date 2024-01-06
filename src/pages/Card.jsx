@@ -1,6 +1,8 @@
-import Navbar from "../components/Navbar";
+
+import Navbar from '../components/Navbar.jsx';
+import Space from '../components/Space.jsx';
+import Footer from "../components/Footer";
 import WindowsTop from '../hooks/WindowsTop.jsx';
-import Space from "../components/Space.jsx";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React, { useMemo, useEffect, useState } from "react";
@@ -191,6 +193,7 @@ function Card() {
 
             </div>
             <Space></Space>
+            <Footer></Footer>
         </>
     );
 }
