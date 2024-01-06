@@ -1005,7 +1005,8 @@ function Questionario() {
             // Se l'upload ha successo, esegui l'upload del secondo file
             await uploadFile();
             if (ciUpload && imageUpload) {
-
+                let descrizione = "";
+                descrizione = document.getElementById("descrizione").value.trim();
                 var data2 = selectedDate.getMonth() + 1;
                 var data1 = selectedDate.getDate() + "-" + data2 + "-" + selectedDate.getFullYear();
                 const db = getDatabase(app);
@@ -1034,6 +1035,7 @@ function Questionario() {
                     Sport: selectedOpzioni.sport,
                     Musica: selectedOpzioni.musica,
                     Cerca: selectedOpzioni.cerca,
+                    Descrizione: descrizione,
                 });
 
                 alert("Profilo salvato con successo!");
@@ -1136,6 +1138,12 @@ function Questionario() {
                                             setCiUpload(e.target.files[0]);
                                         }}
                                     />
+                                </div>
+                                <div className='p-4'>
+                                    <label>Aggiungi una tua descrizione:</label>
+                                </div>
+                                <div className='p-4'>
+                                   <textarea className='border border-black' name="descrizione" id="descrizione" cols="50" rows="10"></textarea>
                                 </div>
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Alcune domande personali</h2>

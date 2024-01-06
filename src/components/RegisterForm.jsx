@@ -13,10 +13,10 @@ import { getDatabase, ref, set, push, child, get, update } from "firebase/databa
 function RegisterForm() {
 
     const dispatch = useDispatch();
-    const [userCredentials, setUserCredentials] = useState({});
+    const [userCredentials, setUserCredentials] = useState({ amico: "Nessuno" });
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
+    const codiceGenerato = generaCodiceAmico(8);
 
     const database = getDatabase();
 
@@ -38,7 +38,6 @@ function RegisterForm() {
                 var prova = new Date();
                 var prova2 = prova.getMonth() + 1;
                 var prova1 = prova.getDate() + "-" + prova2 + "-" + prova.getFullYear();
-                const codiceGenerato = generaCodiceAmico(8);
                 const db = getDatabase();
                 set(ref(db, "Utenti/" + userCredential.user.uid), {
                     Status: "User",
@@ -51,19 +50,18 @@ function RegisterForm() {
                     Iscrizione: prova1,
                     UltimoAccesso: prova1
                 });
-                
-                const dbRef = ref(db, "CodiciAmico/" + userCredentials.amico);
 
-                // Aggiungi un nuovo figlio con chiave "uuser.uid" e valore 1
-                update(dbRef, {
-                    [userCredential.user.uid]: 1
-                });
+                if (userCredentials.amico != "Nessuno" && userCredentials.amico != undefined) {
+                    const dbRef = ref(db, "CodiciAmico/" + userCredentials.amico);
 
-                
+                    // Aggiungi un nuovo figlio con chiave "uuser.uid" e valore 1
+                    update(dbRef, {
+                        [userCredential.user.uid]: 1
+                    });
 
-                
-                              
-        
+                }
+
+
                 localStorage.setItem("uidData", userCredential.user.uid);
                 alert("Registrato con successo!");
                 navigate("/Questionario");
@@ -93,7 +91,7 @@ function RegisterForm() {
         return codiceAmico;
     }
 
-   
+
 
 
     return (

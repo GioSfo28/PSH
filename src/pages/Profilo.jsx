@@ -67,6 +67,7 @@ function Profilo() {
                     document.getElementById("politica").innerHTML = "🏛️ " + a.Politica;
                     document.getElementById("fede").innerHTML = "🙏 " + a.Fede;
                     document.getElementById("messa").innerHTML = "⛪ " + a.Messa;
+                    document.getElementById("descrizione").innerHTML = '"'+a.Descrizione+'"';
                     document.getElementById("sesso").innerHTML = a.Sesso === "Si" ? "✔️ Sesso dopo il matrimonio" : a.Sesso === "No" ? "❌ Sesso dopo il matrimonio" : "❓​ Sesso dopo il matrimonio";
                     document.getElementById("contraccezione").innerHTML = a.Contraccezione === "Si" ? "✔️ No contraccezione" : a.Contraccezione === "No" ? "❌ No contraccezione" : "❓​ Contraccezione";
                     document.getElementById("lgbt").innerHTML = a.LGBT === "Si" ? "✔️ Contro LGBT" : a.LGBT === "No" ? "❌ Contro LGBT" : "❓ Questione LGBT";
@@ -180,6 +181,9 @@ function Profilo() {
                                 <label id='politica'></label>
                                 <label id='fede'></label>
                                 <label id='messa'></label>
+                            </div>
+                            <div className='my-8 mx-4 text-justify bg-blue-600 text-white text-lg text-bold rounded-lg p-6'>
+                                <label id='descrizione'></label>
                             </div>
                             <div>
                                 <h2 className='mt-10'>In cerca di:</h2>

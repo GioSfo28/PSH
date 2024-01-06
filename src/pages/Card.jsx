@@ -47,6 +47,7 @@ function Card() {
             document.getElementById("politica").innerHTML = "🏛️ " + utente.politica;
             document.getElementById("fede").innerHTML = "🙏 " + utente.fede;
             document.getElementById("messa").innerHTML = "⛪ " + utente.messa;
+            document.getElementById("descrizione").innerHTML = '"' + utente.descrizione + '"';
 
             { utente.sesso == "Si" ? document.getElementById("sesso").innerHTML = "✔️ Sesso dopo il matrimonio" : utente.sesso == "No" ? document.getElementById("sesso").innerHTML = "❌ Sesso dopo il matrimonio" : document.getElementById("sesso").innerHTML = "❓​ Sesso dopo il matrimonio" }
             { utente.contraccezione == "Si" ? document.getElementById("contraccezione").innerHTML = "✔️ No contraccezione" : utente.contraccezione == "No" ? document.getElementById("contraccezione").innerHTML = "❌ No contraccezione" : document.getElementById("contraccezione").innerHTML = "❓​ Contraccezione"; }
@@ -135,6 +136,9 @@ function Card() {
                             <label id='politica'></label>
                             <label id='fede'></label>
                             <label id='messa'></label>
+                        </div>
+                        <div className='my-8 mx-4 text-justify bg-blue-600 text-white text-lg text-bold rounded-lg p-6'>
+                            <label id='descrizione'></label>
                         </div>
                         <div>
                             <h2 className='mt-10'>In cerca di:</h2>

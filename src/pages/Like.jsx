@@ -133,6 +133,7 @@ function Like() {
                                             cognome: b.Cognome,
                                             immagineProfilo: b.ImmagineProfilo,
                                             verificato: b.Verificato,
+                                            descrizione: a.Descrizione,
                                             passioni: passioni,
                                             sport: sport,
                                             musica: musica,
