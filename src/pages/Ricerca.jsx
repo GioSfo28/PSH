@@ -810,7 +810,7 @@ function Ricerca() {
                                 <h2 className='text-black'>Nessun utente corrisponde alla ricerca</h2>
                             </div> :
 
-                            <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 md:gap-5 ">
                                 {utenti.map((utente) => (
                                     <CardItem
                                         key={utente.id}
