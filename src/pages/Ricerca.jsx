@@ -10,6 +10,8 @@ import CardItem from '../components/CardItem.jsx';
 import { getDatabase, ref, set, child, get, update, onValue } from "firebase/database";
 
 import { useSelector } from "react-redux";
+import { selectUsers } from '../redux/usersSlice.js';
+
 
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
@@ -21,6 +23,7 @@ function Ricerca() {
     WindowsTop();
     const utenti = useSelector((state) => state.utenti.value);
     const dispatch = useDispatch();
+    const user = useSelector(selectUsers);
 
     const getUid = localStorage.getItem("uidData");
 
@@ -340,7 +343,7 @@ function Ricerca() {
         let eutanasia = "";
         let fede = "";
         let figli = "";
-        let poiFigli= "";
+        let poiFigli = "";
         let fumo = "";
         let lgbt = "";
         let messa = "";
@@ -445,7 +448,7 @@ function Ricerca() {
                                 punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
                                 punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
                                 punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
-                               
+
                                 punteggio = ((100 * punteggio) / 13).toFixed();
                                 punteggio = "La tua affinità è: " + punteggio + "%";
                                 const utenti1 = {
@@ -482,7 +485,7 @@ function Ricerca() {
                                 };
 
                                 dispatch(add(utenti1));
-                                
+
                                 utentiAggiunti.add(childKey);
                             } else {
                                 if (isChecked) {
@@ -736,88 +739,96 @@ function Ricerca() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-600">
-                <h1 className="text-white text-center text-4xl font-bold mb-10">
-                    Ricerca profili
-                </h1>
-                <div className="w-full grid pb-20 px-4 mx-auto bg-orange-600">
-                    <div className='text-left'>
-                        <label className='text-white text-lg p-4'>Filtri:</label>
-                        <div className='flex p-4 w-[100%]'>
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                            {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
-                            <p className='mx-2 text-white'>{isChecked ? '✔️ Nessun filtro' : '⬅️ Seleziona se non vuoi filtri'}</p>
 
-                        </div>
-                        <div className='flex p-4 w-[100%]'>
-                            <input
-                                type="checkbox"
-                                checked={isMatch}
-                                onChange={handleCheckboxChange2}
-                            />
-                            {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
-                            <p className='mx-2 text-white'>{isMatch ? '✔️ Ricerca avviata' : "⬅️ Trova un match superiore all'68%"}</p>
+            {user.currentUser == null ? (
+                <div className='bg-blue-600 p-10 grid place-items-center mx-auto'>
+                    <button><NavLink to={"/Login"}>Effettua il Login!</NavLink></button>
+                </div>
+            ) : (
+                <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-600">
+                    <h1 className="text-white text-center text-4xl font-bold mb-10">
+                        Ricerca profili
+                    </h1>
+                    <div className="w-full grid pb-20 px-4 mx-auto bg-orange-600">
+                        <div className='text-left'>
+                            <label className='text-white text-lg p-4'>Filtri:</label>
+                            <div className='flex p-4 w-[100%]'>
+                                <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={handleCheckboxChange}
+                                />
+                                {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
+                                <p className='mx-2 text-white'>{isChecked ? '✔️ Nessun filtro' : '⬅️ Seleziona se non vuoi filtri'}</p>
 
-                        </div>
-                        {!isChecked && !isMatch ?
-                            <div>
-                                <div className='p-4 w-[100%]'>
-                                    <Select
-                                        name='genere'
-                                        id="genere"
-                                        options={genere}
-                                        onChange={handleInfo}
-                                    />
-                                </div>
-                                <div className='p-4 w-[100%]'>
-                                    <Select
-                                        id="province"
-                                        options={province}
-                                        onChange={handleInfo}
-                                    />
-                                </div>
-                                <div className='p-4 w-[100%]'>
-                                    <Select
-                                        id="anni"
-                                        options={anni}
-                                        onChange={handleInfo}
-                                    />
-                                </div>
                             </div>
-                            :
-                            null
-                        }
+                            <div className='flex p-4 w-[100%]'>
+                                <input
+                                    type="checkbox"
+                                    checked={isMatch}
+                                    onChange={handleCheckboxChange2}
+                                />
+                                {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
+                                <p className='mx-2 text-white'>{isMatch ? '✔️ Ricerca avviata' : "⬅️ Trova un match superiore all'68%"}</p>
 
+                            </div>
+                            {!isChecked && !isMatch ?
+                                <div>
+                                    <div className='p-4 w-[100%]'>
+                                        <Select
+                                            name='genere'
+                                            id="genere"
+                                            options={genere}
+                                            onChange={handleInfo}
+                                        />
+                                    </div>
+                                    <div className='p-4 w-[100%]'>
+                                        <Select
+                                            id="province"
+                                            options={province}
+                                            onChange={handleInfo}
+                                        />
+                                    </div>
+                                    <div className='p-4 w-[100%]'>
+                                        <Select
+                                            id="anni"
+                                            options={anni}
+                                            onChange={handleInfo}
+                                        />
+                                    </div>
+                                </div>
+                                :
+                                null
+                            }
+
+                        </div>
+                    </div>
+
+                    <div className="w-full grid py-10 px-4 rounded-lg mx-auto bg-white">
+                        {utenti.length == 0 ?
+                            <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
+                                <h2 className='text-black'>Nessun utente corrisponde alla ricerca</h2>
+                            </div> :
+
+                            <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
+                                {utenti.map((utente) => (
+                                    <CardItem
+                                        key={utente.id}
+                                        utenteID={utente.id}
+                                        isVerificated={utente.verificato}
+                                        imgURL={utente.immagineProfilo}
+                                        punteggio={utente.punteggio}
+                                        cerca={utente.cerca}
+                                        title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
+                                        {utente.provincia}
+                                    </CardItem>
+                                ))}
+                            </div>
+                        }
                     </div>
                 </div>
+            )}
 
-                <div className="w-full grid py-10 px-4 rounded-lg mx-auto bg-white">
-                    {utenti.length == 0 ?
-                        <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
-                            <h2 className='text-black'>Nessun utente corrisponde alla ricerca</h2>
-                        </div> :
-
-                        <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
-                            {utenti.map((utente) => (
-                                <CardItem
-                                    key={utente.id}
-                                    utenteID={utente.id}
-                                    isVerificated={utente.verificato}
-                                    imgURL={utente.immagineProfilo}
-                                    punteggio={utente.punteggio}
-                                    cerca = {utente.cerca}
-                                    title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
-                                    {utente.provincia}
-                                </CardItem>
-                            ))}
-                        </div>
-                    }
-                </div>
-            </div>
             <Space />
             <Footer />
         </>

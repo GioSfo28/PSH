@@ -5,11 +5,10 @@ import Navbar from '../components/Navbar.jsx';
 import Space from '../components/Space.jsx';
 import Footer from '../components/Footer.jsx';
 
-import CardItem from '../components/CardItem.jsx';
 
 import { getDatabase, ref, remove, set, child, get, update, onValue } from "firebase/database";
-import { getStorage,  deleteObject } from "firebase/storage";
-import { getAuth, deleteUser } from "firebase/auth";
+import { getStorage, ref as refStorage, deleteObject } from "firebase/storage";
+import { getAuth, deleteUser, } from "firebase/auth";
 
 import { useSelector } from "react-redux";
 import { selectUsers } from '../redux/usersSlice.js';
@@ -104,15 +103,52 @@ function Admin() {
 
     function elimina() {
         const storage = getStorage();
-
        
-
         onValue(dbRef, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
                 if (immaginiProfilo[indiceImmagine] === childSnapshot.val().ImmagineProfilo) {
                     const childKey = childSnapshot.key;
 
+                    // RIMUOVE L'UTENTE DAL FIREBASE DATABASE
                     remove(ref(db, '/Utenti/' + childKey));
+
+
+
+                    /// RIMUOVE LE IMMAGINI DELL'UTENTE DALLO STORAGE
+                    // Specifica il percorso del file che desideri eliminare
+                    const fileRef = refStorage (storage, '/Utenti/' + childKey + "/ImmagineProfilo.jpg");
+                    const fileRef2 = refStorage(storage, '/Utenti/' + childKey + "/CI.jpg");
+
+                    // Elimina il file
+                    deleteObject(fileRef)
+                        .then(() => {
+                            alert("Utente rimosso, ricordati di eliminare la mail dall'Auth!");
+                        })
+                        .catch((error) => {
+                            console.error('E: ', error);
+                        });
+
+                    deleteObject(fileRef2)
+                        .then(() => {
+                           
+                        })
+                        .catch((error) => {
+                            console.error('E: ', error);
+                        });
+                   
+            
+
+                }
+            });
+        }, {
+            onlyOnce: true
+        });
+
+    }
+
+
+    /*
+   
                     // Specifica il percorso del file che desideri eliminare
                     const fileRef = ref(storage, '/Utenti/' + childKey + "/ImmagineProfilo.jpg");
                     const fileRef2 = ref(storage, '/Utenti/' + childKey + "/CI.jpg");
@@ -134,25 +170,7 @@ function Admin() {
                             console.error('E: ', error);
                         });
                     const auth = getAuth();
-
-                    // Sostituisci 'UID_DELL_UTENTE_DA_ELIMINARE' con l'UID effettivo dell'utente che vuoi eliminare
-                    const uidToDelete = childKey;
-
-                    deleteUser(auth, uidToDelete)
-                        .then(() => {
-                            console.log('Utente eliminato con successo.');
-                        })
-                        .catch((error) => {
-                            console.error('Errore:', error);
-                        });
-                    alert("Hai rimosso il profilo completamente!");
-                }
-            });
-        }, {
-            onlyOnce: true
-        });
-
-    }
+                */
 
 
 

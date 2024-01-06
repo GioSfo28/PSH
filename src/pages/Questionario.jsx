@@ -992,6 +992,7 @@ function Questionario() {
 
     async function salva() {
         try {
+            document.getElementById("Caricamento").innerHTML = "Caricamento in corso, attendere...!";
             // Esegui l'upload del file CI
             await uploadCI();
 
@@ -1247,6 +1248,7 @@ function Questionario() {
                                 </div>
                             </div>
                             <button className='m-5 bg-white' onClick={salva}>Salva</button>
+                            <labe className="text-bold text-white text-3xl" id="Caricamento"></labe>
                         </div>
                 }
 
