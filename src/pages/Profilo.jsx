@@ -82,7 +82,6 @@ function Profilo() {
                     document.getElementById("codice").innerHTML = "Il tuo codice amico: " + a.CodiceAmico;
                     const dbRef = ref(db, "CodiciAmico/" + a.CodiceAmico);
 
-
                     let z = 0;
                     setNumAm(z);
                     onValue(dbRef, (snapshot) => {
@@ -93,9 +92,6 @@ function Profilo() {
                     }, {
                         onlyOnce: true
                     });
-
-
-
 
                 }, { onlyOnce: true });
 
@@ -157,7 +153,7 @@ function Profilo() {
                                 <label className='text-3xl font-bold ' id='nomecognome'></label>
                                 <label className='text-lg font-bold ' id='codice'></label>
                                 <label className='text-md font-bold ' id='codiceamico'>Hanno utilizzato il tuo codice: {numAm}</label>
-                                <img className='mt-5 w-[300px] h-[300px] shadow-md shadow-black' id='profilo' />
+                                <img className='mt-5 w-auto h-[300px] rounded-xl object-cover shadow-md shadow-black' id='profilo' />
                                 <div className='my-5 grid grid-cols-2 gap-1'>
                                     <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
                                     <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='aborto'></label>

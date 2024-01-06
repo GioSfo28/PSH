@@ -1044,7 +1044,6 @@ function Questionario() {
     return (
         <>
             <Navbar></Navbar>
-
             <Space></Space>
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-blue-700">
                 <h2 className="mb-10 text-white text-4xl font-bold">Completa il tuo profilo!</h2>
@@ -1057,7 +1056,7 @@ function Questionario() {
                         <div>
                             <div className='w-full grid grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
-                                    <label>Sei in cerca di:</label>
+                                    <label>Sei in cerca di (puoi selezionarle entrambe):</label>
                                 </div>
                                 <div className='p-4 w-[100%]'>
                                     <Select id="cerca" isMulti options={cerca} className="basic-multi-select" onChange={handleInfoMulti} />
