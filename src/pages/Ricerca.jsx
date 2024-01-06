@@ -28,10 +28,16 @@ function Ricerca() {
     const [isMatch, setIsMatch] = useState(false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
+        if (isMatch) {
+            setIsMatch(!isMatch);
+        }
         dispatch(reset());
     };
     const handleCheckboxChange2 = () => {
         setIsMatch(!isMatch);
+        if (isChecked) {
+            setIsChecked(!isChecked);
+        }
         dispatch(reset());
         if (isMatch == false) {
             Match();

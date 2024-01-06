@@ -61,7 +61,7 @@ function Like() {
                     const b = childSnapshot.val();
                     onValue(dbRef2, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
-                            if(childSnapshot.key == childKey){
+                            if (childSnapshot.key == childKey) {
                                 let passioni = [];
                                 let sport = [];
                                 let musica = [];
@@ -152,7 +152,7 @@ function Like() {
                             onlyOnce: true
                         });
                     })
-                    
+
                 }
             });
         }, {
@@ -167,40 +167,43 @@ function Like() {
         <>
             <Navbar></Navbar>
             <Space></Space>
-            {user.currentUser == null ? (
-                <div className='bg-blue-600 p-10 grid place-items-center mx-auto'>
-                    <button><NavLink to={"/Login"}>Effettua il Login!</NavLink></button>
-                </div>
-            ) : (
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-green-700">
                 <h1 className="text-white text-center text-4xl font-bold mb-10">
                     Profili da cui hai ricevuto un like!
                 </h1>
-                <div className="w-full grid py-10 px-4 rounded-lg mx-auto bg-white">
-                    {utenti.length == 0 ?
-                        <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
-                            <h2 className='text-black'>Nessun like ricevuto</h2>
-                        </div>
-                        :
-                        <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
-                            {utenti.map((utente) => (
-                                <CardItem
-                                    key={utente.id}
-                                    utenteID={utente.id}
-                                    isVerificated={utente.verificato}
-                                    imgURL={utente.immagineProfilo}
-                                    punteggio={utente.punteggio}
-                                    cerca={utente.cerca}
-                                    title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
-                                    {utente.provincia}
-                                </CardItem>
-                            ))}
-                        </div>
-                    }
-                </div>
+                {user.currentUser == null ? (
+                    <div className='bg-blue-600 p-10 grid place-items-center mx-auto'>
+                        <button><NavLink to={"/Login"}>Effettua il Login!</NavLink></button>
+                    </div>
+                ) : (
+
+                    <div className="w-full grid py-10 px-4 rounded-lg mx-auto bg-white">
+                        {utenti.length == 0 ?
+                            <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
+                                <h2 className='text-black'>Nessun like ricevuto</h2>
+                            </div>
+                            :
+                            <div className="grid md:grid-cols-3 grid-cols-1 md:gap-5 gap-10">
+                                {utenti.map((utente) => (
+                                    <CardItem
+                                        key={utente.id}
+                                        utenteID={utente.id}
+                                        isVerificated={utente.verificato}
+                                        imgURL={utente.immagineProfilo}
+                                        punteggio={utente.punteggio}
+                                        cerca={utente.cerca}
+                                        title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
+                                        {utente.provincia}
+                                    </CardItem>
+                                ))}
+                            </div>
+                        }
+                    </div>
+
+
+                )};
             </div>
-            )};
-            <Space />
+            <Space></Space>
             <Footer />
         </>
     );
