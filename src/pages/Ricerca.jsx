@@ -439,17 +439,14 @@ function Ricerca() {
                                 punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
                                 punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
                                 punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
-                                punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
                                 punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
-                                punteggio += confrontaEAssegnaPunteggio(poiFigli, a.PoiFigli);
                                 punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
                                 punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
-                                punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
                                 punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
                                 punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
                                 punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
 
-                                punteggio = ((100 * punteggio) / 13).toFixed();
+                                punteggio = ((100 * punteggio) / 10).toFixed();
                                 punteggio = "La tua affinità è: " + punteggio + "%";
                                 const utenti1 = {
                                     id: childKey,
@@ -494,17 +491,14 @@ function Ricerca() {
                                     punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
                                     punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
                                     punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
-                                    punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
                                     punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
-                                    punteggio += confrontaEAssegnaPunteggio(poiFigli, a.PoiFigli);
                                     punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
                                     punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
-                                    punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
                                     punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
                                     punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
                                     punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
 
-                                    punteggio = ((100 * punteggio) / 13).toFixed();
+                                    punteggio = ((100 * punteggio) / 10).toFixed();
                                     punteggio = "La tua affinità è: " + punteggio + "%";
                                     const utenti1 = {
                                         id: childKey,
@@ -670,17 +664,15 @@ function Ricerca() {
                             punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
                             punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
                             punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
-                            punteggio += confrontaEAssegnaPunteggio(fede, a.Fede);
                             punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
-                            punteggio += confrontaEAssegnaPunteggio(poiFigli, a.PoiFigli);
                             punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
                             punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
-                            punteggio += confrontaEAssegnaPunteggio(messa, a.Messa);
                             punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
                             punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
                             punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
-                            if (punteggio > 8) {
-                                punteggio = ((100 * punteggio) / 13).toFixed();
+
+                            if (punteggio >= 8) {
+                                punteggio = ((100 * punteggio) / 10).toFixed();
                                 punteggio = "La tua affinità è: " + punteggio + "%";
                                 const utenti1 = {
                                     id: childKey,
@@ -772,7 +764,7 @@ function Ricerca() {
                                     onChange={handleCheckboxChange2}
                                 />
                                 {/* Mostra uno stato a seconda se la checkbox è selezionata o meno */}
-                                <p className='mx-2 text-white'>{isMatch ? '✔️ Ricerca avviata' : "⬅️ Trova un match superiore all'68%"}</p>
+                                <p className='mx-2 text-white'>{isMatch ? '✔️ Ricerca avviata' : "⬅️ Trova un match superiore all'80%"}</p>
 
                             </div>
                             {!isChecked && !isMatch ?
