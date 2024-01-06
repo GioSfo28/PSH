@@ -149,7 +149,7 @@ function Profilo() {
                 ) : (
                     <div>
                         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow'>
-                            <div className='text-center grid place-items-center p-6'>
+                            <div className='text-black text-center grid place-items-center p-6'>
                                 <label className='text-3xl font-bold ' id='nomecognome'></label>
                                 <label className='text-lg font-bold ' id='codice'></label>
                                 <label className='text-md font-bold ' id='codiceamico'>Hanno utilizzato il tuo codice: {numAm}</label>
@@ -163,7 +163,7 @@ function Profilo() {
                                     <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='eutanasia'></label>
                                 </div>
                             </div>
-                            <div className='text-left p-6 '>
+                            <div className='text-black text-left p-6 '>
                                 <label className='text-3xl font-bold'>Informazioni</label>
                                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 text-left gap-6 p-3'>
                                     <label id='genere'></label>
@@ -185,13 +185,13 @@ function Profilo() {
                                     <h2 className='mt-10'>In cerca di:</h2>
                                     <div className='mt-5 grid grid-cols-2'>
                                         {cerca.map((attivita, index) => (
-                                            <label className={attivita == "Amicizia" ? 'p-2 mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-2 mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
+                                            <label className={attivita == "Amicizia" ? 'p-5 md:p-2 mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-5 md:p-2 mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
                                         ))}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 bg-white rounded-b-lg '>
+                        <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 text-black bg-white rounded-b-lg '>
                             <div className='text-left m-4'>
                                 <h2>Passioni:</h2>
                                 {passioni.map((attivita, index) => (
@@ -211,7 +211,7 @@ function Profilo() {
                                 ))}
                             </div>
                         </div>
-                        <Link to={"/Modifica"}><button className='m-5'>Modifica</button></Link>
+                        <Link to={"/Modifica"}><button className='bg-white m-5'>Modifica</button></Link>
                     </div>
                 )}
             </div>
