@@ -104,7 +104,7 @@ function Card() {
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-700">
                 <h2 className="mb-10 text-white text-4xl font-bold">Profilo</h2>
 
-                <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow'>
+                <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-black bg-white rounded-t-lg shadow'>
                     <div className='text-center grid place-items-center p-6'>
                         <label className='text-3xl font-bold' id='nomecognome'>{utente.nome + " " + utente.cognome}</label>
                         <img className='mt-5 w-auto h-[300px] rounded-xl object-cover shadow-md shadow-black' id='profilo' src={utente.immagineProfilo} />
@@ -139,7 +139,7 @@ function Card() {
                             <h2 className='mt-10'>In cerca di:</h2>
                             <div className='my-10 md:mt-5 grid grid-cols-2'>
                                 {utente.cerca.map((attivita, index) => (
-                                    <label className={attivita == "Amicizia" ? 'p-2 mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-2 mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
+                                    <label className={attivita == "Amicizia" ? 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
                                 ))}
                             </div>
                         </div>
@@ -148,7 +148,7 @@ function Card() {
 
                 </div>
                 {verificatoValue == true ?
-                    <div className='w-full grid grid-cols-1 gap-5 bg-white '>
+                    <div className='w-full grid grid-cols-1 gap-5 text-black bg-white '>
                         <div className="mb-10 flex  gap-10">
                             <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
                             <label className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>

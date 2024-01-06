@@ -185,7 +185,7 @@ function Profilo() {
                                     <h2 className='mt-10'>In cerca di:</h2>
                                     <div className='mt-5 grid grid-cols-2'>
                                         {cerca.map((attivita, index) => (
-                                            <label className={attivita == "Amicizia" ? 'p-5 md:p-2 mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-5 md:p-2 mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
+                                            <label className={attivita == "Amicizia" ? 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
                                         ))}
                                     </div>
                                 </div>
