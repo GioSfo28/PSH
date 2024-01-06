@@ -28,12 +28,12 @@ function Login() {
                         {
                             loginType == 'login' ?
                                 <div>
-                                    <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>Login</h1>
-                                    <p className='text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white mb-5'> Accedi o crea un account</p>
+                                    <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl'>Login</h1>
+                                    <p className='text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl mb-5'> Accedi o crea un account</p>
                                 </div>
                                 :
                                 <div>
-                                    <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-5'>Crea un account</h1>
+                                    <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl mb-5'>Crea un account</h1>
                                 </div>
                         }
 
