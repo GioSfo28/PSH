@@ -116,6 +116,7 @@ function Like() {
                                             eutanasia: a.Eutanasia,
                                             fede: a.Fede,
                                             figli: a.Figli,
+                                            poiFigli: a.PoiFigli,
                                             fumo: a.Fumo,
                                             genere: a.Genere,
                                             istruzione: a.Istruzione,
