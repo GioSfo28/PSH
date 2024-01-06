@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import WindowsTop from '../hooks/WindowsTop.jsx';
 import Navbar from '../components/Navbar.jsx';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, get, } from "firebase/database";
 import Space from '../components/Space.jsx';
 import Footer from '../components/Footer.jsx';
 import { selectUsers } from '../redux/usersSlice.js';
@@ -22,6 +22,7 @@ function Profilo() {
     const [sport, setSport] = useState([]);
     const [musica, setMusica] = useState([]);
     const [cerca, setCerca] = useState([]);
+    const [numAm, setNumAm] = useState([]);
     const [utentiAggiunti, setUtentiAggiunti] = useState(new Set());
 
     useEffect(() => {
@@ -78,48 +79,32 @@ function Profilo() {
                     const a = snapshot.val();
                     document.getElementById("profilo").src = a.ImmagineProfilo;
                     document.getElementById("nomecognome").innerHTML = a.Nome + " " + a.Cognome;
+                    document.getElementById("codice").innerHTML = "Il tuo codice amico: " + a.CodiceAmico;
+                    const dbRef = ref(db, "CodiciAmico/" + a.CodiceAmico);
+
+
+                    let z = 0;
+                    setNumAm(z);
+                    onValue(dbRef, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            z++;
+                            setNumAm(z);
+                        });
+                    }, {
+                        onlyOnce: true
+                    });
+
+
+
+
                 }, { onlyOnce: true });
 
-                const conditionsMet = a.Genere === a.Genere && a.Provincia === a.Provincia && parseInt(a.Anni) <= parseInt(a.Anni);
-                const isChecked = true; // Imposta a true o false a seconda delle tue esigenze
+                await fetchData("Passioni", setPassioni);
+                await fetchData("Sport", setSport);
+                await fetchData("Musica", setMusica);
+                await fetchData("Cerca", setCerca);
 
-                if (conditionsMet || (isChecked && !utentiAggiunti.has(getUid))) {
-                    await fetchData("Passioni", setPassioni);
-                    await fetchData("Sport", setSport);
-                    await fetchData("Musica", setMusica);
-                    await fetchData("Cerca", setCerca);
 
-                    const utenti1 = {
-                        id: getUid,
-                        aborto: a.Aborto,
-                        alcol: a.Alcol,
-                        altezza: a.Altezza,
-                        anni: a.Anni,
-                        contraccezione: a.Contraccezione,
-                        dataNascita: a.DataDiNascita,
-                        eutanasia: a.Eutanasia,
-                        fede: a.Fede,
-                        figli: a.Figli,
-                        poiFigli: a.PoiFigli,
-                        fumo: a.Fumo,
-                        genere: a.Genere,
-                        istruzione: a.Istruzione,
-                        lgbt: a.LGBT,
-                        lavoro: a.Lavoro,
-                        messa: a.Messa,
-                        politica: a.Politica,
-                        provincia: a.Provincia,
-                        sesso: a.Sesso,
-                        valoreVita: a.ValoreVita,
-                        nome: a.Nome,
-                        cognome: a.Cognome,
-                        immagineProfilo: a.ImmagineProfilo,
-                        verificato: a.Verificato,
-                    };
-
-                    dispatch(add(utenti1));
-                    utentiAggiunti.add(getUid);
-                }
             } catch (error) {
                 console.error("Errore durante il recupero dei dati utente:", error.message);
             }
@@ -153,6 +138,8 @@ function Profilo() {
     }, []);
 
 
+
+
     return (
         <>
             <Navbar />
@@ -168,6 +155,8 @@ function Profilo() {
                         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow'>
                             <div className='text-center grid place-items-center p-6'>
                                 <label className='text-3xl font-bold ' id='nomecognome'></label>
+                                <label className='text-lg font-bold ' id='codice'></label>
+                                <label className='text-md font-bold ' id='codiceamico'>Hanno utilizzato il tuo codice: {numAm}</label>
                                 <img className='mt-5 w-[300px] h-[300px] shadow-md shadow-black' id='profilo' />
                                 <div className='my-5 grid grid-cols-2 gap-1'>
                                     <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
@@ -226,7 +215,7 @@ function Profilo() {
                                 ))}
                             </div>
                         </div>
-                            <Link to={"/Modifica"}><button className='m-5'>Modifica</button></Link>
+                        <Link to={"/Modifica"}><button className='m-5'>Modifica</button></Link>
                     </div>
                 )}
             </div>

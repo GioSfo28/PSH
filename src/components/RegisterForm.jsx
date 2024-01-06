@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/aut
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/usersSlice';
 import { useNavigate } from 'react-router-dom';
-import { getDatabase, ref, set, child, get } from "firebase/database";
+import { getDatabase, ref, set, push, child, get, update } from "firebase/database";
 
 
 
@@ -38,16 +38,32 @@ function RegisterForm() {
                 var prova = new Date();
                 var prova2 = prova.getMonth() + 1;
                 var prova1 = prova.getDate() + "-" + prova2 + "-" + prova.getFullYear();
-                const db = getDatabase(app);
+                const codiceGenerato = generaCodiceAmico(8);
+                const db = getDatabase();
                 set(ref(db, "Utenti/" + userCredential.user.uid), {
                     Status: "User",
                     Nome: userCredentials.nome,
                     Cognome: userCredentials.cognome,
                     Password: userCredentials.password,
                     Email: userCredentials.email,
+                    CodiceAmico: codiceGenerato,
+                    CodiceIscrizione: userCredentials.amico,
                     Iscrizione: prova1,
                     UltimoAccesso: prova1
                 });
+                
+                const dbRef = ref(db, "CodiciAmico/" + userCredentials.amico);
+
+                // Aggiungi un nuovo figlio con chiave "uuser.uid" e valore 1
+                update(dbRef, {
+                    [userCredential.user.uid]: 1
+                });
+
+                
+
+                
+                              
+        
                 localStorage.setItem("uidData", userCredential.user.uid);
                 alert("Registrato con successo!");
                 navigate("/Questionario");
@@ -65,23 +81,42 @@ function RegisterForm() {
 
     };
 
+    function generaCodiceAmico(lunghezza) {
+        const caratteriAmmissibili = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let codiceAmico = '';
+
+        for (let i = 0; i < lunghezza; i++) {
+            const carattereCasuale = caratteriAmmissibili.charAt(Math.floor(Math.random() * caratteriAmmissibili.length));
+            codiceAmico += carattereCasuale;
+        }
+
+        return codiceAmico;
+    }
+
+   
+
+
     return (
         <>
             <div>
-                <label for="nome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome*</label>
-                <input type="text" name="nome" onChange={(e) => { handleCredentials(e) }} id="nome" autoComplete="given-name" placeholder="Nome" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""></input>
+                <label for="nome" class="block mb-2 text-sm font-medium text-gray-900">Nome*</label>
+                <input type="text" name="nome" onChange={(e) => { handleCredentials(e) }} id="nome" autoComplete="given-name" placeholder="Nome" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required=""></input>
             </div>
             <div>
-                <label for="cognome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cognome*</label>
-                <input type="text" name="cognome" onChange={(e) => { handleCredentials(e) }} id="cognome" autoComplete="family-name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cognome" required=""></input>
+                <label for="cognome" class="block mb-2 text-sm font-medium text-gray-900">Cognome*</label>
+                <input type="text" name="cognome" onChange={(e) => { handleCredentials(e) }} id="cognome" autoComplete="family-name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Cognome" required=""></input>
             </div>
             <div>
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail*</label>
-                <input type="email" name="email" onChange={(e) => { handleCredentials(e) }} id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" autoComplete="off" placeholder="yourmail@domain.com" required=""></input>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900">E-mail*</label>
+                <input type="email" name="email" onChange={(e) => { handleCredentials(e) }} id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" autoComplete="off" placeholder="yourmail@domain.com" required=""></input>
             </div>
             <div>
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password*</label>
-                <input type="password" name="password" onChange={(e) => { handleCredentials(e) }} id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""></input>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password*</label>
+                <input type="password" name="password" onChange={(e) => { handleCredentials(e) }} id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required=""></input>
+            </div>
+            <div>
+                <label for="amico" class="block mb-2 text-sm font-medium text-gray-900">Codice AMICO</label>
+                <input type="text" name="amico" onChange={(e) => { handleCredentials(e) }} id="amico" placeholder="Codice Amico" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required=""></input>
             </div>
             {
                 error &&
@@ -90,7 +125,6 @@ function RegisterForm() {
                 </div>
             }
             <button onClick={(e) => { handleSignup(e) }} className="bg-blue-500 text-white hover:bg-red-300 hover:text-black">Registrati</button>
-
         </>
     )
 }

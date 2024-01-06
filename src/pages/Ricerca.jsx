@@ -254,8 +254,6 @@ function Ricerca() {
 
     ];
 
-
-
     useEffect(() => {
 
         Filtratore();
@@ -386,16 +384,13 @@ function Ricerca() {
                     onValue(dbRef2, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             passioni.push(childSnapshot.val())
-
                         }, {
                             onlyOnce: true
                         });
-
                     })
                     onValue(dbRef3, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             sport.push(childSnapshot.val())
-
                         }, {
                             onlyOnce: true
                         });
@@ -404,7 +399,6 @@ function Ricerca() {
                     onValue(dbRef4, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             musica.push(childSnapshot.val())
-
                         }, {
                             onlyOnce: true
                         });
@@ -424,9 +418,6 @@ function Ricerca() {
                             return 0;
                         }
                     }
-
-                    // ...
-
                     let punteggio = 0;
                     const dbRef1 = ref(db, '/Utenti/' + childKey + '/Informazioni');
                     const b = childSnapshot.val();
@@ -655,7 +646,6 @@ function Ricerca() {
                         }
                     }
 
-                    // ...
 
                     let punteggio = 0;
 
@@ -733,8 +723,6 @@ function Ricerca() {
 
 
     }
-
-
 
 
     return (

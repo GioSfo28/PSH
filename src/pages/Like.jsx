@@ -9,6 +9,7 @@ import CardItem from '../components/CardItem.jsx';
 import { getDatabase, ref, set, child, get, update, onValue } from "firebase/database";
 
 import { useSelector } from "react-redux";
+import { selectUsers } from '../redux/usersSlice.js';
 
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
@@ -18,7 +19,7 @@ import { add, reset } from "../redux/utentiSlice.js";
 
 function Like() {
     WindowsTop();
-
+    const user = useSelector(selectUsers);
     const utenti = useSelector((state) => state.utenti.value);
     const dispatch = useDispatch();
 
@@ -163,6 +164,11 @@ function Like() {
         <>
             <Navbar></Navbar>
             <Space></Space>
+            {user.currentUser == null ? (
+                <div className='bg-blue-600 p-10 grid place-items-center mx-auto'>
+                    <button><NavLink to={"/Login"}>Effettua il Login!</NavLink></button>
+                </div>
+            ) : (
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-green-700">
                 <h1 className="text-white text-center text-4xl font-bold mb-10">
                     Profili da cui hai ricevuto un like!
@@ -190,6 +196,7 @@ function Like() {
                     }
                 </div>
             </div>
+            )};
         </>
     );
 }
