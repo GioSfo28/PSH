@@ -67,12 +67,12 @@ function Profilo() {
                     document.getElementById("politica").innerHTML = "🏛️ " + a.Politica;
                     document.getElementById("fede").innerHTML = "🙏 " + a.Fede;
                     document.getElementById("messa").innerHTML = "⛪ " + a.Messa;
-                    document.getElementById("sesso").innerHTML = a.Sesso === "Si" ? "✔️ Sesso dopo il matrimonio" : "❌ Sesso dopo il matrimonio";
-                    document.getElementById("contraccezione").innerHTML = a.Contraccezione === "Si" ? "✔️ No contraccezione" : "❌ No contraccezione";
-                    document.getElementById("lgbt").innerHTML = a.LGBT === "Si" ? "✔️ Contro LGBT" : "❌ Contro LGBT";
-                    document.getElementById("aborto").innerHTML = a.Aborto === "Si" ? "✔️ Contro aborto" : "❌ Contro aborto";
-                    document.getElementById("eutanasia").innerHTML = a.Eutanasia === "Si" ? "✔️ Contro eutanasia" : "❌ Contro eutanasia";
-                    document.getElementById("valoreVita").innerHTML = a.ValoreVita === "Si" ? "✔️ Sacralità della vita" : "❌ Sacralità della vita";
+                    document.getElementById("sesso").innerHTML = a.Sesso === "Si" ? "✔️ Sesso dopo il matrimonio" : a.Sesso === "No" ? "❌ Sesso dopo il matrimonio" : "❓​ Sesso dopo il matrimonio";
+                    document.getElementById("contraccezione").innerHTML = a.Contraccezione === "Si" ? "✔️ No contraccezione" : a.Contraccezione === "No" ? "❌ No contraccezione" : "❓​ Contraccezione";
+                    document.getElementById("lgbt").innerHTML = a.LGBT === "Si" ? "✔️ Contro LGBT" : a.LGBT === "No" ? "❌ Contro LGBT" : "❓ Questione LGBT";
+                    document.getElementById("aborto").innerHTML = a.Aborto === "Si" ? "✔️ Contro aborto" : a.Aborto === "No" ? "❌ Contro aborto" : "❓​ Aborto";
+                    document.getElementById("eutanasia").innerHTML = a.Eutanasia === "Si" ? "✔️ Contro eutanasia" : a.Eutanasia === "No" ? "❌ Contro eutanasia" : "❓​ Eutanasia";
+                    document.getElementById("valoreVita").innerHTML = a.ValoreVita === "Si" ? "✔️ Sacralità della vita" : a.ValoreVita === "No" ? "❌ Sacralità della vita" : "❓​ Sacralità della vita";
                 }, { onlyOnce: true });
 
                 onValue(dbRef1, (snapshot) => {
@@ -140,81 +140,83 @@ function Profilo() {
         <>
             <Navbar />
             <Space />
-            <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-blue-700">
-                <h2 className="mb-10 text-white text-4xl font-bold">Il tuo profilo</h2>
-                {user.currentUser == null ? (
-                    <div className='grid place-items-center mx-auto'>
-                        <button><NavLink to={"/Login"}>Effettua il Login!</NavLink></button>
-                    </div>
-                ) : (
-                    <div>
-                        <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow'>
-                            <div className='text-black text-center grid place-items-center p-6'>
-                                <label className='text-3xl font-bold ' id='nomecognome'></label>
-                                <label className='text-lg font-bold ' id='codice'></label>
-                                <label className='text-md font-bold ' id='codiceamico'>Hanno utilizzato il tuo codice: {numAm}</label>
-                                <img className='mt-5 w-auto h-[300px] rounded-xl object-cover shadow-md shadow-black' id='profilo' />
-                                <div className='my-5 grid grid-cols-2 gap-1'>
-                                    <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
-                                    <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='aborto'></label>
-                                    <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='contraccezione'></label>
-                                    <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='lgbt'></label>
-                                    <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='valoreVita'></label>
-                                    <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='eutanasia'></label>
-                                </div>
+
+            {user.currentUser == null ? (
+                <div className='grid place-items-center mx-auto'>
+                    <button><NavLink to={"/Login"}>Effettua il Login!</NavLink></button>
+                </div>
+            ) : (
+                <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-blue-700">
+                    <h2 className="mb-10 text-white text-4xl font-bold">Il tuo profilo</h2>
+                    <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-t-lg shadow'>
+                        <div className='text-black text-center grid place-items-center p-6'>
+                            <label className='text-3xl font-bold ' id='nomecognome'></label>
+                            <label className='text-lg font-bold ' id='codice'></label>
+                            <label className='text-md font-bold ' id='codiceamico'>Hanno utilizzato il tuo codice: {numAm}</label>
+                            <img className='mt-5 w-auto h-[300px] rounded-xl object-cover shadow-md shadow-black' id='profilo' />
+                            <div className='my-5 grid grid-cols-2 gap-1'>
+                                <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
+                                <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='aborto'></label>
+                                <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='contraccezione'></label>
+                                <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='lgbt'></label>
+                                <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='valoreVita'></label>
+                                <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='eutanasia'></label>
                             </div>
-                            <div className='text-black text-left p-6 '>
-                                <label className='text-3xl font-bold'>Informazioni</label>
-                                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 text-left gap-6 p-3'>
-                                    <label id='genere'></label>
-                                    <label id='altezza'></label>
-                                    <label id='provincia'></label>
-                                    <label id='dataNascita'></label>
-                                    <label id='anni'></label>
-                                    <label id='istruzione'></label>
-                                    <label id='lavoro'></label>
-                                    <label id='figli'></label>
-                                    <label id='poifigli'></label>
-                                    <label id='fumo'></label>
-                                    <label id='alcol'></label>
-                                    <label id='politica'></label>
-                                    <label id='fede'></label>
-                                    <label id='messa'></label>
-                                </div>
-                                <div>
-                                    <h2 className='mt-10'>In cerca di:</h2>
-                                    <div className='mt-5 grid grid-cols-2'>
-                                        {cerca.map((attivita, index) => (
-                                            <label className={attivita == "Amicizia" ? 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
-                                        ))}
-                                    </div>
+                        </div>
+                        <div className='text-black text-left p-6 '>
+                            <label className='text-3xl font-bold'>Informazioni</label>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 text-left gap-6 p-3'>
+                                <label id='genere'></label>
+                                <label id='altezza'></label>
+                                <label id='provincia'></label>
+                                <label id='dataNascita'></label>
+                                <label id='anni'></label>
+                                <label id='istruzione'></label>
+                                <label id='lavoro'></label>
+                                <label id='figli'></label>
+                                <label id='poifigli'></label>
+                                <label id='fumo'></label>
+                                <label id='alcol'></label>
+                                <label id='politica'></label>
+                                <label id='fede'></label>
+                                <label id='messa'></label>
+                            </div>
+                            <div>
+                                <h2 className='mt-10'>In cerca di:</h2>
+                                <div className='mt-5 grid grid-cols-2'>
+                                    {cerca.map((attivita, index) => (
+                                        <label className={attivita == "Amicizia" ? 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-blue-500 rounded-full' : 'p-5 md:p-2 mx-2 md:mx-10 text-white text-center  bg-red-500 rounded-full'} key={index}>{attivita}</label>
+                                    ))}
                                 </div>
                             </div>
                         </div>
-                        <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 text-black bg-white rounded-b-lg '>
-                            <div className='text-left m-4'>
-                                <h2>Passioni:</h2>
-                                {passioni.map((attivita, index) => (
-                                    <li key={index}>{attivita}</li>
-                                ))}
-                            </div>
-                            <div className='text-left m-4'>
-                                <h2>Sport:</h2>
-                                {sport.map((attivita, index) => (
-                                    <li key={index}>{attivita}</li>
-                                ))}
-                            </div>
-                            <div className='text-left m-4'>
-                                <h2>Generi musicali:</h2>
-                                {musica.map((attivita, index) => (
-                                    <li key={index}>{attivita}</li>
-                                ))}
-                            </div>
-                        </div>
-                        <Link to={"/Modifica"}><button className='bg-white m-5'>Modifica</button></Link>
                     </div>
-                )}
-            </div>
+                    <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 text-black bg-white rounded-b-lg '>
+                        <div className='text-left m-4'>
+                            <h2>Passioni:</h2>
+                            {passioni.map((attivita, index) => (
+                                <li key={index}>{attivita}</li>
+                            ))}
+                        </div>
+                        <div className='text-left m-4'>
+                            <h2>Sport:</h2>
+                            {sport.map((attivita, index) => (
+                                <li key={index}>{attivita}</li>
+                            ))}
+                        </div>
+                        <div className='text-left m-4'>
+                            <h2>Generi musicali:</h2>
+                            {musica.map((attivita, index) => (
+                                <li key={index}>{attivita}</li>
+                            ))}
+                        </div>
+                    </div>
+                    <Link to={"/Modifica"}><button className='bg-white m-5'>Modifica</button></Link>
+                </div>
+
+            )
+            }
+
             <Space />
             <Footer />
         </>

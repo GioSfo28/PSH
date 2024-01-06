@@ -442,12 +442,12 @@ function Questionario() {
     ];
 
     const politica = [
+        { id: "politica", value: "Apolitico", label: "Apolitico" },
         { id: "politica", value: "Estrema Sinistra", label: "Estrema Sinistra" },
         { id: "politica", value: "Sinistra", label: "Sinistra" },
         { id: "politica", value: "Centro", label: "Centro" },
         { id: "politica", value: "Destra", label: "Destra" },
         { id: "politica", value: "Estrema Destra", label: "Estrema Destra" },
-        { id: "politica", value: "Apolitico", label: "Apolitico" },
     ];
 
     const istruzione = [
@@ -482,12 +482,12 @@ function Questionario() {
     ];
 
     const fede = [
+        { id: "fede", value: "Scoprilo conoscendomi", label: "Scoprilo conoscendomi" },
         { id: "fede", value: "La Fede è parte delle mie giornate", label: "La Fede è parte delle mie giornate" },
         { id: "fede", value: "La Fede è importante per me", label: "La Fede è importante per me" },
         { id: "fede", value: "Mi aggrappo alla Fede nei momenti di difficoltà", label: "Mi aggrappo alla Fede nei momenti di difficoltà" },
         { id: "fede", value: "Mi considero Cattolico, ma non praticante", label: "Mi considero Cattolico, ma non praticante" },
         { id: "fede", value: "Ho ricevuto un'educazione Cattolica, ma non sono praticante", label: "Ho ricevuto un'educazione Cattolica, ma non sono praticante" },
-        { id: "fede", value: "Scoprilo conoscendomi", label: "Scoprilo conoscendomi" },
     ];
 
     const messa = [
@@ -500,31 +500,37 @@ function Questionario() {
 
 
     const contraccezione = [
+        { id: "contraccezione", value: "Non rispondo", label: "Non rispondo" },
         { id: "contraccezione", value: "Si", label: "Si" },
         { id: "contraccezione", value: "No", label: "No" },
     ];
 
     const valorevita = [
+        { id: "valorevita", value: "Non rispondo", label: "Non rispondo" },
         { id: "valorevita", value: "Si", label: "Si" },
         { id: "valorevita", value: "No", label: "No" },
     ];
 
     const aborto = [
+        { id: "aborto", value: "Non rispondo", label: "Non rispondo" },
         { id: "aborto", value: "Si", label: "Si" },
         { id: "aborto", value: "No", label: "No" },
     ];
 
     const eutanasia = [
+        { id: "eutanasia", value: "Non rispondo", label: "Non rispondo" },
         { id: "eutanasia", value: "Si", label: "Si" },
         { id: "eutanasia", value: "No", label: "No" },
     ];
 
     const sesso = [
+        { id: "sesso", value: "Non rispondo", label: "Non rispondo" },
         { id: "sesso", value: "Si", label: "Si" },
         { id: "sesso", value: "No", label: "No" },
     ];
 
     const lgbt = [
+        { id: "lgbt", value: "Non rispondo", label: "Non rispondo" },
         { id: "lgbt", value: "Si", label: "Si" },
         { id: "lgbt", value: "No", label: "No" },
     ];

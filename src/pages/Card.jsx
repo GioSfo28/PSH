@@ -48,13 +48,12 @@ function Card() {
             document.getElementById("fede").innerHTML = "🙏 " + utente.fede;
             document.getElementById("messa").innerHTML = "⛪ " + utente.messa;
 
-
-            { utente.sesso == "Si" ? document.getElementById("sesso").innerHTML = "✔️ Sesso dopo il matrimonio" : document.getElementById("sesso").innerHTML = "❌ Sesso dopo il matrimonio" }
-            { utente.contraccezione == "Si" ? document.getElementById("contraccezione").innerHTML = "✔️ No contraccezione" : document.getElementById("contraccezione").innerHTML = "❌ No contraccezione" }
-            { utente.lgbt == "Si" ? document.getElementById("lgbt").innerHTML = "✔️ Contro LGBT" : document.getElementById("lgbt").innerHTML = "❌ Contro LGBT" }
-            { utente.aborto == "Si" ? document.getElementById("aborto").innerHTML = "✔️ Contro aborto" : document.getElementById("aborto").innerHTML = "❌ Contro aborto" }
-            { utente.eutanasia == "Si" ? document.getElementById("eutanasia").innerHTML = "✔️ Contro eutanasia" : document.getElementById("eutanasia").innerHTML = "❌ Contro eutanasia" }
-            { utente.valoreVita == "Si" ? document.getElementById("valoreVita").innerHTML = "✔️ Sacralità della vita" : document.getElementById("valoreVita").innerHTML = "❌ Sacralità della vita" }
+            { utente.sesso == "Si" ? document.getElementById("sesso").innerHTML = "✔️ Sesso dopo il matrimonio" : utente.sesso == "No" ? document.getElementById("sesso").innerHTML = "❌ Sesso dopo il matrimonio" : document.getElementById("sesso").innerHTML = "❓​ Sesso dopo il matrimonio" }
+            { utente.contraccezione == "Si" ? document.getElementById("contraccezione").innerHTML = "✔️ No contraccezione" : utente.contraccezione == "No" ? document.getElementById("contraccezione").innerHTML = "❌ No contraccezione" : document.getElementById("contraccezione").innerHTML = "❓​ Contraccezione"; }
+            { utente.lgbt == "Si" ? document.getElementById("lgbt").innerHTML = "✔️ Contro LGBT" : utente.lgbt == "No" ? document.getElementById("lgbt").innerHTML = "❌ Contro LGBT" : document.getElementById("lgbt").innerHTML = "❓ Questione LGBT" }
+            { utente.aborto == "Si" ? document.getElementById("aborto").innerHTML = "✔️ Contro aborto" : utente.aborto == "No" ? document.getElementById("aborto").innerHTML = "❌ Contro aborto" : document.getElementById("aborto").innerHTML = "❓​ Aborto" }
+            { utente.eutanasia == "Si" ? document.getElementById("eutanasia").innerHTML = "✔️ Contro eutanasia" : utente.eutanasia == "No" ? document.getElementById("eutanasia").innerHTML = "❌ Contro eutanasia" : document.getElementById("eutanasia").innerHTML = "❓​ Eutanasia" }
+            { utente.valoreVita == "Si" ? document.getElementById("valoreVita").innerHTML = "✔️ Sacralità della vita" : utente.valoreVita == "No" ? document.getElementById("valoreVita").innerHTML = "❌ Sacralità della vita" : document.getElementById("valoreVita").innerHTML = "❓​ Sacralità della vita" }
         }
     }, [memoizedUtenti]);
 

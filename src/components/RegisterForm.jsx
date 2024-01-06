@@ -116,7 +116,7 @@ function RegisterForm() {
             </div>
             <div>
                 <label for="amico" class="block mb-2 text-sm font-medium text-gray-900">Codice AMICO</label>
-                <input type="text" name="amico" onChange={(e) => { handleCredentials(e) }} id="amico" placeholder="Codice Amico" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required=""></input>
+                <input type="text" name="amico" onChange={(e) => { handleCredentials(e) }} id="amico" placeholder="Codice Amico" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"></input>
             </div>
             {
                 error &&
