@@ -7,7 +7,9 @@ import Footer from '../components/Footer.jsx';
 
 import CardItem from '../components/CardItem.jsx';
 
-import { getDatabase, ref, set, child, get, update, onValue } from "firebase/database";
+import { getDatabase, ref, remove, set, child, get, update, onValue } from "firebase/database";
+import { getStorage,  deleteObject } from "firebase/storage";
+import { getAuth, deleteUser } from "firebase/auth";
 
 import { useSelector } from "react-redux";
 import { selectUsers } from '../redux/usersSlice.js';
@@ -100,6 +102,58 @@ function Admin() {
 
     }
 
+    function elimina() {
+        const storage = getStorage();
+
+       
+
+        onValue(dbRef, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                if (immaginiProfilo[indiceImmagine] === childSnapshot.val().ImmagineProfilo) {
+                    const childKey = childSnapshot.key;
+
+                    remove(ref(db, '/Utenti/' + childKey));
+                    // Specifica il percorso del file che desideri eliminare
+                    const fileRef = ref(storage, '/Utenti/' + childKey + "/ImmagineProfilo.jpg");
+                    const fileRef2 = ref(storage, '/Utenti/' + childKey + "/CI.jpg");
+
+                    // Elimina il file
+                    deleteObject(fileRef)
+                        .then(() => {
+                            console.log('File eliminato con successo.');
+                        })
+                        .catch((error) => {
+                            console.error('E: ', error);
+                        });
+
+                    deleteObject(fileRef2)
+                        .then(() => {
+                            console.log('File eliminato con successo.');
+                        })
+                        .catch((error) => {
+                            console.error('E: ', error);
+                        });
+                    const auth = getAuth();
+
+                    // Sostituisci 'UID_DELL_UTENTE_DA_ELIMINARE' con l'UID effettivo dell'utente che vuoi eliminare
+                    const uidToDelete = childKey;
+
+                    deleteUser(auth, uidToDelete)
+                        .then(() => {
+                            console.log('Utente eliminato con successo.');
+                        })
+                        .catch((error) => {
+                            console.error('Errore:', error);
+                        });
+                    alert("Hai rimosso il profilo completamente!");
+                }
+            });
+        }, {
+            onlyOnce: true
+        });
+
+    }
+
 
 
     return (
@@ -137,6 +191,9 @@ function Admin() {
                         </div>
                         <div className='m-5'>
                             <button className='mx-5 bg-red-600 text-white' onClick={valida}>Profilo verificato ✅</button>
+                        </div>
+                        <div className='m-5'>
+                            <button className='mx-5 bg-black text-white' onClick={elimina}>Elimina profilo ❌​</button>
                         </div>
                     </div>
 

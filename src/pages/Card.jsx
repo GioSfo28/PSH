@@ -87,7 +87,6 @@ function Card() {
                 const verificatoSnapshot = await get(ref(db, "Utenti/" + getUid + "/Verificato"));
                 const value = verificatoSnapshot.val();
                 setVerificatoValue(value);
-                console.log(value);
             } catch (error) {
                 console.error("Errore durante la lettura di Verificato:", error);
             }
