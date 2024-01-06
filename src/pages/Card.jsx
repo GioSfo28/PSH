@@ -20,7 +20,7 @@ function Card() {
     // Utilizza il selettore memorizzato
     const utenti = useSelector(selectUtenti);
     const getUid = localStorage.getItem("uidData");
-    
+
 
     const memoizedUtenti = useMemo(() => {
         return utenti.filter((utente) => utente.id === cardID);
@@ -96,8 +96,8 @@ function Card() {
         fetchVerificato();
     }, []); // L'array vuoto [] assicura che useEffect venga eseguito solo al montaggio del componente
 
-    
-        
+
+
     return (
         <>
             <Navbar />
@@ -153,7 +153,11 @@ function Card() {
                         <div className="mb-10 flex  gap-10">
                             <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
                             <label className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
-                            <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
+                            {utente.matching == true ?
+                                <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
+                                :
+                                null
+                            }
                         </div>
                     </div>
                     :

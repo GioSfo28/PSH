@@ -44,7 +44,7 @@ function Match() {
         fetchData();
     }, []);
 
-
+    let matching = false;
     async function Filtratore() {
         const db = getDatabase();
         const dbRef = ref(db, '/Utenti');
@@ -65,6 +65,7 @@ function Match() {
                                 onValue(dbRef3, (snapshot) => {
                                     snapshot.forEach((childSnapshot) => {
                                         if (childSnapshot.key == getUid) {
+                                            matching = true;
                                             let passioni = [];
                                             let sport = [];
                                             let musica = [];
@@ -139,6 +140,7 @@ function Match() {
                                                         sport: sport,
                                                         musica: musica,
                                                         cerca: cerca,
+                                                        matching: matching,
                                                     };
 
                                                     dispatch(add(utenti1));
