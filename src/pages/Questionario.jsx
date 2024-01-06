@@ -1246,7 +1246,7 @@ function Questionario() {
                                     <Select id="listaGeneri" isMulti options={listaGeneri} className="basic-multi-select" onChange={handleInfoMulti} />
                                 </div>
                             </div>
-                            <button className='m-5' onClick={salva}>Salva</button>
+                            <button className='m-5 bg-white' onClick={salva}>Salva</button>
                         </div>
                 }
 
