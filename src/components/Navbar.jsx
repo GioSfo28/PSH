@@ -17,7 +17,7 @@ const Nav = () => {
     const dispatch = useDispatch();
     const user = useSelector(selectUsers);
     const navigate = useNavigate();
-   
+
 
     const [status, setStatus] = useState(null);
 
@@ -65,12 +65,15 @@ const Nav = () => {
     return (
         <div className='shadow-md w-full fixed top-0 left-0 z-10'>
             <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7 '>
-                <div className='font-bold text-black text-2xl cursor-pointer flex items-center'>
-                    <span className='text-3xl text-red-600 mr-1 pt-2'>
-                        <ion-icon name="chatbubbles"></ion-icon>
-                    </span>
-                    Incontri Cristiani
-                </div>
+                <NavLink to={"/"}>
+                    <div className='font-bold text-black text-2xl cursor-pointer flex items-center'>
+
+                        <span className='text-3xl text-red-600 mr-1 pt-2'>
+                            <ion-icon name="chatbubbles"></ion-icon>
+                        </span>
+                        Incontri Cristiani
+                    </div>
+                </NavLink>
                 <div onClick={() => setOpen(!open)} className='text-3xl text-black absolute right-8 top-6 cursor-pointer md:hidden'>
                     <ion-icon name={open ? 'close' : 'menu'}></ion-icon>
                 </div>
@@ -80,7 +83,7 @@ const Nav = () => {
                         user.currentUser != null ?
                             Links.map((Link) => (
                                 <li key={Link.name} className='md:ml-8 text-lg md:my-0 my-7'>
-                                   <NavLink to={Link.linkto} className='text-black hover:text-red-500 duration-500'>{Link.name}</NavLink>
+                                    <NavLink to={Link.linkto} className='text-black hover:text-red-500 duration-500'>{Link.name}</NavLink>
                                 </li>
                             ))
                             :
