@@ -1054,7 +1054,7 @@ function Questionario() {
                         </div>
                         :
                         <div>
-                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
+                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center text-black bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
                                     <label>Sei in cerca di (puoi selezionarle entrambe):</label>
                                 </div>
@@ -1132,7 +1132,7 @@ function Questionario() {
                                 </div>
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Alcune domande personali</h2>
-                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
+                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center text-black bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
                                     <label>Bevi alcolici?</label>
                                 </div>
@@ -1226,7 +1226,7 @@ function Questionario() {
 
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Ultima richiesta: le tue passioni!</h2>
-                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center bg-white rounded-lg shadow-md shadow-black'>
+                            <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center text-black bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
                                     <label>Seleziona le tue passioni:</label>
                                 </div>
