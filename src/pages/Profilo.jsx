@@ -164,6 +164,7 @@ function Profilo() {
                                 <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='eutanasia'></label>
                             </div>
                         </div>
+                            
                         <div className='text-black text-left p-6 '>
                             <label className='text-3xl font-bold'>Informazioni</label>
                             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 text-left gap-6 p-3'>

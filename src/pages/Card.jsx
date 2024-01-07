@@ -78,7 +78,7 @@ function Card() {
     }
 
     function chat() {
-        alert("Funzione al momento non disponibile!");
+        alert(utente.nome + " ha deciso di condividere il suo numero di cellulare: " + utente.cellulare);
     }
     const db = getDatabase();
     const [verificatoValue, setVerificatoValue] = useState(null);

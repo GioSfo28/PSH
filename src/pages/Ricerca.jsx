@@ -480,6 +480,7 @@ function Ricerca() {
                                     musica: musica,
                                     punteggio: punteggio,
                                     cerca: cerca,
+                                    cellulare: b.Cellulare,
                                 };
 
                                 dispatch(add(utenti1));
@@ -532,6 +533,7 @@ function Ricerca() {
                                         musica: musica,
                                         punteggio: punteggio,
                                         cerca: cerca,
+                                        cellulare: b.Cellulare,
                                     };
 
                                     dispatch(add(utenti1));
@@ -706,6 +708,7 @@ function Ricerca() {
                                     musica: musica,
                                     cerca: cerca,
                                     punteggio: punteggio,
+                                    cellulare: b.Cellulare,
                                 };
 
                                 dispatch(add(utenti1));

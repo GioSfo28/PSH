@@ -144,6 +144,7 @@ function Match() {
                                                         musica: musica,
                                                         cerca: cerca,
                                                         matching: matching,
+                                                        cellulare: b.Cellulare,
                                                     };
 
                                                     dispatch(add(utenti1));

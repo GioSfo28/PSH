@@ -138,6 +138,7 @@ function Like() {
                                             sport: sport,
                                             musica: musica,
                                             cerca: cerca,
+                                            cellulare: b.Cellulare,
                                         };
 
                                         dispatch(add(utenti1));
