@@ -52,7 +52,6 @@ const Nav = () => {
                 console.log(error);
             });
         };
-
     };
 
     let Links = [

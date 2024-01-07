@@ -168,20 +168,20 @@ function Profilo() {
                         <div className='text-black text-left p-6 '>
                             <label className='text-3xl font-bold'>Informazioni</label>
                             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 text-left gap-6 p-3'>
-                                <label id='genere'></label>
-                                <label id='altezza'></label>
-                                <label id='provincia'></label>
-                                <label id='dataNascita'></label>
-                                <label id='anni'></label>
-                                <label id='istruzione'></label>
-                                <label id='lavoro'></label>
-                                <label id='figli'></label>
-                                <label id='poifigli'></label>
-                                <label id='fumo'></label>
-                                <label id='alcol'></label>
-                                <label id='politica'></label>
-                                <label id='fede'></label>
-                                <label id='messa'></label>
+                                    <label title="Genere" id='genere'></label>
+                                    <label title="Altezza" id='altezza'></label>
+                                    <label title="Vive in provincia di" id='provincia'></label>
+                                    <label title="Data di nascita" id='dataNascita'></label>
+                                    <label title="Età" id='anni'></label>
+                                    <label title="Istruzione" id='istruzione'></label>
+                                    <label title="Ambiente lavorativo" id='lavoro'></label>
+                                    <label title="Figli" id='figli'></label>
+                                    <label title="Figli in futuro?" id='poifigli'></label>
+                                    <label title="Fumo" id='fumo'></label>
+                                    <label title="Alcol" id='alcol'></label>
+                                    <label title="Orientamento politico" id='politica'></label>
+                                    <label title="Fede" id='fede'></label>
+                                    <label title="Messa" id='messa'></label>
                             </div>
                             <div className='my-8 mx-4 text-justify bg-blue-600 text-white text-lg text-bold rounded-lg p-6'>
                                 <label id='descrizione'></label>

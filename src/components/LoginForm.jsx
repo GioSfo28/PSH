@@ -82,6 +82,9 @@ function LoginForm() {
                 if (error.message == "Firebase: Error (auth/invalid-credential).") {
                     setError("Credenziali non valide!")
                 };
+                if (error.message == "Firebase: Error (auth/missing-password)."){
+                    setError("Inserisci la password!");
+                }
                 console.log(error.message);
             });
     }

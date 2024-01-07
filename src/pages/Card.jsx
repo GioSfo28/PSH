@@ -82,7 +82,10 @@ function Card() {
         alert(utente.nome + " ha deciso di condividere il suo numero di cellulare: " + utente.cellulare);
         }
         else {
-            alert(utente.nome + " ha deciso di condividere il suo profilo di Instagram: " + utente.instagram);
+            let linkInsta = utente.instagram.split("@");
+            if (confirm(utente.nome + " ha deciso di condividere il suo profilo di Instagram, vuoi aprirlo? ")) {
+                window.open('https://www.instagram.com/' +linkInsta[1], '_blank');
+            };
         }
     }
     const db = getDatabase();
@@ -127,20 +130,20 @@ function Card() {
                     <div className='text-left p-6'>
                         <label className='text-3xl font-bold'>Informazioni</label>
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 text-left gap-6 p-3'>
-                            <label id='genere'></label>
-                            <label id='altezza'></label>
-                            <label id='provincia'></label>
-                            <label id='dataNascita'></label>
-                            <label id='anni'></label>
-                            <label id='istruzione'></label>
-                            <label id='lavoro'></label>
-                            <label id='figli'></label>
-                            <label id='poifigli'></label>
-                            <label id='fumo'></label>
-                            <label id='alcol'></label>
-                            <label id='politica'></label>
-                            <label id='fede'></label>
-                            <label id='messa'></label>
+                            <label title="Genere" id='genere'></label>
+                            <label title="Altezza" id='altezza'></label>
+                            <label title="Vive in provincia di" id='provincia'></label>
+                            <label title="Data di nascita" id='dataNascita'></label>
+                            <label title="Età" id='anni'></label>
+                            <label title="Istruzione" id='istruzione'></label>
+                            <label title="Ambiente lavorativo" id='lavoro'></label>
+                            <label title="Figli" id='figli'></label>
+                            <label title="Figli in futuro?" id='poifigli'></label>
+                            <label title="Fumo" id='fumo'></label>
+                            <label title="Alcol" id='alcol'></label>
+                            <label title="Orientamento politico" id='politica'></label>
+                            <label title="Fede" id='fede'></label>
+                            <label title="Messa" id='messa'></label>
                         </div>
                         <div className='my-8 mx-4 text-justify bg-blue-600 text-white text-lg text-bold rounded-lg p-6'>
                             <label id='descrizione'></label>
@@ -160,10 +163,10 @@ function Card() {
                 {verificatoValue == true ?
                     <div className='w-full grid grid-cols-1 gap-5 text-black bg-white '>
                         <div className="mb-10 grid grid-cols-1 md:flex gap-10">
-                            <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
-                            <label className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
+                            <label title="Lascia un like" className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
+                            <label title="Togli il like" className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
                             {utente.matching == true ?
-                                <label className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
+                                <label title="Contattami!" className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
                                 :
                                 null
                             }

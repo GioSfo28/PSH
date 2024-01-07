@@ -65,7 +65,7 @@ function Ricerca() {
     ];
 
     const province = [
-        { id: "province", value: "Province", label: "Province", isDisabled: true },
+        { id: "province", value: "Provincia di:", label: "Provincia di:", isDisabled: true },
         { id: "province", value: "Agrigento", label: "Agrigento" },
         { id: "province", value: "Alessandria", label: "Alessandria" },
         { id: "province", value: "Ancona", label: "Ancona" },
