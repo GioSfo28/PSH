@@ -47,8 +47,47 @@ function Match() {
 
     let matching = false;
     async function Filtratore() {
+        let aborto = "";
+        let alcol = "";
+        let contraccezione = "";
+        let eutanasia = "";
+        let fede = "";
+        let figli = "";
+        let poiFigli = "";
+        let fumo = "";
+        let lgbt = "";
+        let messa = "";
+        let politica = "";
+        let sesso = "";
+        let valoreVita = "";
+
         const db = getDatabase();
         const dbRef = ref(db, '/Utenti');
+
+
+
+        const dbRef2 = ref(db, '/Utenti/' + getUid + '/Informazioni');
+
+        onValue(dbRef2, (snapshot) => {
+
+            const a = snapshot.val();
+            aborto = a.Aborto;
+            alcol = a.Alcol;
+            contraccezione = a.Contraccezione;
+            eutanasia = a.Eutanasia;
+            fede = a.Fede;
+            figli = a.Figli;
+            poiFigli = a.PoiFigli;
+            fumo = a.Fumo;
+            lgbt = a.LGBT;
+            messa = a.Messa;
+            politica = a.Politica;
+            sesso = a.Sesso;
+            valoreVita = a.ValoreVita;
+
+        }, {
+            onlyOnce: true
+        });
 
         dispatch(reset());
 
@@ -109,9 +148,32 @@ function Match() {
                                                     onlyOnce: true
                                                 });
                                             })
+
+                                            function confrontaEAssegnaPunteggio(valoreSinistra, valoreDestra) {
+                                                if (valoreSinistra === valoreDestra) {
+                                                    return 1;
+                                                } else {
+                                                    return 0;
+                                                }
+                                            }
+
+                                            let punteggio = 0;
+
                                             onValue(dbRef1, (snapshot1) => {
                                                 const a = snapshot1.val();
                                                 if (!utentiAggiunti.has(childKey)) {
+                                                    punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
+                                                    punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
+                                                    punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
+                                                    punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
+                                                    punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                                                    punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
+                                                    punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
+                                                    punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
+                                                    punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
+                                                    punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
+                                                    punteggio = ((100 * punteggio) / 10).toFixed();
+                                                    punteggio = "La tua affinità è: " + punteggio + "%";
                                                     const utenti1 = {
                                                         id: childKey,
                                                         aborto: a.Aborto,
@@ -144,6 +206,7 @@ function Match() {
                                                         musica: musica,
                                                         cerca: cerca,
                                                         matching: matching,
+                                                        punteggio: punteggio,
                                                         cellulare: b.Cellulare,
                                                         contatti: a.Contatti,
                                                         instagram: a.Instagram,
