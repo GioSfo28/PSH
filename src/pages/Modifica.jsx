@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import WindowsTop from '../hooks/WindowsTop.jsx';
 import Navbar from '../components/Navbar.jsx';
 
-import { getDatabase, ref, set, child, get, update } from "firebase/database";
+import { getDatabase, ref, set, child, get, update, onValue } from "firebase/database";
 import { auth, app, storage } from '../firebase/config.js';
 
 import { getDownloadURL, ref as storageRef, uploadBytes, } from "firebase/storage";
@@ -28,32 +28,153 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 function Modifica() {
+
+    const [selectedOpzioni, setSelectedOpzioni] = useState({
+        attivita: [],
+        sport: [],
+        musica: [],
+        cerca: [],
+    });
+
+    const handleReset = () => {
+        setSelectedOpzioni({
+            attivita: [],
+            sport: [],
+            musica: [],
+            cerca: [],
+        });
+    };
+
+
+    const db = getDatabase();
+    const [info, setInfo] = useState({});
+    const getUid = localStorage.getItem("uidData");
+    useEffect(() => {
+        handleReset();
+        const dbRef = ref(db, '/Utenti/' + getUid);
+        const dbRef1 = ref(db, '/Utenti/' + getUid + '/Informazioni');
+
+        let passioni = [];
+        let sport = [];
+        let musica = [];
+        let cerca1 = [];
+        const dbRef2 = ref(db, '/Utenti/' + getUid + '/Informazioni/Passioni');
+        const dbRef3 = ref(db, '/Utenti/' + getUid + '/Informazioni/Sport');
+        const dbRef4 = ref(db, '/Utenti/' + getUid + '/Informazioni/Musica');
+        const dbRef5 = ref(db, '/Utenti/' + getUid + '/Informazioni/Cerca');
+        onValue(dbRef2, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                passioni.push(childSnapshot.val())
+            }, {
+                onlyOnce: true
+            });
+
+        })
+        onValue(dbRef3, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                sport.push(childSnapshot.val())
+            }, {
+                onlyOnce: true
+            });
+
+        })
+        onValue(dbRef4, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                musica.push(childSnapshot.val())
+            }, {
+                onlyOnce: true
+            });
+        })
+        onValue(dbRef5, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                cerca1.push(childSnapshot.val())
+            }, {
+                onlyOnce: true
+            });
+        })
+
+
+        onValue(dbRef1, (snapshot) => {
+            const a = snapshot.val();
+            onValue(dbRef, (snapshot1) => {
+                const b = snapshot1.val();
+                const utenti1 = {
+                    id: getUid,
+                    aborto: a.Aborto,
+                    alcol: a.Alcol,
+                    altezza: a.Altezza,
+                    anni: a.Anni,
+                    contraccezione: a.Contraccezione,
+                    dataNascita: a.DataDiNascita,
+                    eutanasia: a.Eutanasia,
+                    fede: a.Fede,
+                    oraFigli: a.Figli,
+                    poiFigli: a.PoiFigli,
+                    fumo: a.Fumo,
+                    genere: a.Genere,
+                    istruzione: a.Istruzione,
+                    lgbt: a.LGBT,
+                    lavoro: a.Lavoro,
+                    messa: a.Messa,
+                    politica: a.Politica,
+                    province: a.Provincia,
+                    sesso: a.Sesso,
+                    valorevita: a.ValoreVita,
+                    nome: b.Nome,
+                    cognome: b.Cognome,
+                    immagineProfilo: b.ImmagineProfilo,
+                    verificato: b.Verificato,
+                    descrizione: a.Descrizione,
+                    cellulare: b.Cellulare,
+                    contatti: a.Contatti,
+                    instagram: a.Instagram,
+                };
+                const utenti2 = {
+                    attivita: passioni,
+                    sport: sport,
+                    musica: musica,
+                    cerca: cerca1,
+                }
+
+                setInfo(utenti1);
+                setSelectedOpzioni(utenti2);
+
+            }, {
+                onlyOnce: true
+            });
+        }, {
+            onlyOnce: true
+        });
+
+    }, []);
+
+
     WindowsTop();
     const [selectedDate, setSelectedDate] = useState(null);
     const user = useSelector(selectUsers);
     const navigate = useNavigate();
-    const getUid = localStorage.getItem("uidData");
+
 
     const [imageUpload, setImageUpload] = useState(null);
     const [ciUpload, setCiUpload] = useState(null);
 
     async function uploadFile() {
         try {
-            if (!imageUpload) {
-                alert("Seleziona un'immagine profilo da caricare!");
-                return;
+            if (imageUpload) {
+                const imageRef = storageRef(storage, `Utenti/${getUid}/ImmagineProfilo.jpg`);
+                const snapshot = await uploadBytes(imageRef, imageUpload);
+                const url = await getDownloadURL(snapshot.ref);
+
+                const db = getDatabase(app);
+                await update(ref(db, "Utenti/" + getUid), {
+                    ImmagineProfilo: url
+                });
+
+                alert("Immagine caricata correttamente!");
+
             }
 
-            const imageRef = storageRef(storage, `Utenti/${getUid}/ImmagineProfilo.jpg`);
-            const snapshot = await uploadBytes(imageRef, imageUpload);
-            const url = await getDownloadURL(snapshot.ref);
 
-            const db = getDatabase(app);
-            await update(ref(db, "Utenti/" + getUid), {
-                ImmagineProfilo: url
-            });
-
-            alert("Immagine caricata correttamente!");
 
         } catch (error) {
             console.error("Errore durante l'upload dell'immagine profilo:", error.message);
@@ -85,7 +206,7 @@ function Modifica() {
 
 
 
-    const [info, setInfo] = useState({});
+
 
 
     const genere = [
@@ -858,30 +979,12 @@ function Modifica() {
 
 
 
-    const [selectedOpzioni, setSelectedOpzioni] = useState({
-        attivita: [],
-        sport: [],
-        musica: [],
-        cerca:[],
-    });
 
-    const handleReset = () => {
-        setSelectedOpzioni({
-            attivita: [],
-            sport: [],
-            musica: [],
-            cerca:[],
-        });
-    };
 
-    useEffect(() => {
-        handleReset();
-    },[]);
-    
 
     // La tua funzione handleInfo
     const handleInfoMulti = selectedOptions => {
-        
+
         if (selectedOptions.length > 0) {
 
             // Copia lo stato attuale
@@ -890,10 +993,10 @@ function Modifica() {
             for (let i = 0; i < selectedOptions.length; i++) {
                 switch (selectedOptions[i].id) {
                     case "listaAttivita":
-                        if(i==0){
-                        updatedOpzioni.attivita = [selectedOptions[i].label];
+                        if (i == 0) {
+                            updatedOpzioni.attivita = [selectedOptions[i].label];
                         }
-                        else{
+                        else {
                             updatedOpzioni.attivita.push(selectedOptions[i].label);
                         }
                         break;
@@ -998,9 +1101,9 @@ function Modifica() {
 
         }
     }
-    
 
 
+    let descrizione = "";
     async function salva() {
         try {
             document.getElementById("Caricamento").innerHTML = "Caricamento in corso, attendere...!";
@@ -1008,48 +1111,55 @@ function Modifica() {
             if (info.contatti == "Instagram") {
                 profiloInsta = document.getElementById("instagram").value.trim();
             }
-            
+            console.log(info.province);
             // Se l'upload ha successo, esegui l'upload del secondo file
-            await uploadFile();
-            if (imageUpload) {
-
+            uploadFile();
+            
+            descrizione = document.getElementById("descrizione").value.trim();
+            if(descrizione == ""){
+                descrizione = info.descrizione;
+            }
+            if (info.dataNascita == null) {
                 var data2 = selectedDate.getMonth() + 1;
                 var data1 = selectedDate.getDate() + "-" + data2 + "-" + selectedDate.getFullYear();
-                const db = getDatabase(app);
-                await update(ref(db, "Utenti/" + getUid + '/Informazioni'), {
-                    Genere: info.genere,
-                    Contatti: info.contatti,
-                    Instagram: profiloInsta,
-                    Altezza: info.altezza,
-                    Provincia: info.province,
-                    DataDiNascita: data1,
-                    Anni: info.anni,
-                    Alcol: info.alcol,
-                    Fumo: info.fumo,
-                    Figli: info.oraFigli,
-                    PoiFigli: info.poiFigli,
-                    Politica: info.politica,
-                    Istruzione: info.istruzione,
-                    Lavoro: info.lavoro,
-                    Fede: info.fede,
-                    Messa: info.messa,
-                    Contraccezione: info.contraccezione,
-                    Sesso: info.sesso,
-                    ValoreVita: info.valorevita,
-                    Aborto: info.aborto,
-                    Eutanasia: info.eutanasia,
-                    LGBT: info.lgbt,
-                    Passioni: selectedOpzioni.attivita,
-                    Sport: selectedOpzioni.sport,
-                    Musica: selectedOpzioni.musica,
-                    Cerca: selectedOpzioni.cerca,
-                    Descrizione: descrizione,
-                });
+            } else { data1 = info.dataNascita }
 
-                alert("Profilo salvato con successo!");
-                navigate("/Profilo");
-                setInfo(null);
-            }
+            
+            const db = getDatabase(app);
+            await update(ref(db, "Utenti/" + getUid + '/Informazioni'), {
+                Genere: info.genere,
+                Contatti: info.contatti,
+                Instagram: profiloInsta,
+                Altezza: info.altezza,
+                Provincia: info.province,
+                DataDiNascita: data1,
+                Anni: info.anni,
+                Alcol: info.alcol,
+                Fumo: info.fumo,
+                Figli: info.oraFigli,
+                PoiFigli: info.poiFigli,
+                Politica: info.politica,
+                Istruzione: info.istruzione,
+                Lavoro: info.lavoro,
+                Fede: info.fede,
+                Messa: info.messa,
+                Contraccezione: info.contraccezione,
+                Sesso: info.sesso,
+                ValoreVita: info.valorevita,
+                Aborto: info.aborto,
+                Eutanasia: info.eutanasia,
+                LGBT: info.lgbt,
+                Passioni: selectedOpzioni.attivita,
+                Sport: selectedOpzioni.sport,
+                Musica: selectedOpzioni.musica,
+                Cerca: selectedOpzioni.cerca,
+                Descrizione: descrizione,
+            });
+
+            alert("Profilo salvato con successo!");
+            navigate("/Profilo");
+            setInfo(null);
+
         } catch (error) {
             // Gestisci l'errore qui, ad esempio mostra un messaggio all'utente o fai altro
             console.error("Errore durante il salvataggio del profilo:", error.message);
@@ -1277,6 +1387,7 @@ function Modifica() {
                                 </div>
                             </div>
                             <button className='m-5 bg-white' onClick={salva}>Salva</button>
+                            <label className="text-bold text-white text-3xl" id="Caricamento"></label>
                         </div>
                 }
 

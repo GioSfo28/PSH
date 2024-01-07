@@ -1294,7 +1294,7 @@ function Questionario() {
                                 </div>
                             </div>
                             <button className='m-5 bg-white' onClick={salva}>Salva</button>
-                            <labe className="text-bold text-white text-3xl" id="Caricamento"></labe>
+                            <label className="text-bold text-white text-3xl" id="Caricamento"></label>
                         </div>
                 }
 
