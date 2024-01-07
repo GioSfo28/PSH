@@ -93,13 +93,17 @@ function Modifica() {
         { id: "genere", value: "Femmina", label: "Femmina" },
     ];
 
+    const contatti = [
+        { id: "contatti", value: "Instagram", label: "Instagram" },
+        { id: "contatti", value: "Whatsapp", label: "Whatsapp" },
+    ];
+
     const cerca = [
         { id: "cerca", value: "Amicizia", label: "Amicizia" },
         { id: "cerca", value: "Relazione", label: "Relazione" },
     ];
 
     const altezza = [
-
         { id: "altezza", value: "110", label: "110" },
         { id: "altezza", value: "111", label: "111" },
         { id: "altezza", value: "112", label: "112" },
@@ -319,8 +323,6 @@ function Modifica() {
         { id: "province", value: "Vibo valentia", label: "Vibo valentia" },
         { id: "province", value: "Vicenza", label: "Vicenza" },
         { id: "province", value: "Viterbo", label: "Viterbo" },
-
-
     ];
 
     const anni = [
@@ -442,12 +444,12 @@ function Modifica() {
     ];
 
     const politica = [
+        { id: "politica", value: "Apolitico", label: "Apolitico" },
         { id: "politica", value: "Estrema Sinistra", label: "Estrema Sinistra" },
         { id: "politica", value: "Sinistra", label: "Sinistra" },
         { id: "politica", value: "Centro", label: "Centro" },
         { id: "politica", value: "Destra", label: "Destra" },
         { id: "politica", value: "Estrema Destra", label: "Estrema Destra" },
-        { id: "politica", value: "Apolitico", label: "Apolitico" },
     ];
 
     const istruzione = [
@@ -482,12 +484,12 @@ function Modifica() {
     ];
 
     const fede = [
+        { id: "fede", value: "Scoprilo conoscendomi", label: "Scoprilo conoscendomi" },
         { id: "fede", value: "La Fede è parte delle mie giornate", label: "La Fede è parte delle mie giornate" },
         { id: "fede", value: "La Fede è importante per me", label: "La Fede è importante per me" },
         { id: "fede", value: "Mi aggrappo alla Fede nei momenti di difficoltà", label: "Mi aggrappo alla Fede nei momenti di difficoltà" },
         { id: "fede", value: "Mi considero Cattolico, ma non praticante", label: "Mi considero Cattolico, ma non praticante" },
         { id: "fede", value: "Ho ricevuto un'educazione Cattolica, ma non sono praticante", label: "Ho ricevuto un'educazione Cattolica, ma non sono praticante" },
-        { id: "fede", value: "Scoprilo conoscendomi", label: "Scoprilo conoscendomi" },
     ];
 
     const messa = [
@@ -500,31 +502,37 @@ function Modifica() {
 
 
     const contraccezione = [
+        { id: "contraccezione", value: "Non rispondo", label: "Non rispondo" },
         { id: "contraccezione", value: "Si", label: "Si" },
         { id: "contraccezione", value: "No", label: "No" },
     ];
 
     const valorevita = [
+        { id: "valorevita", value: "Non rispondo", label: "Non rispondo" },
         { id: "valorevita", value: "Si", label: "Si" },
         { id: "valorevita", value: "No", label: "No" },
     ];
 
     const aborto = [
+        { id: "aborto", value: "Non rispondo", label: "Non rispondo" },
         { id: "aborto", value: "Si", label: "Si" },
         { id: "aborto", value: "No", label: "No" },
     ];
 
     const eutanasia = [
+        { id: "eutanasia", value: "Non rispondo", label: "Non rispondo" },
         { id: "eutanasia", value: "Si", label: "Si" },
         { id: "eutanasia", value: "No", label: "No" },
     ];
 
     const sesso = [
+        { id: "sesso", value: "Non rispondo", label: "Non rispondo" },
         { id: "sesso", value: "Si", label: "Si" },
         { id: "sesso", value: "No", label: "No" },
     ];
 
     const lgbt = [
+        { id: "lgbt", value: "Non rispondo", label: "Non rispondo" },
         { id: "lgbt", value: "Si", label: "Si" },
         { id: "lgbt", value: "No", label: "No" },
     ];
@@ -930,6 +938,9 @@ function Modifica() {
             case "genere":
                 setInfo({ ...info, ["genere"]: selectedOption.value });
                 break;
+            case "contatti":
+                setInfo({ ...info, ["contatti"]: selectedOption.value });
+                break;
             case "altezza":
                 setInfo({ ...info, ["altezza"]: selectedOption.value });
                 break;
@@ -992,6 +1003,11 @@ function Modifica() {
 
     async function salva() {
         try {
+            document.getElementById("Caricamento").innerHTML = "Caricamento in corso, attendere...!";
+            let profiloInsta = "";
+            if (info.contatti == "Instagram") {
+                profiloInsta = document.getElementById("instagram").value.trim();
+            }
             
             // Se l'upload ha successo, esegui l'upload del secondo file
             await uploadFile();
@@ -1002,6 +1018,8 @@ function Modifica() {
                 const db = getDatabase(app);
                 await update(ref(db, "Utenti/" + getUid + '/Informazioni'), {
                     Genere: info.genere,
+                    Contatti: info.contatti,
+                    Instagram: profiloInsta,
                     Altezza: info.altezza,
                     Provincia: info.province,
                     DataDiNascita: data1,
@@ -1025,6 +1043,7 @@ function Modifica() {
                     Sport: selectedOpzioni.sport,
                     Musica: selectedOpzioni.musica,
                     Cerca: selectedOpzioni.cerca,
+                    Descrizione: descrizione,
                 });
 
                 alert("Profilo salvato con successo!");
@@ -1055,11 +1074,31 @@ function Modifica() {
                         <div>
                             <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5 px-5 place-items-center text-black bg-white rounded-lg shadow-md shadow-black'>
                                 <div className='p-4'>
-                                    <label>Sei in cerca di:</label>
+                                    <label>Sei in cerca di (puoi selezionarle entrambe):</label>
                                 </div>
                                 <div className='p-4 w-[100%]'>
                                     <Select id="cerca" isMulti options={cerca} className="basic-multi-select" onChange={handleInfoMulti} />
                                 </div>
+                                <div className='grid p-4'>
+                                    <label>Come preferisci essere contattato?</label>
+                                    <label className='text-gray-500 underline underline-offset-4 '>(La modalità di contatto sarà mostrata solo in caso di MATCH)</label>
+                                </div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select name='contact' id="contact" options={contatti} onChange={handleInfo} />
+                                </div>
+                                {info.contatti == "Instagram" ?
+                                    <>
+                                        <div className='grid p-4'>
+                                            <label>Profilo instagram:</label>
+                                        </div>
+                                        <div className='p-4 w-[100%]'>
+                                            <input type="text" name="instagram" id="instagram" placeholder="@tuo_profilo" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"></input>
+                                        </div>
+                                    </>
+                                    :
+                                    null
+                                }
+
                                 <div className='p-4'>
                                     <label>Genere:</label>
                                 </div>
@@ -1096,7 +1135,7 @@ function Modifica() {
                                     />
                                 </div>
                                 <div className='p-4'>
-                                    <label>Età?</label>
+                                    <label>Quanti anni hai?</label>
                                 </div>
                                 <div className='p-4 w-[100%]'>
                                     <Select id="anni" options={anni} onChange={handleInfo} />
@@ -1114,6 +1153,12 @@ function Modifica() {
                                             setImageUpload(e.target.files[0]);
                                         }}
                                     />
+                                </div>
+                                <div className='p-4'>
+                                    <label>Aggiungi una tua descrizione:</label>
+                                </div>
+                                <div className='p-4'>
+                                    <textarea className='border border-black p-2' name="descrizione" id="descrizione" cols="50" rows="10"></textarea>
                                 </div>
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Alcune domande personali</h2>

@@ -104,7 +104,6 @@ function Questionario() {
     ];
 
     const altezza = [
-
         { id: "altezza", value: "110", label: "110" },
         { id: "altezza", value: "111", label: "111" },
         { id: "altezza", value: "112", label: "112" },
@@ -324,8 +323,6 @@ function Questionario() {
         { id: "province", value: "Vibo valentia", label: "Vibo valentia" },
         { id: "province", value: "Vicenza", label: "Vicenza" },
         { id: "province", value: "Viterbo", label: "Viterbo" },
-
-
     ];
 
     const anni = [
@@ -1172,7 +1169,7 @@ function Questionario() {
                                         onChange={(e) => {
                                             setCiUpload(e.target.files[0]);
                                         }}
-                                    />
+                                    /> 
                                 </div>
                                 <div className='p-4'>
                                     <label>Aggiungi una tua descrizione:</label>
