@@ -78,7 +78,12 @@ function Card() {
     }
 
     function chat() {
+        if (utente.contatti == "Whatsapp"){
         alert(utente.nome + " ha deciso di condividere il suo numero di cellulare: " + utente.cellulare);
+        }
+        else {
+            alert(utente.nome + " ha deciso di condividere il suo profilo di Instagram: " + utente.instagram);
+        }
     }
     const db = getDatabase();
     const [verificatoValue, setVerificatoValue] = useState(null);

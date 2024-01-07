@@ -93,6 +93,11 @@ function Questionario() {
         { id: "genere", value: "Femmina", label: "Femmina" },
     ];
 
+    const contatti = [
+        { id: "contatti", value: "Instagram", label: "Instagram" },
+        { id: "contatti", value: "Whatsapp", label: "Whatsapp" },
+    ];
+
     const cerca = [
         { id: "cerca", value: "Amicizia", label: "Amicizia" },
         { id: "cerca", value: "Relazione", label: "Relazione" },
@@ -860,7 +865,7 @@ function Questionario() {
         attivita: [],
         sport: [],
         musica: [],
-        cerca:[],
+        cerca: [],
     });
 
     const handleReset = () => {
@@ -868,18 +873,18 @@ function Questionario() {
             attivita: [],
             sport: [],
             musica: [],
-            cerca:[],
+            cerca: [],
         });
     };
 
     useEffect(() => {
         handleReset();
-    },[]);
-    
+    }, []);
+
 
     // La tua funzione handleInfo
     const handleInfoMulti = selectedOptions => {
-        
+
         if (selectedOptions.length > 0) {
 
             // Copia lo stato attuale
@@ -888,10 +893,10 @@ function Questionario() {
             for (let i = 0; i < selectedOptions.length; i++) {
                 switch (selectedOptions[i].id) {
                     case "listaAttivita":
-                        if(i==0){
-                        updatedOpzioni.attivita = [selectedOptions[i].label];
+                        if (i == 0) {
+                            updatedOpzioni.attivita = [selectedOptions[i].label];
                         }
-                        else{
+                        else {
                             updatedOpzioni.attivita.push(selectedOptions[i].label);
                         }
                         break;
@@ -935,6 +940,9 @@ function Questionario() {
         switch (selectedOption.id) {
             case "genere":
                 setInfo({ ...info, ["genere"]: selectedOption.value });
+                break;
+            case "contatti":
+                setInfo({ ...info, ["contatti"]: selectedOption.value });
                 break;
             case "altezza":
                 setInfo({ ...info, ["altezza"]: selectedOption.value });
@@ -993,12 +1001,16 @@ function Questionario() {
 
         }
     }
-    
+
 
 
     async function salva() {
         try {
             document.getElementById("Caricamento").innerHTML = "Caricamento in corso, attendere...!";
+            let profiloInsta = "";
+            if (info.contatti == "Instagram"){
+                profiloInsta = document.getElementById("instagram").value.trim();
+            }
             // Esegui l'upload del file CI
             await uploadCI();
 
@@ -1010,8 +1022,11 @@ function Questionario() {
                 var data2 = selectedDate.getMonth() + 1;
                 var data1 = selectedDate.getDate() + "-" + data2 + "-" + selectedDate.getFullYear();
                 const db = getDatabase(app);
+                
                 await update(ref(db, "Utenti/" + getUid + '/Informazioni'), {
                     Genere: info.genere,
+                    Contatti: info.contatti,
+                    Instagram: profiloInsta,
                     Altezza: info.altezza,
                     Provincia: info.province,
                     DataDiNascita: data1,
@@ -1070,6 +1085,26 @@ function Questionario() {
                                 <div className='p-4 w-[100%]'>
                                     <Select id="cerca" isMulti options={cerca} className="basic-multi-select" onChange={handleInfoMulti} />
                                 </div>
+                                <div className='grid p-4'>
+                                    <label>Come preferisci essere contattato?</label>
+                                    <label className='text-gray-500 underline underline-offset-4 '>(La modalità di contatto sarà mostrata solo in caso di MATCH)</label>
+                                </div>
+                                <div className='p-4 w-[100%]'>
+                                    <Select name='contact' id="contact" options={contatti} onChange={handleInfo} />
+                                </div>
+                                {info.contatti == "Instagram" ?
+                                    <>
+                                        <div className='grid p-4'>
+                                            <label>Profilo instagram:</label>
+                                        </div>
+                                        <div className='p-4 w-[100%]'>
+                                            <input type="text" name="instagram" id="instagram" placeholder="@tuo_profilo" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"></input>
+                                        </div>
+                                    </>
+                                    :
+                                    null
+                                }
+
                                 <div className='p-4'>
                                     <label>Genere:</label>
                                 </div>
@@ -1143,7 +1178,7 @@ function Questionario() {
                                     <label>Aggiungi una tua descrizione:</label>
                                 </div>
                                 <div className='p-4'>
-                                   <textarea className='border border-black' name="descrizione" id="descrizione" cols="50" rows="10"></textarea>
+                                    <textarea className='border border-black' name="descrizione" id="descrizione" cols="50" rows="10"></textarea>
                                 </div>
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Alcune domande personali</h2>

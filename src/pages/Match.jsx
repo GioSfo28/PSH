@@ -145,6 +145,8 @@ function Match() {
                                                         cerca: cerca,
                                                         matching: matching,
                                                         cellulare: b.Cellulare,
+                                                        contatti: a.Contatti,
+                                                        instagram: a.Instagram,
                                                     };
 
                                                     dispatch(add(utenti1));
