@@ -79,11 +79,13 @@ function Card() {
 
     function chat() {
         if (utente.contatti == "Whatsapp"){
-        alert(utente.nome + " ha deciso di condividere il suo numero di cellulare: " + utente.cellulare);
+            if (confirm(utente.nome + " ha deciso di condividere il suo contatto Whatsapp, vuoi aprirlo? ")) {
+                window.open('https://wa.me/39' +utente.cellulare, '_blank');
+            };
         }
         else {
             let linkInsta = utente.instagram.split("@");
-            if (confirm(utente.nome + " ha deciso di condividere il suo profilo di Instagram, vuoi aprirlo? ")) {
+            if (confirm(utente.nome + " ha deciso di condividere il suo profilo Instagram, vuoi aprirlo? ")) {
                 window.open('https://www.instagram.com/' +linkInsta[1], '_blank');
             };
         }
