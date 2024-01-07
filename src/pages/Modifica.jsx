@@ -1107,9 +1107,19 @@ function Modifica() {
     async function salva() {
         try {
             document.getElementById("Caricamento").innerHTML = "Caricamento in corso, attendere...!";
-            let profiloInsta = "";
+            let profiloInsta = info.instagram;
+            let cellulare = info.cellulare;
+            console.log(cellulare);
             if (info.contatti == "Instagram") {
-                profiloInsta = document.getElementById("instagram").value.trim();
+                if (info.Instagram == "" && document.getElementById("instagram").value.trim() != ""){
+                    profiloInsta = document.getElementById("instagram").value.trim();
+                }
+                
+            }
+            if (info.contatti == "Whatsapp") {
+                if (info.cellulare == "" && document.getElementById("cellulare").value.trim() != "") {
+                    cellulare = document.getElementById("cellulare").value.trim();
+                }
             }
             // Se l'upload ha successo, esegui l'upload del secondo file
             uploadFile();
@@ -1125,6 +1135,9 @@ function Modifica() {
 
             
             const db = getDatabase(app);
+            await update(ref(db, "Utenti/" + getUid), {
+               Cellulare: cellulare,
+            });
             await update(ref(db, "Utenti/" + getUid + '/Informazioni'), {
                 Genere: info.genere,
                 Contatti: info.contatti,
@@ -1204,6 +1217,15 @@ function Modifica() {
                                         <div className='p-4 w-[100%]'>
                                             <input type="text" name="instagram" id="instagram" placeholder="@tuo_profilo" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"></input>
                                         </div>
+                                    </>
+                                    : info.contatti == "Whatsapp"?
+                                    <>
+                                            <div className='grid p-4'>
+                                                <label>Numero di cellulare:</label>
+                                            </div>
+                                            <div className='p-4 w-[100%]'>
+                                                <input type="tell" name="cellulare" id="cellulare" placeholder="" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"></input>
+                                            </div>
                                     </>
                                     :
                                     null

@@ -66,7 +66,6 @@ const Nav = () => {
             <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7 '>
                 <NavLink to={"/"}>
                     <div className='font-bold text-black text-2xl cursor-pointer flex items-center'>
-
                         <span className='text-3xl text-yellow-600 mr-1 pt-2'>
                             <ion-icon name="star"></ion-icon>
                         </span>
