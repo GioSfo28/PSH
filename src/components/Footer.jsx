@@ -6,11 +6,11 @@ function Footer() {
         <footer className="w-full py-20 bg-[#010e30]">
             <div className='grid grid-cols-2'>
                 <div>
-                    <div className='font-bold text-xl cursor-pointer flex items-center text-white px-10'>
-                        <span className='text-3xl text-red-600 mr-1 pt-2'>
-                            <ion-icon name="chatbubbles"></ion-icon>
+                    <div className='font-bold text-3xl cursor-pointer flex items-center text-white px-10'>
+                        <span className='text-3xl text-yellow-600 mr-1 pt-2'>
+                            <ion-icon name="star"></ion-icon>
                         </span>
-                        Incontri Cristiani
+                        Legami di Luce
                     </div>
 
                 </div>

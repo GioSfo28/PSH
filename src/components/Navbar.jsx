@@ -68,10 +68,10 @@ const Nav = () => {
                 <NavLink to={"/"}>
                     <div className='font-bold text-black text-2xl cursor-pointer flex items-center'>
 
-                        <span className='text-3xl text-red-600 mr-1 pt-2'>
-                            <ion-icon name="chatbubbles"></ion-icon>
+                        <span className='text-3xl text-yellow-600 mr-1 pt-2'>
+                            <ion-icon name="star"></ion-icon>
                         </span>
-                        Incontri Cristiani
+                        Legami di Luce
                     </div>
                 </NavLink>
                 <div onClick={() => setOpen(!open)} className='text-3xl text-black absolute right-8 top-6 cursor-pointer md:hidden'>
