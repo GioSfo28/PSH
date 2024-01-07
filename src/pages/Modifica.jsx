@@ -1175,6 +1175,7 @@ function Modifica() {
             <Space></Space>
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-blue-700">
                 <h2 className="mb-10 text-white text-4xl font-bold">Modifica il tuo profilo!</h2>
+                <h2 className="mb-10 text-white text-xl font-bold">Modifica le voci che ti servono, le altre rimarranno con i dati attuali</h2>
                 {
                     user.currentUser == null ?
                         <div className='grid place-items-center mx-auto'>
