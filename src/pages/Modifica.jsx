@@ -1111,10 +1111,9 @@ function Modifica() {
             let cellulare = info.cellulare;
             console.log(cellulare);
             if (info.contatti == "Instagram") {
-                if (info.Instagram == "" && document.getElementById("instagram").value.trim() != ""){
+                if (info.instagram == "" && document.getElementById("instagram").value.trim() != ""){
                     profiloInsta = document.getElementById("instagram").value.trim();
                 }
-                
             }
             if (info.contatti == "Whatsapp") {
                 if (info.cellulare == "" && document.getElementById("cellulare").value.trim() != "") {
