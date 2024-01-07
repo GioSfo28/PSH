@@ -1111,7 +1111,6 @@ function Modifica() {
             if (info.contatti == "Instagram") {
                 profiloInsta = document.getElementById("instagram").value.trim();
             }
-            console.log(info.province);
             // Se l'upload ha successo, esegui l'upload del secondo file
             uploadFile();
             
