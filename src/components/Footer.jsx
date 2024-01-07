@@ -16,36 +16,19 @@ function Footer() {
                 </div>
                 <div className='font-bold text-l cursor-pointer items-center text-white px-10'>
                     <p>Seguici sui nostri social:</p>
-                    <a href="https://chat.whatsapp.com/HdymYMo0FToCCFnXqMFihA" target="_blank">
+                    <a href="/" target="_blank">
                         <span className='text-3xl text-white hover:text-green-400 mr-2 pt-2'>
                             <ion-icon name="logo-whatsapp"></ion-icon>
                         </span>
                     </a>
-                    <a href="https://www.instagram.com/professioni.sanitarie.help/" target="_blank">
+                    <a href="https://www.instagram.com/legami.di.luce/" target="_blank">
                         <span className='text-3xl text-white hover:text-orange-500 mr-2 pt-2'>
                             <ion-icon name="logo-instagram" ></ion-icon>
                         </span>
                     </a>
-                    <a href="https://www.facebook.com/groups/1456290811105652" target="_blank">
-                        <span className='text-3xl text-white hover:text-[#535bf2] mr-2 pt-2'>
-                            <ion-icon name="logo-facebook"></ion-icon>
-                        </span>
-                    </a>
-                    <a href="https://www.youtube.com/@psh-professionisanitariehe7395" target="_blank">
-                        <span className='text-3xl text-white hover:text-red-500 mr-2 pt-2'>
-                            <ion-icon name="logo-youtube"></ion-icon>
-                        </span>
-                    </a>
-                    <a href="https://discord.gg/B4KqfXUeHf" target="_blank">
-                        <span className='text-3xl text-white hover:text-[#535bf2] mr-2 pt-2'>
-                            <ion-icon name="logo-discord"></ion-icon>
-                        </span>
-                    </a>
-                    <a href="mailto:info@professionisanitariehelp.it">
-                        <span className='text-3xl text-white hover:text-red-500 mr-2 pt-2'>
-                            <ion-icon name="mail"></ion-icon>
-                        </span>
-                    </a>
+                    
+                    
+                    
                 </div>
             </div>
             <div className='mt-20 font-bold text-xs text-white'>
