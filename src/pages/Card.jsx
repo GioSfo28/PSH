@@ -119,7 +119,7 @@ function Card() {
                 <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-black bg-white rounded-t-lg shadow'>
                     <div className='text-center grid place-items-center p-6'>
                         <label className='text-3xl font-bold' id='nomecognome'>{utente.nome}</label>
-                        <img className='mt-5 w-auto h-[350px] rounded-xl object-cover shadow-md shadow-black md:hover:scale-150 transition-all ease-linear' id='profilo' src={utente.immagineProfilo} />
+                        <img className='mt-5 w-auto h-[350px] rounded-xl object-cover shadow-md shadow-black hover:scale-150 transition-all ease-linear' id='profilo' src={utente.immagineProfilo} />
                         <div className='my-5 grid grid-cols-2 gap-1'>
                             <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
                             <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='aborto'></label>
