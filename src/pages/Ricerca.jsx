@@ -29,6 +29,7 @@ function Ricerca() {
 
     const [isChecked, setIsChecked] = useState(false);
     const [isMatch, setIsMatch] = useState(false);
+    const [isAll, setIsAll] = useState(false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
         if (isMatch) {
@@ -489,7 +490,7 @@ function Ricerca() {
 
                                 utentiAggiunti.add(childKey);
                             } else {
-                                if (isChecked) {
+                                if (!isChecked) {
                                     if (genere != a.Genere) {
                                         punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
                                         punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
@@ -542,6 +543,58 @@ function Ricerca() {
                                         dispatch(add(utenti1));
                                         utentiAggiunti.add(childKey);
                                     }
+                                    
+                                } else {
+                                    punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
+                                    punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
+                                    punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
+                                    punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
+                                    punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                                    punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
+                                    punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
+                                    punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
+                                    punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
+                                    punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
+
+                                    punteggio = ((100 * punteggio) / 10).toFixed();
+                                    punteggio = "La tua affinità è: " + punteggio + "%";
+                                    const utenti1 = {
+                                        id: childKey,
+                                        aborto: a.Aborto,
+                                        alcol: a.Alcol,
+                                        altezza: a.Altezza,
+                                        anni: a.Anni,
+                                        contraccezione: a.Contraccezione,
+                                        dataNascita: a.DataDiNascita,
+                                        eutanasia: a.Eutanasia,
+                                        fede: a.Fede,
+                                        figli: a.Figli,
+                                        poiFigli: a.PoiFigli,
+                                        fumo: a.Fumo,
+                                        genere: a.Genere,
+                                        istruzione: a.Istruzione,
+                                        lgbt: a.LGBT,
+                                        lavoro: a.Lavoro,
+                                        messa: a.Messa,
+                                        politica: a.Politica,
+                                        provincia: a.Provincia,
+                                        sesso: a.Sesso,
+                                        valoreVita: a.ValoreVita,
+                                        nome: b.Nome,
+                                        cognome: b.Cognome,
+                                        immagineProfilo: b.ImmagineProfilo,
+                                        verificato: b.Verificato,
+                                        descrizione: a.Descrizione,
+                                        passioni: passioni,
+                                        sport: sport,
+                                        musica: musica,
+                                        punteggio: punteggio,
+                                        cerca: cerca,
+                                        cellulare: b.Cellulare,
+                                    };
+
+                                    dispatch(add(utenti1));
+                                    utentiAggiunti.add(childKey);
                                 }
                             }
                         }
