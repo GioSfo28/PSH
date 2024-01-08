@@ -338,6 +338,7 @@ function Ricerca() {
     function Filtratore() {
         dispatch(reset());
         let aborto = "";
+        let genere = "";
         let alcol = "";
         let contraccezione = "";
         let eutanasia = "";
@@ -374,6 +375,7 @@ function Ricerca() {
             politica = a.Politica;
             sesso = a.Sesso;
             valoreVita = a.ValoreVita;
+            genere = a.Genere;
 
         }, {
             onlyOnce: true
@@ -488,56 +490,58 @@ function Ricerca() {
                                 utentiAggiunti.add(childKey);
                             } else {
                                 if (isChecked) {
-                                    punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
-                                    punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
-                                    punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
-                                    punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
-                                    punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
-                                    punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
-                                    punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
-                                    punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
-                                    punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
-                                    punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
+                                    if (genere != a.Genere) {
+                                        punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
+                                        punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
+                                        punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
+                                        punteggio += confrontaEAssegnaPunteggio(eutanasia, a.Eutanasia);
+                                        punteggio += confrontaEAssegnaPunteggio(figli, a.Figli);
+                                        punteggio += confrontaEAssegnaPunteggio(fumo, a.Fumo);
+                                        punteggio += confrontaEAssegnaPunteggio(lgbt, a.LGBT);
+                                        punteggio += confrontaEAssegnaPunteggio(politica, a.Politica);
+                                        punteggio += confrontaEAssegnaPunteggio(sesso, a.Sesso);
+                                        punteggio += confrontaEAssegnaPunteggio(valoreVita, a.ValoreVita);
 
-                                    punteggio = ((100 * punteggio) / 10).toFixed();
-                                    punteggio = "La tua affinità è: " + punteggio + "%";
-                                    const utenti1 = {
-                                        id: childKey,
-                                        aborto: a.Aborto,
-                                        alcol: a.Alcol,
-                                        altezza: a.Altezza,
-                                        anni: a.Anni,
-                                        contraccezione: a.Contraccezione,
-                                        dataNascita: a.DataDiNascita,
-                                        eutanasia: a.Eutanasia,
-                                        fede: a.Fede,
-                                        figli: a.Figli,
-                                        poiFigli: a.PoiFigli,
-                                        fumo: a.Fumo,
-                                        genere: a.Genere,
-                                        istruzione: a.Istruzione,
-                                        lgbt: a.LGBT,
-                                        lavoro: a.Lavoro,
-                                        messa: a.Messa,
-                                        politica: a.Politica,
-                                        provincia: a.Provincia,
-                                        sesso: a.Sesso,
-                                        valoreVita: a.ValoreVita,
-                                        nome: b.Nome,
-                                        cognome: b.Cognome,
-                                        immagineProfilo: b.ImmagineProfilo,
-                                        verificato: b.Verificato,
-                                        descrizione: a.Descrizione,
-                                        passioni: passioni,
-                                        sport: sport,
-                                        musica: musica,
-                                        punteggio: punteggio,
-                                        cerca: cerca,
-                                        cellulare: b.Cellulare,
-                                    };
+                                        punteggio = ((100 * punteggio) / 10).toFixed();
+                                        punteggio = "La tua affinità è: " + punteggio + "%";
+                                        const utenti1 = {
+                                            id: childKey,
+                                            aborto: a.Aborto,
+                                            alcol: a.Alcol,
+                                            altezza: a.Altezza,
+                                            anni: a.Anni,
+                                            contraccezione: a.Contraccezione,
+                                            dataNascita: a.DataDiNascita,
+                                            eutanasia: a.Eutanasia,
+                                            fede: a.Fede,
+                                            figli: a.Figli,
+                                            poiFigli: a.PoiFigli,
+                                            fumo: a.Fumo,
+                                            genere: a.Genere,
+                                            istruzione: a.Istruzione,
+                                            lgbt: a.LGBT,
+                                            lavoro: a.Lavoro,
+                                            messa: a.Messa,
+                                            politica: a.Politica,
+                                            provincia: a.Provincia,
+                                            sesso: a.Sesso,
+                                            valoreVita: a.ValoreVita,
+                                            nome: b.Nome,
+                                            cognome: b.Cognome,
+                                            immagineProfilo: b.ImmagineProfilo,
+                                            verificato: b.Verificato,
+                                            descrizione: a.Descrizione,
+                                            passioni: passioni,
+                                            sport: sport,
+                                            musica: musica,
+                                            punteggio: punteggio,
+                                            cerca: cerca,
+                                            cellulare: b.Cellulare,
+                                        };
 
-                                    dispatch(add(utenti1));
-                                    utentiAggiunti.add(childKey);
+                                        dispatch(add(utenti1));
+                                        utentiAggiunti.add(childKey);
+                                    }
                                 }
                             }
                         }
@@ -808,7 +812,7 @@ function Ricerca() {
                                 <h2 className='text-black'>Nessun utente corrisponde alla ricerca</h2>
                             </div> :
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 md:gap-5 ">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 md:gap-5 ">
                                 {utenti.map((utente) => (
                                     <CardItem
                                         key={utente.id}

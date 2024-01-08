@@ -36,10 +36,10 @@ function Footer() {
             </div>
 
             <div className='mt-20 grid grid-cols-3'>
-                <a className='text-white' href="https://www.iubenda.com/privacy-policy/49235521/cookie-policy" title="Cookie Policy ">Cookie
+                <a className='text-white' href="https://www.iubenda.com/privacy-policy/59370081/cookie-policy" title="Cookie Policy ">Cookie
                     Policy</a>
 
-                <a className='text-white' href="https://www.iubenda.com/privacy-policy/49235521"
+                <a className='text-white' href="https://www.iubenda.com/privacy-policy/59370081"
                     title="Privacy Policy ">Privacy Policy</a>
 
                 <a className='text-white' href="https://www.iubenda.com/termini-e-condizioni/49235521"
