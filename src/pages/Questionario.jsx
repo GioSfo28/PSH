@@ -1175,7 +1175,7 @@ function Questionario() {
                                     <label>Aggiungi una tua descrizione:</label>
                                 </div>
                                 <div className='p-4'>
-                                    <textarea className='border border-black p-2' name="descrizione" id="descrizione" cols="50" rows="10"></textarea>
+                                    <textarea className='border border-black p-2' name="descrizione" id="descrizione" cols="35" rows="10"></textarea>
                                 </div>
                             </div>
                             <h2 className="my-10 text-white text-4xl font-bold">Alcune domande personali</h2>
