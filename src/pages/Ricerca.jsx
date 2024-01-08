@@ -821,7 +821,7 @@ function Ricerca() {
                                         imgURL={utente.immagineProfilo}
                                         punteggio={utente.punteggio}
                                         cerca={utente.cerca}
-                                        title={utente.nome + " " + utente.cognome + ", " + utente.anni}>
+                                        title={utente.nome + ", " + utente.anni}>
                                         {utente.provincia}
                                     </CardItem>
                                 ))}
