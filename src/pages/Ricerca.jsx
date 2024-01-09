@@ -265,17 +265,17 @@ function Ricerca() {
 
     ];
     useEffect(() => {
-
-        Filtratore();
-
-
-    }, []);
+        console.log(isChecked + " " + isMatch)
+        if (!isChecked && !isMatch) {
+            Filtratore();
+        }
+    }, [isChecked, isMatch]);
 
     useEffect(() => {
+        // QUESTO AVVIENE OGNI VOLTA CHE CAMBIA ISCHECKED
         if (isChecked) {
             Filtratore();
         }
-
     }, [isChecked]);
 
     const handleInfo = (selectedOption) => {
