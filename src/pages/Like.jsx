@@ -61,6 +61,7 @@ function Like() {
         let politica = "";
         let sesso = "";
         let valoreVita = "";
+        let messaggio = "";
 
         const db = getDatabase();
         const dbRef = ref(db, '/Utenti');
@@ -88,7 +89,9 @@ function Like() {
 
         }, {
             onlyOnce: true
-        });
+        }); 
+        
+        
 
 
         dispatch(reset());
@@ -103,6 +106,7 @@ function Like() {
                     onValue(dbRef2, (snapshot) => {
                         snapshot.forEach((childSnapshot) => {
                             if (childSnapshot.key == childKey) {
+                                const c = childSnapshot.val();
                                 let passioni = [];
                                 let sport = [];
                                 let musica = [];
@@ -145,7 +149,12 @@ function Like() {
                                         onlyOnce: true
                                     });
                                 })
+                               
 
+                               
+                                messaggio = c.Messaggio;
+                                console.log(messaggio);
+                               
                                 function confrontaEAssegnaPunteggio(valoreSinistra, valoreDestra) {
                                     if (valoreSinistra === valoreDestra) {
                                         return 1;
@@ -204,6 +213,7 @@ function Like() {
                                             cerca: cerca,
                                             cellulare: b.Cellulare,
                                             punteggio: punteggio,
+                                            messaggio: messaggio,
                                            
                                         };
 

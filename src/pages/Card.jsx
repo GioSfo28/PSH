@@ -5,7 +5,8 @@ import Footer from "../components/Footer";
 import WindowsTop from '../hooks/WindowsTop.jsx';
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState, } from "react";
+import Modal from 'react-modal';
 import { createSelector } from 'reselect';
 import { selectUtenti } from '../redux/utentiSlice.js';
 
@@ -27,6 +28,33 @@ function Card() {
     const memoizedUtenti = useMemo(() => {
         return utenti.filter((utente) => utente.id === cardID);
     }, [utenti, cardID]);
+
+    // FINESTRA MODALE
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [message, setMessage] = useState('');
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleConfirm = () => {
+        // Puoi gestire l'input del messaggio qui
+        alert("Hai lasciato un ❤️ con il messaggio!");
+        const db = getDatabase();
+
+
+        update(ref(db, "Utenti/" + cardID + '/Like/' + getUid), {
+            Like: 1,
+            Messaggio: message,
+        });
+
+        // Chiudi la finestra modale
+        closeModal();
+    };
 
 
 
@@ -78,15 +106,15 @@ function Card() {
     }
 
     function chat() {
-        if (utente.contatti == "Whatsapp"){
-            if (confirm(utente.nome + " ha deciso di condividere il suo contatto Whatsapp, vuoi aprirlo? ")) {
-                window.open('https://wa.me/39' +utente.cellulare, '_blank');
+        if (utente.contatti == "Whatsapp") {
+            if (confirm(utente.nome + " ha deciso di condividere il suo contatto Whatsapp, vuoi aprirlo?")) {
+                window.open('https://wa.me/39' + utente.cellulare, '_blank');
             };
         }
         else {
             let linkInsta = utente.instagram.split("@");
-            if (confirm(utente.nome + " ha deciso di condividere il suo profilo Instagram, vuoi aprirlo? ")) {
-                window.open('https://www.instagram.com/' +linkInsta[1], '_blank');
+            if (confirm(utente.nome + " ha deciso di condividere il suo profilo Instagram, vuoi aprirlo?")) {
+                window.open('https://www.instagram.com/' + linkInsta[1], '_blank');
             };
         }
     }
@@ -115,10 +143,18 @@ function Card() {
             <Space></Space>
             <div className="w-full grid place-items-center py-10 px-4 mx-auto bg-orange-700">
                 <h2 className="mb-10 text-white text-4xl font-bold">Profilo</h2>
+                {utente.messaggio ?
+                    <>
+                        <div className='w-full grid grid-cols-1 text-black text-left bg-white rounded-lg shadow-lg shadow-black m-5 p-5'>
 
+                            <label className='text-3xl font-bold' id='messaggio'>{"Messaggio ricevuto: " + utente.messaggio}</label>
+                        </div>
+                    </> :
+                    null
+                }
                 <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-black bg-white rounded-t-lg shadow'>
                     <div className='text-center grid place-items-center p-6'>
-                        <label className='text-3xl font-bold' id='nomecognome'>{utente.nome + ", " + utente.anni +  (utente.verificato? " ☑️": "") }</label>
+                        <label className='text-3xl font-bold' id='nomecognome'>{utente.nome + ", " + utente.anni + (utente.verificato ? " ☑️" : "")}</label>
                         <img className='mt-5 w-auto h-[350px] rounded-xl object-cover shadow-md shadow-black hover:scale-150 transition-all ease-linear' id='profilo' src={utente.immagineProfilo} />
                         <div className='my-5 grid grid-cols-2 gap-1'>
                             <label className='bg-gray-300 rounded-full text-center font-bold p-2' id='sesso'></label>
@@ -165,8 +201,37 @@ function Card() {
                 {verificatoValue == true ?
                     <div className='w-full grid grid-cols-1 gap-5 text-black bg-white '>
                         <div className="mb-10 grid grid-cols-1 md:flex gap-10">
-                            <label title="Lascia un like" className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={cuore} id='love'>❤️</label>
+                            <label title="Lascia un like" className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={openModal} id='love'>❤️</label>
                             <label title="Togli il like" className='bg-white shadow-lg shadow-black rounded-full  text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={eliminacuore} id='love'>💔</label>
+                            <Modal
+                                isOpen={isModalOpen}
+                                onRequestClose={closeModal}
+                                contentLabel="Finestra Modale"
+                                style={{
+                                    overlay: {
+                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    },
+                                    content: {
+                                        width: '50%', // Imposta la larghezza desiderata
+                                        height: '50%', // Imposta l'altezza desiderata
+                                        margin: 'auto', // Per centrare la modal
+                                    },
+                                }}
+                            >
+                                <div className='grid m-5'>
+                                    <h2 className='m-5 text-2xl text-bold text-black'>Oltre al ❤️ lascia un messaggio per rompere il ghiaccio!</h2>
+                                    <textarea
+                                        className='m-5 border border-black p-2 text-lg'
+                                        type="text"
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                    />
+                                    <div className='flex m-5 gap-5'>
+                                        <button className='bg-blue-400 text-white hover:bg-blue-500' onClick={handleConfirm}>Conferma</button>
+                                        <button className='bg-red-400 text-white hover:bg-red-500' onClick={closeModal}>Annulla</button>
+                                    </div>
+                                </div>
+                            </Modal>
                             {utente.matching == true ?
                                 <label title="Contattami!" className='bg-white shadow-lg shadow-black rounded-full text-center font-bold text-5xl cursor-pointer p-4 m-auto' onClick={chat} id='chat'>💬</label>
                                 :

@@ -8,7 +8,7 @@ import { setUser } from '../redux/usersSlice';
 
 import { useNavigate } from 'react-router-dom';
 
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, update } from "firebase/database";
 
 
 function LoginForm() {
@@ -56,6 +56,14 @@ function LoginForm() {
                             localStorage.setItem("uidData", childKey);
                             localStorage.setItem("statusData", childSnapshot.val().Status);
                             localStorage.setItem("verificatoData", childSnapshot.val().Verificato);
+                            var prova = new Date();
+                            var prova2 = prova.getMonth() + 1;
+                            var prova1 = prova.getDate() + "-" + prova2 + "-" + prova.getFullYear();
+                            const dbRef = ref(db, "Utenti/" + childKey);
+
+                            update(dbRef, {
+                                UltimoAccesso: prova1,
+                            });
                             a = childSnapshot.val().Informazioni != undefined;
                             if (a) {
                                 navigate("/Profilo");
