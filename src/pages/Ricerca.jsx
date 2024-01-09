@@ -264,6 +264,12 @@ function Ricerca() {
         { id: "anni", value: "99", label: "99" },
 
     ];
+    useEffect(() => {
+
+        Filtratore();
+
+
+    }, []);
 
     useEffect(() => {
         if (isChecked) {

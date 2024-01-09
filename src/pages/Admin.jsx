@@ -33,6 +33,7 @@ function Admin() {
     const [immaginiProfilo, setImmaginiProfilo] = useState([]);
     const [immaginiCI, setImmaginiCI] = useState([]);
     const [nomiprof, setNomi] = useState([]);
+    const [dateprof, setDate] = useState([]);
     const [indiceImmagine, setIndiceImmagine] = useState(0);
 
     const db = getDatabase();
@@ -43,6 +44,7 @@ function Admin() {
         const immagini = [];
         const CI = [];
         const nomi = [];
+        const date = [];
 
         onValue(dbRef, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
@@ -50,9 +52,11 @@ function Admin() {
                     const immagineProfilo = childSnapshot.val().ImmagineProfilo;
                     const immagineCI = childSnapshot.val().ImmagineCI;
                     const nomi2 = childSnapshot.val().Nome + " " + childSnapshot.val().Cognome;
+                    const date2 = childSnapshot.val().DataDiNascita;
                     immagini.push(immagineProfilo);
                     CI.push(immagineCI);
                     nomi.push(nomi2);
+                    date.push(date2);
                 }
 
             });
@@ -61,6 +65,7 @@ function Admin() {
             setImmaginiProfilo(immagini);
             setImmaginiCI(CI);
             setNomi(nomi);
+            setDate(date);
 
         }, {
             onlyOnce: true
@@ -103,7 +108,7 @@ function Admin() {
 
     function elimina() {
         const storage = getStorage();
-       
+
         onValue(dbRef, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
                 if (immaginiProfilo[indiceImmagine] === childSnapshot.val().ImmagineProfilo) {
@@ -116,7 +121,7 @@ function Admin() {
 
                     /// RIMUOVE LE IMMAGINI DELL'UTENTE DALLO STORAGE
                     // Specifica il percorso del file che desideri eliminare
-                    const fileRef = refStorage (storage, '/Utenti/' + childKey + "/ImmagineProfilo.jpg");
+                    const fileRef = refStorage(storage, '/Utenti/' + childKey + "/ImmagineProfilo.jpg");
                     const fileRef2 = refStorage(storage, '/Utenti/' + childKey + "/CI.jpg");
 
                     // Elimina il file
@@ -130,13 +135,13 @@ function Admin() {
 
                     deleteObject(fileRef2)
                         .then(() => {
-                           
+
                         })
                         .catch((error) => {
                             console.error('E: ', error);
                         });
-                   
-            
+
+
 
                 }
             });
@@ -188,6 +193,7 @@ function Admin() {
                     <div>
                         <div className='w-full bg-white rounded-t-lg'>
                             <h2 className='p-5 text-bold text-4xl'>{nomiprof[indiceImmagine]}</h2>
+                            <h2 className='p-5 text-bold text-4xl'>{dateprof[indiceImmagine]}</h2>
                         </div>
                         {immaginiProfilo.length > 0 ? (
                             <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 bg-white rounded-b-lg'>
