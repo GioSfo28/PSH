@@ -265,7 +265,6 @@ function Ricerca() {
 
     ];
     useEffect(() => {
-        console.log(isChecked + " " + isMatch)
         if (!isChecked && !isMatch) {
             Filtratore();
         }
