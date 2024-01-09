@@ -30,7 +30,12 @@ function Ricerca() {
     const [isChecked, setIsChecked] = useState(false);
     const [isMatch, setIsMatch] = useState(false);
     const [isAll, setIsAll] = useState(false);
+    // Recupera info da localStorage o imposta un valore di default
+    const [info, setInfo] = useState(
+        JSON.parse(localStorage.getItem("info")) || {}
+    );
     const handleCheckboxChange = () => {
+        setInfo({});
         setIsChecked(!isChecked);
         if (isMatch) {
             setIsMatch(!isMatch);
@@ -49,10 +54,7 @@ function Ricerca() {
     };
 
 
-    // Recupera info da localStorage o imposta un valore di default
-    const [info, setInfo] = useState(
-        JSON.parse(localStorage.getItem("info")) || {}
-    );
+    
 
     useEffect(() => {
         // Salva info in localStorage ogni volta che cambia
@@ -268,7 +270,7 @@ function Ricerca() {
         if (!isChecked && !isMatch) {
             Filtratore();
         }
-    }, [isChecked, isMatch]);
+    }, [info, isChecked, isMatch]);
 
     useEffect(() => {
         // QUESTO AVVIENE OGNI VOLTA CHE CAMBIA ISCHECKED
@@ -495,8 +497,9 @@ function Ricerca() {
                                 dispatch(add(utenti1));
 
                                 utentiAggiunti.add(childKey);
-                            } else {
-                                if (!isChecked) {
+                            }
+                            else {
+                                if (!isChecked && info.genere == undefined && info.province == undefined && info.anni == undefined) {
                                     if (genere != a.Genere) {
                                         punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
                                         punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
@@ -550,7 +553,7 @@ function Ricerca() {
                                         utentiAggiunti.add(childKey);
                                     }
 
-                                } else {
+                                } else if (info.genere == undefined && info.province == undefined && info.anni == undefined) {
                                     punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
                                     punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
                                     punteggio += confrontaEAssegnaPunteggio(contraccezione, a.Contraccezione);
