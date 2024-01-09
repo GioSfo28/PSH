@@ -41,13 +41,13 @@ function RegisterForm() {
                 const db = getDatabase();
                 set(ref(db, "Utenti/" + userCredential.user.uid), {
                     Status: "User",
-                    Nome: userCredentials.nome,
-                    Cognome: userCredentials.cognome,
-                    Password: userCredentials.password,
-                    Email: userCredentials.email,
-                    Cellulare: userCredentials.cellulare,
+                    Nome: userCredentials.nome.trim(),
+                    Cognome: userCredentials.cognome.trim(),
+                    Password: userCredentials.password.trim(),
+                    Email: userCredentials.email.trim(),
+                    Cellulare: userCredentials.cellulare.trim(),
                     CodiceAmico: codiceGenerato,
-                    CodiceIscrizione: userCredentials.amico,
+                    CodiceIscrizione: userCredentials.amico.trim(),
                     Iscrizione: prova1,
                     UltimoAccesso: prova1
                 });

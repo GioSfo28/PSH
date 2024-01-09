@@ -207,8 +207,6 @@ function Modifica() {
 
 
 
-
-
     const genere = [
         { id: "genere", value: "Maschio", label: "Maschio" },
         { id: "genere", value: "Femmina", label: "Femmina" },
