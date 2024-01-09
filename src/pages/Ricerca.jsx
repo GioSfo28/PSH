@@ -266,10 +266,11 @@ function Ricerca() {
     ];
 
     useEffect(() => {
+        if (isChecked) {
+            Filtratore();
+        }
 
-        Filtratore();
-
-    }, [info, isChecked]);
+    }, [isChecked]);
 
     const handleInfo = (selectedOption) => {
         switch (selectedOption.id) {
@@ -543,7 +544,7 @@ function Ricerca() {
                                         dispatch(add(utenti1));
                                         utentiAggiunti.add(childKey);
                                     }
-                                    
+
                                 } else {
                                     punteggio += confrontaEAssegnaPunteggio(aborto, a.Aborto);
                                     punteggio += confrontaEAssegnaPunteggio(alcol, a.Alcol);
@@ -592,7 +593,6 @@ function Ricerca() {
                                         cerca: cerca,
                                         cellulare: b.Cellulare,
                                     };
-
                                     dispatch(add(utenti1));
                                     utentiAggiunti.add(childKey);
                                 }
