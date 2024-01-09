@@ -981,9 +981,15 @@ function Modifica() {
                 if (info.instagram == "" && document.getElementById("instagram").value.trim() != ""){
                     profiloInsta = document.getElementById("instagram").value.trim();
                 }
+                else if (info.instagram != "" && document.getElementById("instagram").value.trim() != "") {
+                    profiloInsta = document.getElementById("instagram").value.trim();
+                }
             }
             if (info.contatti == "Whatsapp") {
                 if (info.cellulare == "" && document.getElementById("cellulare").value.trim() != "") {
+                    cellulare = document.getElementById("cellulare").value.trim();
+                }
+                else if (info.cellulare != "" && document.getElementById("cellulare").value.trim() != "") {
                     cellulare = document.getElementById("cellulare").value.trim();
                 }
             }
