@@ -557,7 +557,7 @@ function Questionario() {
         { id: "listaAttivita", value: "dipingere", label: "Dipingere" },
         { id: "listaAttivita", value: "dipingere_tela", label: "Dipingere su tela" },
         { id: "listaAttivita", value: "disegnare", label: "Disegnare" },
-        { id: "listaAttivita", value: "escursione_montagna", label: "Escursione in montagna" },
+        { id: "listaAttivita", value: "escursioni_montagna", label: "Escursioni in montagna" },
         { id: "listaAttivita", value: "esplorazione_sotteranei", label: "Esplorazione di sotteranei" },
         { id: "listaAttivita", value: "fai_da_te", label: "Fai da te" },
         { id: "listaAttivita", value: "fotografia", label: "Fotografia" },
